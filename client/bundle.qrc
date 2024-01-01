@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/">
+        <file>src/ui/main.qml</file>
+        <file>src/ui/MainPage.qml</file>
+        <file>src/ui/SubPage1.qml</file>
+        <file>src/ui/SubPage2.qml</file>
+        <file>src/ui/SubPage3.qml</file>
+        <file>src/ui/SubPage4.qml</file>
+        <file>src/ui/SubPage5.qml</file>
+        <file>src/ui/SubPage6.qml</file>
+        <file>src/ui/SubPage7.qml</file>
+        <file>src/ui/SubPage8.qml</file>
+        <file>src/ui/SubPage9.qml</file>
+        <file>resources/images/picture.jpg</file>
+    </qresource>
+</RCC>
