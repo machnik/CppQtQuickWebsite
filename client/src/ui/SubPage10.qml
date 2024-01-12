@@ -2,34 +2,25 @@ import QtQuick
 import QtQuick.Controls
 
 Page {
-    id: subPage8
-
-    Component {
-        id: popUpMessageComponent
-        PopUpMessage {}
-    }
+    id: subPage9
 
     Label {
         id: headerLabel
-        text: "SubPage 8"
+        text: "SubPage 10"
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
         font.pointSize: 20
     }
 
     Label {
-        text: "Floating pop-up message."
+        text: "Pulling data from the internet."
         anchors.top: headerLabel.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         font.pointSize: 16
     }
 
-    Button {
-        text: "Show Message"
+    Label {
+        text: "..."
         anchors.centerIn: parent
-        onClicked: {
-            var popUpMessage = popUpMessageComponent.createObject(subPage8);
-            popUpMessage.visible = true;
-        }
     }
 }

@@ -58,6 +58,21 @@ ApplicationWindow {
         SubPage9 { }
     }
 
+    Component {
+        id: "subPage10"
+        SubPage10 { }
+    }
+
+    Component {
+        id: "subPage11"
+        SubPage11 { }
+    }
+
+    Component {
+        id: "subPage12"
+        SubPage12 { }
+    }
+
     StackView {
         id: stackView
         initialItem: mainPage
@@ -110,6 +125,21 @@ ApplicationWindow {
             MenuItem {
                 text: "SubPage 9"
                 onTriggered: stackView.replace(subPage9)
+            }
+
+            MenuItem {
+                text: "SubPage 10"
+                onTriggered: stackView.replace(subPage10)
+            }
+
+            MenuItem {
+                text: "SubPage 11"
+                onTriggered: stackView.replace(subPage11)
+            }
+
+            MenuItem {
+                text: "SubPage 12"
+                onTriggered: stackView.replace(subPage12)
             }
         }
     }
