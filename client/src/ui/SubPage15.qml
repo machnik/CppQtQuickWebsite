@@ -2,18 +2,18 @@ import QtQuick
 import QtQuick.Controls
 
 Page {
-    id: subPage11
+    id: subPage15
 
     Label {
         id: headerLabel
-        text: "SubPage 11"
+        text: "SubPage 15"
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
         font.pointSize: 20
     }
 
     Label {
-        text: "Qt Quick 3D Physics."
+        text: "Input form."
         anchors.top: headerLabel.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         font.pointSize: 16

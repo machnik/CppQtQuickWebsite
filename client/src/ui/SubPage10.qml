@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Controls
 
 Page {
-    id: subPage9
+    id: subPage10
 
     Label {
         id: headerLabel

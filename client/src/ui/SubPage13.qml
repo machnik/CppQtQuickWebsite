@@ -2,18 +2,18 @@ import QtQuick
 import QtQuick.Controls
 
 Page {
-    id: subPage11
+    id: subPage9
 
     Label {
         id: headerLabel
-        text: "SubPage 11"
+        text: "SubPage 13"
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
         font.pointSize: 20
     }
 
     Label {
-        text: "Qt Quick 3D Physics."
+        text: "Static webpage with much scrollable text."
         anchors.top: headerLabel.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         font.pointSize: 16

@@ -73,6 +73,31 @@ ApplicationWindow {
         SubPage12 { }
     }
 
+    Component {
+        id: "subPage13"
+        SubPage13 { }
+    }
+
+    Component {
+        id: "subPage14"
+        SubPage14 { }
+    }
+
+    Component {
+        id: "subPage15"
+        SubPage15 { }
+    }
+
+    Component {
+        id: "subPage16"
+        SubPage16 { }
+    }
+
+    Component {
+        id: "subPage17"
+        SubPage17 { }
+    }
+    
     StackView {
         id: stackView
         initialItem: mainPage
@@ -140,6 +165,31 @@ ApplicationWindow {
             MenuItem {
                 text: "SubPage 12"
                 onTriggered: stackView.replace(subPage12)
+            }
+
+            MenuItem {
+                text: "SubPage 13"
+                onTriggered: stackView.replace(subPage13)
+            }
+
+            MenuItem {
+                text: "SubPage 14"
+                onTriggered: stackView.replace(subPage14)
+            }
+
+            MenuItem {
+                text: "SubPage 15"
+                onTriggered: stackView.replace(subPage15)
+            }
+
+            MenuItem {
+                text: "SubPage 16"
+                onTriggered: stackView.replace(subPage16)
+            }
+
+            MenuItem {
+                text: "SubPage 17"
+                onTriggered: stackView.replace(subPage17)
             }
         }
     }

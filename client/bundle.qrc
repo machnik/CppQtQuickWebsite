@@ -11,6 +11,15 @@
         <file>src/ui/SubPage7.qml</file>
         <file>src/ui/SubPage8.qml</file>
         <file>src/ui/SubPage9.qml</file>
+        <file>src/ui/SubPage10.qml</file>
+        <file>src/ui/SubPage11.qml</file>
+        <file>src/ui/SubPage12.qml</file>
+        <file>src/ui/SubPage13.qml</file>
+        <file>src/ui/SubPage14.qml</file>
+        <file>src/ui/SubPage15.qml</file>
+        <file>src/ui/SubPage16.qml</file>
+        <file>src/ui/SubPage17.qml</file>
+        <file>src/ui/PopUpMessage.qml</file>
         <file>resources/images/picture.jpg</file>
     </qresource>
 </RCC>
