@@ -2,6 +2,9 @@
 
 Backend::Backend(QObject *parent) : QObject(parent), m_listModel(new ListModel(this))
 {
+    m_listModel->addItem("C++ Item 1");
+    m_listModel->addItem("C++ Item 2");
+    m_listModel->addItem("C++ Item 3");
 }
 
 QString Backend::message() const

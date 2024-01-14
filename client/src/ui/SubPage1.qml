@@ -32,6 +32,7 @@ Page {
     Label {
         text: "Count 1: " + counter1.count + ", Count 2: " + counter2.count
         anchors.centerIn: parent
+        font.pixelSize: 40
     }
 
     Button {

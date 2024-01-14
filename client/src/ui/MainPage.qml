@@ -1,8 +1,6 @@
 import QtQuick
 import QtQuick.Controls
 
-import CppQtQuickWebpage.Backend
-
 Page {
     id: mainPage
 

@@ -15,7 +15,7 @@ Page {
     }
 
     Label {
-        text: "C++ backend is used to implement the button."
+        text: "C++ backend object (singleton) is used to implement the button."
         anchors.top: headerLabel.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         font.pointSize: 16

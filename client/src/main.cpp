@@ -2,12 +2,7 @@
 - WebAssembly
 - Write QML property from C++
 - Auto adjust app window size to browser window size
-- Widget gallery
-- Sound player
-- WebSockets
-- 3D view
 - Better menu
-- nested floating window
 */
 
 #include <QtGui/QGuiApplication>
