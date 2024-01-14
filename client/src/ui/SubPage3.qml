@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
-import CppQtQuickWebpage.Backend 
+import CppQtQuickWebsite.Backend 
 
 Page {
     id: subPage3
@@ -14,13 +14,13 @@ Page {
         Label {
             id: headerLabel
             text: "SubPage 3"
-            font.pointSize: 20
+            font.pointSize: 24 // Increase the font size to 24
             Layout.alignment: Qt.AlignHCenter
         }
 
         Label {
-            text: "QML ListViews with QML and C++ backends."
-            font.pointSize: 16
+            text: "QML ListViews with QML and C++ models."
+            font.pointSize: 20 // Increase the font size to 20
             Layout.alignment: Qt.AlignHCenter
         }
 
@@ -40,6 +40,7 @@ Page {
                     }
                     delegate: Text {
                         text: model.text
+                        font.pointSize: 12
                     }
                 }
 
@@ -65,7 +66,10 @@ Page {
                     id: listViewCpp
                     width: 200; height: 300
                     model: Backend.listModel
-                    delegate: Text { text: model.display }
+                    delegate: Text { 
+                        text: model.display 
+                        font.pointSize: 12
+                    }
                 }
 
                 Button {

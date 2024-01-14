@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 
-import CppQtQuickWebpage.CppClasses
+import CppQtQuickWebsite.CppClasses
 
 Page {
     id: subPage1

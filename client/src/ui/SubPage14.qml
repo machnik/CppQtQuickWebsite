@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 
-import CppQtQuickWebpage.Backend
+import CppQtQuickWebsite.Backend
 
 Page {
     id: subPage14

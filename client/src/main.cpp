@@ -19,9 +19,9 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
 
     Backend backend;
-    qmlRegisterSingletonInstance<Backend>("CppQtQuickWebpage.Backend", 1, 0, "Backend", &backend);
+    qmlRegisterSingletonInstance<Backend>("CppQtQuickWebsite.Backend", 1, 0, "Backend", &backend);
 
-    qmlRegisterType<Counter>("CppQtQuickWebpage.CppClasses", 1, 0, "Counter");
+    qmlRegisterType<Counter>("CppQtQuickWebsite.CppClasses", 1, 0, "Counter");
 
     const QUrl url(QStringLiteral("qrc:/src/ui/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,

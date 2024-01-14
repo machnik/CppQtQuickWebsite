@@ -6,7 +6,7 @@ ApplicationWindow {
     visible: true
     width: 800
     height: 600
-    title: "CppQtQuickWebpage"
+    title: "CppQtQuickWebsite"
 
     Component {
         id: "mainPage"
@@ -107,7 +107,7 @@ ApplicationWindow {
 
     menuBar: MenuBar {
         Menu {
-            title: "Webpage Menu"
+            title: "Website Menu"
             MenuItem {
                 text: "Main Page"
                 onTriggered: stackView.replace(mainPage)
