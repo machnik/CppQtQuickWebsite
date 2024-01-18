@@ -36,6 +36,7 @@ Page {
         id: buttonSetTextJS
         anchors.top: textField.bottom;
         anchors.horizontalCenter: parent.horizontalCenter;
+        anchors.margins: 20
         text: "Set text using JavaScript"
         onClicked: {
             resetInputField(textField);
@@ -46,6 +47,7 @@ Page {
         id: buttonSetTextCpp
         anchors.top: buttonSetTextJS.bottom;
         anchors.horizontalCenter: parent.horizontalCenter;
+        anchors.margins: 10
         text: "Set text using C++"
         onClicked: {
             Backend.resetInputField(textField);

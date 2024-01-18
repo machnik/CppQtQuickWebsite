@@ -21,6 +21,7 @@
         <file>src/ui/SubPage17.qml</file>
         <file>src/ui/PopUpMessage.qml</file>
         <file>resources/images/picture.jpg</file>
+        <file>resources/audio/sound.wav</file>
         <file>resources/text/lorem_ipsum.html</file>
     </qresource>
 </RCC>

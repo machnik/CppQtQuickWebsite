@@ -13,7 +13,7 @@ Page {
     }
 
     Label {
-        text: "Showing an image."
+        text: "An image."
         anchors.top: headerLabel.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         font.pointSize: 16
