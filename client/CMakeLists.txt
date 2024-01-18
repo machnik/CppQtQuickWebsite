@@ -15,7 +15,7 @@ if(CMAKE_VERSION VERSION_LESS "3.7.0")
     set(CMAKE_INCLUDE_CURRENT_DIR ON)
 endif()
 
-find_package(Qt6 COMPONENTS Core Quick REQUIRED)
+find_package(Qt6 COMPONENTS Core Quick WebView REQUIRED)
 
 add_executable(${PROJECT_NAME}
     "src/main.cpp"
@@ -27,5 +27,6 @@ add_executable(${PROJECT_NAME}
 
 target_compile_definitions(${PROJECT_NAME}
     PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
+
 target_link_libraries(${PROJECT_NAME}
-    PRIVATE Qt6::Core Qt6::Quick)
+    PRIVATE Qt6::Core Qt6::Quick Qt6::WebView)

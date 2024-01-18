@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Controls
+import QtWebView
 
 Page {
     id: subPage9
@@ -13,14 +14,23 @@ Page {
     }
 
     Label {
+        id: titleLabel
         text: "Static webpage with much scrollable text."
         anchors.top: headerLabel.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         font.pointSize: 16
     }
 
-    Label {
-        text: "..."
-        anchors.centerIn: parent
+    ScrollView {
+        anchors.top: titleLabel.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        anchors.margins: 10
+
+        WebView {
+            anchors.fill: parent
+            url: "qrc:/resources/text/lorem_ipsum.html"
+        }
     }
 }
