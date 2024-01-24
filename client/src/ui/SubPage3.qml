@@ -5,7 +5,9 @@ import QtQuick.Layouts
 import CppQtQuickWebsite.Backend 
 
 Page {
-    id: subPage3
+
+    readonly property string headerText: "SubPage 3"
+    readonly property string subHeaderText: "QML ListViews with QML and C++ models."
 
     ColumnLayout {
         anchors.centerIn: parent
@@ -13,13 +15,13 @@ Page {
 
         Label {
             id: headerLabel
-            text: "SubPage 3"
+            text: headerText
             font.pointSize: 24 // Increase the font size to 24
             Layout.alignment: Qt.AlignHCenter
         }
 
         Label {
-            text: "QML ListViews with QML and C++ models."
+            text: subHeaderText
             font.pointSize: 20 // Increase the font size to 20
             Layout.alignment: Qt.AlignHCenter
         }
@@ -99,5 +101,10 @@ Page {
             Backend.listModel.addItem("C++ Item 4");
             Backend.listModel.addItem("C++ Item 5");
         }
+    }
+
+    ToMainPageButton {
+        anchors.bottom: parent.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
     }
 }

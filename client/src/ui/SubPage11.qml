@@ -2,18 +2,20 @@ import QtQuick
 import QtQuick.Controls
 
 Page {
-    id: subPage11
+
+    readonly property string headerText: "SubPage 11"
+    readonly property string subHeaderText: "Qt Quick 3D Physics"
 
     Label {
         id: headerLabel
-        text: "SubPage 11"
+        text: headerText
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
         font.pointSize: 20
     }
 
     Label {
-        text: "Qt Quick 3D Physics."
+        text: subHeaderText
         anchors.top: headerLabel.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         font.pointSize: 16
@@ -22,5 +24,10 @@ Page {
     Label {
         text: "..."
         anchors.centerIn: parent
+    }
+
+    ToMainPageButton {
+        anchors.bottom: parent.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
     }
 }

@@ -4,7 +4,9 @@ import QtQuick.Controls
 import CppQtQuickWebsite.Backend
 
 Page {
-    id: subPage4
+
+    readonly property string headerText: "SubPage 4"
+    readonly property string subHeaderText: "Modifying QML properties using JavaScript or C++."
 
     function resetInputField(inputField) {
         inputField.text = "Text set using JavaScript.";
@@ -12,14 +14,14 @@ Page {
 
     Label {
         id: headerLabel
-        text: "SubPage 4"
+        text: headerText
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
         font.pointSize: 20
     }
 
     Label {
-        text: "Modifying QML properties using JavaScript or C++."
+        text: subHeaderText
         anchors.top: headerLabel.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         font.pointSize: 16
@@ -52,5 +54,10 @@ Page {
         onClicked: {
             Backend.resetInputField(textField);
         }
+    }
+
+    ToMainPageButton {
+        anchors.bottom: parent.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
     }
 }

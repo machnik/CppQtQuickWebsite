@@ -2,18 +2,20 @@ import QtQuick
 import QtQuick.Controls
 
 Page {
-    id: subPage10
+
+    readonly property string headerText: "SubPage 10"
+    readonly property string subHeaderText: "Pulling data from the internet."
 
     Label {
         id: headerLabel
-        text: "SubPage 10"
+        text: headerText
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
         font.pointSize: 20
     }
 
     Label {
-        text: "Pulling data from the internet."
+        text: subHeaderText
         anchors.top: headerLabel.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         font.pointSize: 16
@@ -22,5 +24,10 @@ Page {
     Label {
         text: "..."
         anchors.centerIn: parent
+    }
+
+    ToMainPageButton {
+        anchors.bottom: parent.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
     }
 }

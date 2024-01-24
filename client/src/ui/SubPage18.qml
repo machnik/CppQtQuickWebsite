@@ -1,12 +1,10 @@
 import QtQuick
 import QtQuick.Controls
 
-import CppQtQuickWebsite.Backend
-
 Page {
 
-    readonly property string headerText: "SubPage 14"
-    readonly property string subHeaderText: "C++ backend object (singleton) is used to implement the button."
+    readonly property string headerText: "SubPage 18"
+    readonly property string subHeaderText: "Placeholder 18."
 
     Label {
         id: headerLabel
@@ -24,21 +22,8 @@ Page {
     }
 
     Label {
-        id: messageLabel
-        text: Backend.message
+        text: "..."
         anchors.centerIn: parent
-    }
-
-    Button {
-        text: "Change Message"
-        anchors.top: messageLabel.bottom
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.margins: 10
-        onClicked: Backend.setMessage("Message Changed!")
-    }
-
-    Component.onCompleted: {
-        Backend.message = "Hello World!"
     }
 
     ToMainPageButton {

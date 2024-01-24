@@ -3,11 +3,13 @@ import QtQuick.Controls
 import QtWebView
 
 Page {
-    id: subPage9
+
+    readonly property string headerText: "SubPage 13"
+    readonly property string subHeaderText: "Static webpage with much scrollable text."
 
     Label {
         id: headerLabel
-        text: "SubPage 13"
+        text: headerText
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
         font.pointSize: 20
@@ -15,7 +17,7 @@ Page {
 
     Label {
         id: titleLabel
-        text: "Static webpage with much scrollable text."
+        text: subHeaderText
         anchors.top: headerLabel.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         font.pointSize: 16
@@ -25,12 +27,18 @@ Page {
         anchors.top: titleLabel.bottom
         anchors.left: parent.left
         anchors.right: parent.right
-        anchors.bottom: parent.bottom
+        anchors.bottom: toMainPageButton.top
         anchors.margins: 10
 
         WebView {
             anchors.fill: parent
             url: "qrc:/resources/text/lorem_ipsum.html"
         }
+    }
+
+    ToMainPageButton {
+        id: toMainPageButton
+        anchors.bottom: parent.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
     }
 }

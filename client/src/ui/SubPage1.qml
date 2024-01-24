@@ -4,18 +4,21 @@ import QtQuick.Controls
 import CppQtQuickWebsite.CppClasses
 
 Page {
-    id: subPage1
 
+    readonly property string headerText: "Subpage 1"
+    readonly property string subHeaderText: "C++ class is used to implement the counters."
+    
     Label {
         id: headerLabel
-        text: "SubPage 1"
+        text: headerText
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
         font.pointSize: 20
     }
 
     Label {
-        text: "C++ class is used to implement the counters."
+
+        text: subHeaderText
         anchors.top: headerLabel.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         font.pointSize: 16
@@ -47,5 +50,10 @@ Page {
         anchors.bottom: parent.bottom
         anchors.right: parent.right
         onClicked: counter2.count++
+    }
+
+    ToMainPageButton {
+        anchors.bottom: parent.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
     }
 }

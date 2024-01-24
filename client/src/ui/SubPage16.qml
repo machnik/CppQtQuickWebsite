@@ -2,18 +2,20 @@ import QtQuick
 import QtQuick.Controls
 
 Page {
-    id: subPage16
+
+    readonly property string headerText: "SubPage 16"
+    readonly property string subHeaderText: "2D animation."
 
     Label {
         id: headerLabel
-        text: "SubPage 16"
+        text: headerText
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
         font.pointSize: 20
     }
 
     Label {
-        text: "2D animation."
+        text: subHeaderText
         anchors.top: headerLabel.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         font.pointSize: 16
@@ -22,5 +24,10 @@ Page {
     Label {
         text: "..."
         anchors.centerIn: parent
+    }
+
+    ToMainPageButton {
+        anchors.bottom: parent.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
     }
 }

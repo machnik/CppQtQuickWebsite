@@ -2,7 +2,9 @@ import QtQuick
 import QtQuick.Controls
 
 Page {
-    id: subPage8
+
+    readonly property string headerText: "SubPage 8"
+    readonly property string subHeaderText: "Floating pop-up message."
 
     Component {
         id: popUpMessageComponent
@@ -11,14 +13,14 @@ Page {
 
     Label {
         id: headerLabel
-        text: "SubPage 8"
+        text: headerText
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
         font.pointSize: 20
     }
 
     Label {
-        text: "Floating pop-up message."
+        text: subHeaderText
         anchors.top: headerLabel.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         font.pointSize: 16
@@ -31,5 +33,10 @@ Page {
             var popUpMessage = popUpMessageComponent.createObject(subPage8);
             popUpMessage.visible = true;
         }
+    }
+
+    ToMainPageButton {
+        anchors.bottom: parent.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
     }
 }

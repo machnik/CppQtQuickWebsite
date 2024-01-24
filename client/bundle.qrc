@@ -19,7 +19,11 @@
         <file>src/ui/SubPage15.qml</file>
         <file>src/ui/SubPage16.qml</file>
         <file>src/ui/SubPage17.qml</file>
+        <file>src/ui/SubPage18.qml</file>
+        <file>src/ui/SubPage19.qml</file>
+        <file>src/ui/SubPage20.qml</file>
         <file>src/ui/PopUpMessage.qml</file>
+        <file>src/ui/ToMainPageButton.qml</file>
         <file>resources/images/picture.jpg</file>
         <file>resources/audio/sound.wav</file>
         <file>resources/text/lorem_ipsum.html</file>

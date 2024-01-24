@@ -3,7 +3,9 @@ import QtQuick.Controls
 import QtMultimedia
 
 Page {
-    id: subPage6
+    
+    readonly property string headerText: "SubPage 6"
+    readonly property string subHeaderText: "Music Playback"
 
     MediaPlayer {
         id: mediaPlayer
@@ -13,14 +15,14 @@ Page {
 
     Label {
         id: headerLabel
-        text: "SubPage 6"
+        text: headerText
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
         font.pointSize: 20
     }
 
     Label {
-        text: "Music Playback."
+        text: subHeaderText
         anchors.top: headerLabel.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         font.pointSize: 16
@@ -60,5 +62,10 @@ Page {
                 mediaPlayer.stop()
             }
         }
+    }
+
+    ToMainPageButton {
+        anchors.bottom: parent.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
     }
 }
