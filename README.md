@@ -30,7 +30,7 @@ source emsdk_env.sh
 ```
 cd CppQtQuickWebsite/client
 mkdir build_wasm && cd build_wasm
-$QT_BIN_WASM/qt-cmake ..
+"$QT_BIN_WASM/qt-cmake" ..
 cmake --build .
 ```
 
@@ -44,6 +44,6 @@ cmake --build .
 ```
 cd CppQtQuickWebsite/client
 mkdir build_linux && cd build_linux
-$QT_BIN_GCC/qt-cmake ..
+"$QT_BIN_GCC/qt-cmake" ..
 cmake --build .
 ```

@@ -4,6 +4,6 @@ import QtQuick.Controls
 Button {
     text: "To Main Page"
     onClicked: {
-        stackView.push(mainPage)
+        stackView.replace(mainPage, StackView.PopTransition)
     }
 }

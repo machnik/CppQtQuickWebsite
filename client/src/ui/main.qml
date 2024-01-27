@@ -4,9 +4,8 @@ import QtQuick.Controls
 ApplicationWindow {
 
     visible: true
-    width: 1024
-    height: 768
-    title: "CppQtQuickWebsite"
+    width: Screen.width; height: Screen.height
+    flags: Qt.Window | Qt.FramelessWindowHint
 
     Component {
         id: mainPage
@@ -35,7 +34,7 @@ ApplicationWindow {
         Component { id: subPage19; SubPage19 {}},
         Component { id: subPage20; SubPage20 {}}
     ]
-    
+        
     StackView {
         id: stackView
         initialItem: mainPage
@@ -46,13 +45,25 @@ ApplicationWindow {
     menuBar: MenuBar {
         Menu {
             title: "Website Menu"
+            MenuItem {
+                text: "Main Page"
+                onTriggered: {
+                    stackView.replace(mainPage.createObject(stackView), StackView.PopTransition)
+                }
+            }
             Repeater {
                 model: subPagesComponents
                 MenuItem {
                     text: "Page " + (index + 1)
                     onTriggered: {
-                        stackView.replace(modelData.createObject(stackView))
+                        stackView.replace(modelData, StackView.PushTransition)
                     }
+                }
+            }
+            MenuItem {
+                text: "Exit"
+                onTriggered: {
+                    Qt.quit();
                 }
             }
         }

@@ -31,31 +31,16 @@ Page {
         Repeater {
             model: 20
 
-            delegate: Rectangle {
+            delegate: Button {
                 width: 100
                 height: 65
-                border.color: "black"
-                border.width: 1
-                radius: 5
-
-                gradient: Gradient {
-                    GradientStop { position: 0.0; color: "#ECECEC" }
-                    GradientStop { position: 1.0; color: "#D6D6D6" }
-                }
-
-                Text {
-                    anchors.centerIn: parent
-                    text: "Page " + (index + 1)
-                    font.pointSize: 16
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        stackView.replace(
-                            subPagesComponents[index].createObject(stackView)
-                        )
-                    }
+                text: "Page " + (index + 1)
+                font.pointSize: 16
+                onClicked: {
+                    stackView.replace(
+                        subPagesComponents[index],
+                        StackView.PushTransition
+                    )
                 }
             }
         }

@@ -29,8 +29,11 @@ Page {
         anchors.bottom: toMainPageButton.top
         anchors.margins: 10
 
-        Label {
-            text: "lorem ipsum..."
+        TextArea {
+            readOnly: true
+            text: "lorem ipsum dolor sit amet ".repeat(1000)
+            font.pointSize: 12
+            wrapMode: Text.WordWrap
         }
     }
 
