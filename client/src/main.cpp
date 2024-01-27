@@ -6,7 +6,6 @@
 */
 
 #include <QtGui/QGuiApplication>
-#include <QtWebView/QtWebView>
 
 #include <QtQml/QQmlApplicationEngine>
 #include <QtQml/QQmlContext>
@@ -17,8 +16,6 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
-
-    QtWebView::initialize();
 
     QQmlApplicationEngine engine;
 

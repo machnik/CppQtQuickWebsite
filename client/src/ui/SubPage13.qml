@@ -1,6 +1,5 @@
 import QtQuick
 import QtQuick.Controls
-import QtWebView
 
 Page {
 
@@ -30,9 +29,8 @@ Page {
         anchors.bottom: toMainPageButton.top
         anchors.margins: 10
 
-        WebView {
-            anchors.fill: parent
-            url: "qrc:/resources/text/lorem_ipsum.html"
+        Label {
+            text: "lorem ipsum..."
         }
     }
 
