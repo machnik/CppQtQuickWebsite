@@ -4,7 +4,7 @@ import QtQuick.Controls
 Page {
 
     readonly property string headerText: "SubPage 9"
-    readonly property string subHeaderText: "WebSockets"
+    readonly property string subHeaderText: "Placeholder"
 
     Label {
         id: headerLabel

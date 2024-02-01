@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
-import CppQtQuickWebsite.Backend 
+import CppQtQuickWebsite.CppObjects
 
 Page {
 
