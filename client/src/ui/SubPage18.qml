@@ -8,13 +8,18 @@ Page {
     readonly property string headerText: "SubPage 18"
     readonly property string subHeaderText: "WebSocket Server."
 
+    function resetTextFields() {
+        bouncedMessageField.text = "";
+        errorField.text = "";
+    }
+
     Connections {
         target: WebSocketServer
         function onBouncedMessage(message) {
             bouncedMessageField.text = message;
         }
         function onErrorOccurred(error) {
-            console.log(error);
+            errorField.text = error;
         }
     }
 
@@ -35,7 +40,9 @@ Page {
 
     TextField {
         id: portField
+        text: "12345"
         placeholderText: "enter port number"
+        readOnly: WebSocketServer.isServerRunning
         anchors.bottom: startButton.top
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.margins: 10
@@ -43,11 +50,16 @@ Page {
 
     Button {
         id: startButton
-        text: "START"
+        text: WebSocketServer.isServerRunning ? "STOP" : "START"
         checkable: true
         anchors.centerIn: parent
         onClicked: {
-            WebSocketServer.startServer(parseInt(portField.text));
+            if (WebSocketServer.isServerRunning) {
+                WebSocketServer.stopServer();
+                resetTextFields();
+            } else {
+                WebSocketServer.startServer(parseInt(portField.text));
+            }
         }
     }
 
@@ -55,6 +67,14 @@ Page {
         id: bouncedMessageField
         placeholderText: "(last bounced message)"
         anchors.top: startButton.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.margins: 10
+    }
+
+    TextField {
+        id: errorField
+        placeholderText: "(last error)"
+        anchors.top: bouncedMessageField.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.margins: 10
     }
