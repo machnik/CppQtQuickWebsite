@@ -1,5 +1,7 @@
 import QtQuick
 import QtQuick.Controls
+import QtQuick3D
+import QtQuick3D.Helpers
 
 Page {
 
@@ -21,9 +23,79 @@ Page {
         font.pointSize: 16
     }
 
-    Label {
-        text: "..."
+    Rectangle {
+
+        id: view3dContainer
         anchors.centerIn: parent
+        width: 400; height: 400
+
+        color: "black"
+
+        View3D {
+            id: view3d
+            anchors.fill: parent
+            anchors.margins: 3
+
+            environment: SceneEnvironment {
+                clearColor: "lightgray"
+                backgroundMode: SceneEnvironment.Color
+            }
+
+            PerspectiveCamera {
+                id: camera
+                position: Qt.vector3d(0, 200, 300)
+                eulerRotation.x: -30
+            }
+
+            DirectionalLight {
+                eulerRotation.x: -30
+                eulerRotation.y: -70
+            }
+
+            Model {
+                position: Qt.vector3d(0, -200, 0)
+                source: "#Cylinder"
+                scale: Qt.vector3d(2, 0.2, 1)
+                materials: [ DefaultMaterial { diffuseColor: "orange" } ]
+            }
+
+            Model {
+                position: Qt.vector3d(0, 150, 0)
+                source: "#Sphere"
+
+                materials: [ DefaultMaterial { diffuseColor: "green" } ]
+
+                SequentialAnimation on y {
+                    loops: Animation.Infinite
+                    NumberAnimation {
+                        duration: 2000
+                        to: -150
+                        from: 150
+                        easing.type: Easing.InQuad
+                    }
+                    NumberAnimation {
+                        duration: 2000
+                        to: 150
+                        from: -150
+                        easing.type: Easing.OutQuad
+                    }
+                }
+            }
+        }
+
+        WasdController {
+            controlledObject: camera
+        }
+    }
+
+    Label {
+        id: wasdControlLabel
+        text: "W: Forward, S: Backward, A: Left, D: Right, R: Up, F: Down, Hold Mouse: Look Around"
+        anchors.top: view3dContainer.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.margins: 20
+        font.pointSize: 14
+        font.bold: true
     }
 
     ToMainPageButton {
