@@ -50,13 +50,16 @@ Page {
             DirectionalLight {
                 eulerRotation.x: -30
                 eulerRotation.y: -70
+                castsShadow: true
             }
 
             Model {
                 position: Qt.vector3d(0, -200, 0)
                 source: "#Cylinder"
-                scale: Qt.vector3d(2, 0.2, 1)
+                scale: Qt.vector3d(2, 0.1, 1)
                 materials: [ DefaultMaterial { diffuseColor: "orange" } ]
+                castsShadows: false
+                receivesShadows: true
             }
 
             Model {
@@ -64,6 +67,9 @@ Page {
                 source: "#Sphere"
 
                 materials: [ DefaultMaterial { diffuseColor: "green" } ]
+
+                castsShadows: true
+                receivesShadows: false
 
                 SequentialAnimation on y {
                     loops: Animation.Infinite
