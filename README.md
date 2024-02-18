@@ -1,18 +1,18 @@
 # CppQtQuickWebsite
 
-## Requirements
+## ✅ Requirements
 
 - **CMake** version `3.27`
-- **Qt** version `6.6.1` with pre-built binaries for WebAssembly (single thread)
+- **Qt** version `6.6.2` with pre-built binaries for WebAssembly (multi thread)
 - **emscripten** version `3.1.37`
 
-## Environment
+## 💻 Environment
 
 ### Qt
 
 ```
-export QT_BIN_WASM="$HOME/Qt/6.6.1/wasm_singlethread/bin"
-export QT_BIN_GCC="$HOME/Qt/6.6.1/gcc_64/bin"
+export QT_BIN_WASM="$HOME/Qt/6.6.2/wasm_multithread/bin"
+export QT_BIN_GCC="$HOME/Qt/6.6.2/gcc_64/bin"
 ```
 
 ### emscripten
@@ -25,13 +25,12 @@ cd emsdk
 source emsdk_env.sh
 ```
 
-## Build for WebAssembly
+## 🌐 Build for WebAssembly
 
 ```
 cd CppQtQuickWebsite/client
 mkdir build_wasm && cd build_wasm
-"$QT_BIN_WASM/qt-cmake" ..
-cmake --build .
+"$QT_BIN_WASM/qt-cmake" .. && cmake --build .
 ```
 
 ### Run
@@ -40,10 +39,14 @@ cmake --build .
 "$EMSDK/upstream/emscripten/emrun" --browser=chrome CppQtQuickWebsite.html
 ```
 
-## Build for Linux
+## 🐧 Build for Linux
 ```
 cd CppQtQuickWebsite/client
 mkdir build_linux && cd build_linux
-"$QT_BIN_GCC/qt-cmake" ..
-cmake --build .
+"$QT_BIN_GCC/qt-cmake" .. && cmake --build .
+```
+
+### Run
+```
+./CppQtQuickWebsite
 ```
