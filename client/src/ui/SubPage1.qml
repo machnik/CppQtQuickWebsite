@@ -33,22 +33,26 @@ Page {
     }
 
     Label {
-        text: "Count 1: " + counter1.count + ", Count 2: " + counter2.count
+        id: countLabel
+        text: "Count 1: [" + counter1.count + "] - Count 2: [" + counter2.count + "]"
         anchors.centerIn: parent
         font.pixelSize: 40
     }
 
+
     Button {
         text: "Increment Count 1"
-        anchors.bottom: parent.bottom
-        anchors.left: parent.left
+        anchors.right: countLabel.left
+        anchors.verticalCenter: countLabel.verticalCenter
+        anchors.margins: 10
         onClicked: counter1.count++
     }
 
     Button {
         text: "Increment Count 2"
-        anchors.bottom: parent.bottom
-        anchors.right: parent.right
+        anchors.left: countLabel.right
+        anchors.verticalCenter: countLabel.verticalCenter
+        anchors.margins: 10
         onClicked: counter2.count++
     }
 

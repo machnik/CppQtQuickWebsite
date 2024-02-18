@@ -4,7 +4,7 @@ import QtQuick.Controls
 Page {
 
     readonly property string headerText: "SubPage 20"
-    readonly property string subHeaderText: "Placeholder 20."
+    readonly property string subHeaderText: "Placeholder."
 
     Label {
         id: headerLabel

@@ -1,10 +1,3 @@
-/* TODO
-- WebAssembly
-- Write QML property from C++
-- Auto adjust app window size to browser window size
-- Better menu
-*/
-
 #include <QtGui/QGuiApplication>
 
 #include <QtQml/QQmlApplicationEngine>
