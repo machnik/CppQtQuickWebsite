@@ -28,7 +28,7 @@ Page {
 
         Rectangle {
             border.width: 2
-            width: 500; height: 400
+            width: 400; height: 400
             anchors.margins: 20
             color: "transparent"
 
@@ -109,6 +109,7 @@ Page {
                 color: "red"
                 border.width: 2
                 MouseArea {
+                    id: rMouseArea
                     anchors.fill: parent
                     onClicked: {
                         console.log("R clicked")
@@ -123,6 +124,7 @@ Page {
                 color: "green"
                 border.width: 2
                 MouseArea {
+                    id: gMouseArea
                     anchors.fill: parent
                     onClicked: {
                         console.log("G clicked")
@@ -137,17 +139,30 @@ Page {
                 color: "blue"
                 border.width: 2
                 MouseArea {
+                    id: bMouseArea
                     anchors.fill: parent
                     onClicked: {
                         console.log("B clicked")
                     }
                 }
             }
+
+            ToolTip {
+                text: "This is a tooltip"
+                background: Rectangle {
+                    radius: 10
+                    color: "lightgrey"
+                }
+                visible: rMouseArea.containsMouse || gMouseArea.containsMouse || bMouseArea.containsMouse
+                delay: 1000
+                x: rMouseArea.containsMouse ? rMouseArea.mouseX : (gMouseArea.containsMouse ? gMouseArea.mouseX : bMouseArea.mouseX)
+                y: rMouseArea.containsMouse ? rMouseArea.mouseY : (gMouseArea.containsMouse ? gMouseArea.mouseY : bMouseArea.mouseY)
+            }
         }
 
         Rectangle {
             border.width: 2
-            width: 500; height: 400
+            width: 400; height: 400
             anchors.margins: 20
             color: "transparent"
 
@@ -155,7 +170,7 @@ Page {
                 anchors.fill: parent
                 anchors.margins: 10
                 Label {
-                    text: "JavaScript"
+                    text: "JavaScript (Qt Engine)"
                     font.pointSize: 20
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
@@ -175,7 +190,7 @@ Page {
                         anchors.margins: 10
                         onClicked: {
                             //let decimalPlaces = cppDecimalPlacesSpinBox.value
-                            jsPiTextArea.text = "Calculating..."
+                            jsQtPiTextArea.text = "Calculating..."
                         }
                     }
                 }
@@ -199,7 +214,77 @@ Page {
                     border.color: "black"
                     color: "darkblue"
                     TextArea {
-                        id: jsPiTextArea
+                        id: jsQtPiTextArea
+                        text: "3.14"
+                        anchors.fill: parent
+                        readOnly: true
+                        width: parent.width
+                        font.pointSize: 13
+                        font.family: "Courier"
+                        font.bold: true
+                        color: "white"
+                    }
+                }
+            }
+        }
+
+        Rectangle {
+            border.width: 2
+            width: 400; height: 400
+            anchors.margins: 20
+            color: "transparent"
+
+            ColumnLayout {
+                anchors.fill: parent
+                anchors.margins: 10
+                Label {
+                    text: "JavaScript (Browser)"
+                    font.pointSize: 20
+                    anchors.horizontalCenter: parent.horizontalCenter
+                }
+                RowLayout {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    Label {
+                        text: "Decimal places:"
+                        font.pointSize: 12
+                        anchors.margins: 10
+                    }
+                    SpinBox {
+                        value: 100; from: 10; to: 100000; stepSize: 10
+                        anchors.margins: 10
+                    }
+                    Button {
+                        text: "GO!"
+                        anchors.margins: 10
+                        onClicked: {
+                            //let decimalPlaces = cppDecimalPlacesSpinBox.value
+                            jsBrowserPiTextArea.text = "Calculating..."
+                        }
+                    }
+                }
+
+                RowLayout {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    Label {
+                        text: "Last Time:"
+                        font.pointSize: 16
+                        anchors.margins: 10
+                    }
+                    Label {
+                        text: "0.00 s"
+                        font.pointSize: 16
+                        anchors.margins: 10
+                    }
+                }
+
+                Rectangle {
+                    width: parent.width - 20; height: 150
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    border.width: 2
+                    border.color: "black"
+                    color: "darkblue"
+                    TextArea {
+                        id: jsBrowserPiTextArea
                         text: "3.14"
                         anchors.fill: parent
                         readOnly: true
