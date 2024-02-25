@@ -3,6 +3,7 @@
 
 #include <QtCore/QObject>
 #include <QtCore/QString>
+
 #include <QtQml/QQmlProperty>
 
 #include "ListModel.h"
@@ -10,6 +11,8 @@
 class Backend : public QObject
 {
     Q_OBJECT
+    QML_ELEMENT
+    QML_SINGLETON
 
     Q_PROPERTY(QString message READ message WRITE setMessage NOTIFY messageChanged)
     Q_PROPERTY(ListModel *listModel READ listModel CONSTANT)

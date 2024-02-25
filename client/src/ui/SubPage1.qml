@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 
-import CppQtQuickWebsite.CppClasses
+import CppQtQuickWebsite.CppObjects
 
 Page {
 

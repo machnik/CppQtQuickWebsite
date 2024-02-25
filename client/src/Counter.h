@@ -3,9 +3,13 @@
 
 #include <QtCore/QObject>
 
+#include <QtQml>
+
 class Counter : public QObject
 {
     Q_OBJECT
+    QML_ELEMENT
+
     Q_PROPERTY(int count READ count WRITE setCount NOTIFY countChanged)
 
 public:

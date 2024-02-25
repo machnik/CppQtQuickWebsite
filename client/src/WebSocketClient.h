@@ -1,8 +1,16 @@
+#ifndef WEBSOCKETCLIENT_H
+#define WEBSOCKETCLIENT_H
+
 #include <QtWebSockets/QWebSocket>
+
+#include <QtQml>
 
 class WebSocketClient : public QObject
 {
     Q_OBJECT
+    QML_ELEMENT
+    QML_SINGLETON
+
     Q_PROPERTY(bool isClientRunning READ isClientRunning NOTIFY clientRunningChanged)
 public:
     explicit WebSocketClient(QObject * parent = nullptr);
@@ -21,3 +29,5 @@ private:
     QWebSocket m_webSocket;
     bool m_isClientRunning;
 };
+
+#endif // WEBSOCKETCLIENT_H

@@ -1,9 +1,16 @@
+#ifndef WEBSOCKETSERVER_H
+#define WEBSOCKETSERVER_H
 
 #include <QtWebSockets/QWebSocketServer>
+
+#include <QtQml>
 
 class WebSocketServer : public QObject
 {
     Q_OBJECT
+    QML_ELEMENT
+    QML_SINGLETON
+
     Q_PROPERTY(bool isServerRunning READ isServerRunning NOTIFY serverRunningChanged)
 public:
     explicit WebSocketServer(QObject * parent = nullptr);
@@ -22,3 +29,5 @@ private:
     QWebSocketServer * m_webSocketServer;
     bool m_isServerRunning;
 };
+
+#endif // WEBSOCKETSERVER_H
