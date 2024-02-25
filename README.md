@@ -36,7 +36,7 @@ mkdir build_wasm && cd build_wasm
 ### Run
 
 ```
-"$EMSDK/upstream/emscripten/emrun" --browser=chrome CppQtQuickWebsite.html
+"$EMSDK/upstream/emscripten/emrun" --browser=chrome Website.html
 ```
 
 ## 🐧 Build for Linux
@@ -48,5 +48,5 @@ mkdir build_linux && cd build_linux
 
 ### Run
 ```
-./CppQtQuickWebsite
+./Website
 ```
