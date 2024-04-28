@@ -9,18 +9,19 @@ set(CMAKE_AUTORCC ON)
 
 find_package(Qt6 REQUIRED COMPONENTS Core Quick Quick3D Multimedia WebSockets)
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/cpp)
 
 qt_standard_project_setup()
 
 qt_add_executable(${PROJECT_NAME}
-    "src/main.cpp"
-    "src/Backend.cpp"
-    "src/Counter.cpp"
-    "src/ListModel.cpp"
-    "src/WebSocketServer.cpp"
-    "src/WebSocketClient.cpp"    
-    "bundle.qrc"
+    "src/cpp/main.cpp"
+    "src/cpp/Backend.cpp"
+    "src/cpp/Counter.cpp"
+    "src/cpp/ListModel.cpp"
+    "src/cpp/WebSocketServer.cpp"
+    "src/cpp/WebSocketClient.cpp"    
+    "src/qml/qml.qrc"
+    "resources/resources.qrc"
 )
 
 qt_policy(
