@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/resources/">
         <file>images/picture.jpg</file>
+        <file>images/avatar_placeholder.png</file>
         <file>audio/sound.wav</file>
         <file>text/lorem_ipsum.html</file>
     </qresource>

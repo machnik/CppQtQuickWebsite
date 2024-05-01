@@ -4,7 +4,7 @@ import QtQuick.Controls
 Page {
 
     readonly property string headerText: "SubPage 17"
-    readonly property string subHeaderText: "Placeholder."
+    readonly property string subHeaderText: "Importing JavaScript source code from external files."
 
     Label {
         id: headerLabel
