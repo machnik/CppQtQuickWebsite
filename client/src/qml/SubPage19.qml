@@ -32,11 +32,18 @@ Page {
         font.pointSize: 20
     }
 
+    Label {
+        text: subHeaderText
+        anchors.top: headerLabel.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        font.pointSize: 16
+    }
+
     TextField {
         id: portField
-        text: "12345"
-        placeholderText: "enter port number"
+        placeholderText: "(enter port number here)"
         readOnly: WebSocketClient.isClientRunning
+        width: 250
         anchors.bottom: startButton.top
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.margins: 10
@@ -59,7 +66,8 @@ Page {
 
     TextField {
         id: messageToSendField
-        placeholderText: "enter message to send"
+        placeholderText: "(enter message to send here)"
+        width: 250
         anchors.top: startButton.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.margins: 10
@@ -68,6 +76,7 @@ Page {
     Button {
         id: sendButton
         text: "SEND"
+        enabled: messageToSendField.text.length > 0
         anchors.top: messageToSendField.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.margins: 10
@@ -79,6 +88,8 @@ Page {
     TextField {
         id: receivedMessageField
         placeholderText: "(last received message)"
+        readOnly: true
+        width: 250
         anchors.top: sendButton.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.margins: 10
@@ -87,6 +98,8 @@ Page {
     TextField {
         id: errorField
         placeholderText: "(last error)"
+        readOnly: true
+        width: 250
         anchors.top: receivedMessageField.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.margins: 10

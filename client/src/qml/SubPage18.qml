@@ -40,9 +40,9 @@ Page {
 
     TextField {
         id: portField
-        text: "12345"
-        placeholderText: "enter port number"
+        placeholderText: "(enter port number here)"
         readOnly: WebSocketServer.isServerRunning
+        width: 250
         anchors.bottom: startButton.top
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.margins: 10
@@ -66,6 +66,8 @@ Page {
     TextField {
         id: bouncedMessageField
         placeholderText: "(last bounced message)"
+        readOnly: true
+        width: 250
         anchors.top: startButton.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.margins: 10
@@ -74,6 +76,8 @@ Page {
     TextField {
         id: errorField
         placeholderText: "(last error)"
+        readOnly: true
+        width: 250
         anchors.top: bouncedMessageField.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.margins: 10

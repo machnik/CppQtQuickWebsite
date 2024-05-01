@@ -7,7 +7,10 @@ Page {
     readonly property string subHeaderText: "UI Widget Gallery"
 
     ColumnLayout {
-        anchors.fill: parent
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+
         spacing: 10
 
         Label {
@@ -21,6 +24,10 @@ Page {
             text: subHeaderText
             font.pointSize: 16
             Layout.alignment: Qt.AlignHCenter
+        }
+
+        Item {
+            Layout.preferredHeight: 20
         }
 
         ScrollView {
