@@ -25,7 +25,7 @@ Page {
 
     Rectangle {
         id: avatarArea
-        width: 256; height: 256
+        width: 200; height: 200
         anchors.centerIn: parent
 
         Image {
@@ -35,15 +35,30 @@ Page {
         }
     }
 
-    Button {
-        id: newAvatarButton
-        text: "Make New Avatar"
+    ComboBox {
+        id: styleComboBox
+        model: [
+            "adventurer", "avataaars", "bottts", "croodles",
+            "fun-emoji", "icons", "identicon", "lorelei",
+            "micah", "miniavs", "notionists", "open-peeps",
+            "personas", "shapes", "rings", "thumbs"
+        ]
+        currentIndex: 0
         anchors.top: avatarArea.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.margins: 10
+    }
+
+    Button {
+        text: "New Avatar"
+        anchors.top: styleComboBox.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.margins: 10
         onClicked: {
             var xhr = new XMLHttpRequest();
-            var url = "https://api.dicebear.com/8.x/rings/svg?seed=" + Math.random();
+            var url =
+                "https://api.dicebear.com/8.x/" + styleComboBox.currentText +
+                "/svg?seed=" + Math.random();
             xhr.open('GET', url, true);
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
