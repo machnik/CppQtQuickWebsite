@@ -30,7 +30,8 @@ Page {
         text: "Show Message"
         anchors.centerIn: parent
         onClicked: {
-            var popUpMessage = popUpMessageComponent.createObject(subPage8);
+            var popUpMessage = popUpMessageComponent.createObject(parent.parent);
+            popUpMessage.anchors.centerIn = parent.parent;
             popUpMessage.visible = true;
         }
     }

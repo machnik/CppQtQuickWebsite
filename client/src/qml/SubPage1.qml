@@ -34,26 +34,32 @@ Page {
 
     Label {
         id: countLabel
-        text: "Count 1: [" + counter1.count + "] - Count 2: [" + counter2.count + "]"
+        text: "Count 1: [" + counter1.count + "]\nCount 2: [" + counter2.count + "]"
         anchors.centerIn: parent
-        font.pixelSize: 40
+        font.pixelSize: 36
     }
 
+    Rectangle {
+        width: incrementButton1.width + incrementButton2.width
+        anchors.top: countLabel.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
 
-    Button {
-        text: "Increment Count 1"
-        anchors.right: countLabel.left
-        anchors.verticalCenter: countLabel.verticalCenter
-        anchors.margins: 10
-        onClicked: counter1.count++
-    }
+        Button {
+            id: incrementButton1
+            text: "Increment Count 1"
+            anchors.top: parent.top
+            anchors.margins: 15
+            onClicked: counter1.count++
+        }
 
-    Button {
-        text: "Increment Count 2"
-        anchors.left: countLabel.right
-        anchors.verticalCenter: countLabel.verticalCenter
-        anchors.margins: 10
-        onClicked: counter2.count++
+        Button {
+            id: incrementButton2
+            text: "Increment Count 2"
+            anchors.top: parent.top
+            anchors.left: incrementButton1.right
+            anchors.margins: 15
+            onClicked: counter2.count++
+        }
     }
 
     ToMainPageButton {
