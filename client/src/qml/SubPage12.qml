@@ -12,14 +12,14 @@ Page {
         text: headerText
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
-        font.pointSize: 20
+        font.pointSize: 16
     }
 
     Label {
         text: subHeaderText
         anchors.top: headerLabel.bottom
         anchors.horizontalCenter: parent.horizontalCenter
-        font.pointSize: 16
+        font.pointSize: 13
     }
 
     RowLayout {
@@ -37,14 +37,14 @@ Page {
                 anchors.margins: 10
                 Label {
                     text: "C++"
-                    font.pointSize: 20
+                    font.pointSize: 16
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
                 RowLayout {
                     anchors.horizontalCenter: parent.horizontalCenter
                     Label {
                         text: "Decimal places:"
-                        font.pointSize: 12
+                        font.pointSize: 10
                         anchors.margins: 10
                     }
                     SpinBox {
@@ -64,12 +64,12 @@ Page {
                     anchors.horizontalCenter: parent.horizontalCenter
                     Label {
                         text: "Last Time:"
-                        font.pointSize: 16
+                        font.pointSize: 13
                         anchors.margins: 10
                     }
                     Label {
                         text: "0.00 s"
-                        font.pointSize: 16
+                        font.pointSize: 13
                         anchors.margins: 10
                     }
                 }
@@ -85,7 +85,7 @@ Page {
                         anchors.fill: parent
                         readOnly: true
                         width: parent.width
-                        font.pointSize: 13
+                        font.pointSize: 10
                         font.family: "Courier"
                         font.bold: true
                         color: "white"
@@ -98,7 +98,7 @@ Page {
             anchors.margins: 20
             Label {
                 text: "VS."
-                font.pointSize: 20
+                font.pointSize: 16
                 anchors.horizontalCenter: parent.horizontalCenter
             }
             Rectangle {
@@ -171,14 +171,14 @@ Page {
                 anchors.margins: 10
                 Label {
                     text: "JavaScript (Qt Engine)"
-                    font.pointSize: 20
+                    font.pointSize: 16
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
                 RowLayout {
                     anchors.horizontalCenter: parent.horizontalCenter
                     Label {
                         text: "Decimal places:"
-                        font.pointSize: 12
+                        font.pointSize: 10
                         anchors.margins: 10
                     }
                     SpinBox {
@@ -198,12 +198,12 @@ Page {
                     anchors.horizontalCenter: parent.horizontalCenter
                     Label {
                         text: "Last Time:"
-                        font.pointSize: 16
+                        font.pointSize: 13
                         anchors.margins: 10
                     }
                     Label {
                         text: "0.00 s"
-                        font.pointSize: 16
+                        font.pointSize: 13
                         anchors.margins: 10
                     }
                 }
@@ -219,7 +219,7 @@ Page {
                         anchors.fill: parent
                         readOnly: true
                         width: parent.width
-                        font.pointSize: 13
+                        font.pointSize: 10
                         font.family: "Courier"
                         font.bold: true
                         color: "white"
@@ -239,14 +239,14 @@ Page {
                 anchors.margins: 10
                 Label {
                     text: "JavaScript (Browser)"
-                    font.pointSize: 20
+                    font.pointSize: 16
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
                 RowLayout {
                     anchors.horizontalCenter: parent.horizontalCenter
                     Label {
                         text: "Decimal places:"
-                        font.pointSize: 12
+                        font.pointSize: 10
                         anchors.margins: 10
                     }
                     SpinBox {
@@ -267,12 +267,12 @@ Page {
                     anchors.horizontalCenter: parent.horizontalCenter
                     Label {
                         text: "Last Time:"
-                        font.pointSize: 16
+                        font.pointSize: 13
                         anchors.margins: 10
                     }
                     Label {
                         text: "0.00 s"
-                        font.pointSize: 16
+                        font.pointSize: 13
                         anchors.margins: 10
                     }
                 }
@@ -289,7 +289,7 @@ Page {
                         anchors.fill: parent
                         readOnly: true
                         width: parent.width
-                        font.pointSize: 13
+                        font.pointSize: 10
                         font.family: "Courier"
                         font.bold: true
                         color: "white"
