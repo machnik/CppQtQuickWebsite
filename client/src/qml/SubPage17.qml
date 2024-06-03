@@ -21,12 +21,29 @@ Page {
         font.pointSize: 16
     }
 
-    Label {
-        text: "..."
+    Text {
+        id: textFileContents
+        text: "This is a long, multi-line text that needs to be displayed in the center."
+        width: parent.width * 0.8
+        height: parent.height * 0.6
+        wrapMode: Text.WordWrap
         anchors.centerIn: parent
+        font.pixelSize: 11
+    }
+
+    Button {
+        id: openFileButton
+        text: "Open Text File"
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: toMainPageButton.top
+        anchors.margins: 20
+        onClicked: {
+            console.log("Open File button clicked.")
+        }
     }
 
     ToMainPageButton {
+        id: toMainPageButton
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
     }
