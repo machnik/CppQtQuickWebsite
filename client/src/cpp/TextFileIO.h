@@ -16,10 +16,11 @@ public:
 
 public slots:
     void loadFileContent();
-    void saveFileContent(const QString &content);
+    void saveFileContent(const QString &fileName, const QString &content);
 
 signals:
     void fileContentReady(const QString &content);
+    void currentFileNameChanged(const QString &fileName);
 };
 
 #endif // TEXTFILEIO_H

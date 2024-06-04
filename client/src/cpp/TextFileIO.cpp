@@ -9,13 +9,13 @@ void TextFileIO::loadFileContent()
     QFileDialog::getOpenFileContent(
         "Text Files (*.txt)",
         [this](const QString &fileName, const QByteArray &fileContent) {
-            Q_UNUSED(fileName)
+            emit currentFileNameChanged(fileName);
             emit fileContentReady(QString::fromUtf8(fileContent));
         }
     );
 }
 
-void TextFileIO::saveFileContent(const QString &content)
+void TextFileIO::saveFileContent(const QString &fileName, const QString &content)
 {
-    QFileDialog::saveFileContent(content.toUtf8(), "untitled.txt");
+    QFileDialog::saveFileContent(content.toUtf8(), fileName);
 }

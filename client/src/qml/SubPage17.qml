@@ -8,8 +8,13 @@ Page {
     readonly property string headerText: "SubPage 17"
     readonly property string subHeaderText: "Loading and saving/downloading a local file."
 
+    property string currentFileName: "untitled.txt"
+
     Connections {
         target: TextFileIO
+        function onCurrentFileNameChanged(fileName) {
+            currentFileName = fileName
+        }
         function onFileContentReady(content) {
             fileContentsTextArea.text = content
         }
@@ -30,22 +35,26 @@ Page {
         font.pointSize: 16
     }
 
-    Rectangle {
-        id: fileContentsRectangle
-        width: parent.width * 0.8
-        height: parent.height * 0.5
-        color: "white"
-        border.color: "black"
-        border.width: 1
+    Label {
+        text: "File name: " + currentFileName
+        anchors.bottom: fileContentsScrollView.top
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottomMargin: 10
+        font.pointSize: 14
+    }
+
+    ScrollView {
+        id: fileContentsScrollView
+        width: parent.width * 0.7
+        height: parent.height * 0.4
         anchors.centerIn: parent
 
         TextArea {
             id: fileContentsTextArea
-            text: "This is a long, multi-line text that needs to be displayed in the center."
-            width: parent.width * 0.8
-            height: parent.height * 0.6
+            text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+            width: parent.width
+            height: parent.height
             wrapMode: Text.WordWrap
-            anchors.fill: parent
             font.pixelSize: 11
         }
     }
@@ -76,7 +85,7 @@ Page {
             anchors.right: parent.right
             anchors.rightMargin: 10
             onClicked: {
-                TextFileIO.saveFileContent(fileContentsTextArea.text)
+                TextFileIO.saveFileContent(currentFileName, fileContentsTextArea.text)
             }
         }
     }
