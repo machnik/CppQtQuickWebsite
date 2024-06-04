@@ -43,6 +43,7 @@ Page {
         width: incrementButton1.width + incrementButton2.width
         anchors.top: countLabel.bottom
         anchors.horizontalCenter: parent.horizontalCenter
+        anchors.topMargin: 20
 
         Button {
             id: incrementButton1
