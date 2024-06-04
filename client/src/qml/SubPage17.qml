@@ -1,10 +1,19 @@
 import QtQuick
 import QtQuick.Controls
 
+import CppQtQuickWebsite.CppObjects
+
 Page {
 
     readonly property string headerText: "SubPage 17"
     readonly property string subHeaderText: "Loading and saving/downloading a local file."
+
+    Connections {
+        target: TextFileIO
+        function onFileContentReady(content) {
+            fileContentsTextArea.text = content
+        }
+    }
 
     Label {
         id: headerLabel
@@ -56,7 +65,7 @@ Page {
             anchors.left: parent.left
             anchors.leftMargin: 10
             onClicked: {
-                console.log("Open File button clicked.")
+                TextFileIO.loadFileContent()
             }
         }
 
@@ -67,7 +76,7 @@ Page {
             anchors.right: parent.right
             anchors.rightMargin: 10
             onClicked: {
-                console.log("Save File button clicked.")
+                TextFileIO.saveFileContent(fileContentsTextArea.text)
             }
         }
     }

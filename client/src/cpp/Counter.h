@@ -3,7 +3,8 @@
 
 #include <QtCore/QObject>
 
-#include <QtQml>
+#include <QtQml/QtQml>
+
 
 class Counter : public QObject
 {
