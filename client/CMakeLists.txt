@@ -38,4 +38,14 @@ target_link_libraries(${PROJECT_NAME}
     PRIVATE Qt6::Core Qt6::Quick Qt6::Quick3D Qt6::Multimedia Qt6::WebSockets Qt6::Widgets
 )
 
-set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "Website")
+set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "WebApplication")
+
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy
+        ${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/favicon.ico
+        ${CMAKE_CURRENT_BINARY_DIR}/favicon.ico
+    COMMAND ${CMAKE_COMMAND} -E copy
+        ${CMAKE_CURRENT_SOURCE_DIR}/resources/images/splash.svg
+        ${CMAKE_CURRENT_BINARY_DIR}/qtlogo.svg
+    COMMENT "Copying website icon and splash image to build directory..."
+)
