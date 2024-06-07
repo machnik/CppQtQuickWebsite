@@ -9,14 +9,14 @@ Page {
         text: "Main Page"
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
-        font.pointSize: 20
+        font.pointSize: 15
     }
 
     Label {
         text: "Table of Contents"
         anchors.top: headerLabel.bottom
         anchors.horizontalCenter: parent.horizontalCenter
-        font.pointSize: 16
+        font.pointSize: 12
     }
 
     GridLayout {
@@ -35,7 +35,7 @@ Page {
                 width: 100
                 height: 65
                 text: "Page " + (index + 1)
-                font.pointSize: 16
+                font.pointSize: 12
                 onClicked: {
                     stackView.replace(
                         subPagesComponents[index],

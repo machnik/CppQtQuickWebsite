@@ -22,7 +22,7 @@ Page {
 
         Label {
             text: subHeaderText
-            font.pointSize: 20 // Increase the font size to 20
+            font.pointSize: 15 // Increase the font size to 20
             Layout.alignment: Qt.AlignHCenter
         }
 

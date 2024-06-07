@@ -13,7 +13,7 @@ Page {
         text: headerText
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
-        font.pointSize: 20
+        font.pointSize: 15
     }
 
     Label {
@@ -21,7 +21,7 @@ Page {
         text: subHeaderText
         anchors.top: headerLabel.bottom
         anchors.horizontalCenter: parent.horizontalCenter
-        font.pointSize: 16
+        font.pointSize: 12
     }
 
     Counter {
@@ -36,7 +36,8 @@ Page {
         id: countLabel
         text: "Count 1: [" + counter1.count + "]\nCount 2: [" + counter2.count + "]"
         anchors.centerIn: parent
-        font.pixelSize: 36
+        font.pixelSize: 18
+        font.bold: true
     }
 
     Rectangle {

@@ -18,14 +18,14 @@ Page {
         text: headerText
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
-        font.pointSize: 20
+        font.pointSize: 15
     }
 
     Label {
         text: subHeaderText
         anchors.top: headerLabel.bottom
         anchors.horizontalCenter: parent.horizontalCenter
-        font.pointSize: 16
+        font.pointSize: 12
     }
 
     Text {
@@ -33,7 +33,7 @@ Page {
         text: "Click to Play Music";
         anchors.centerIn: parent;
         width: 200; height: 60;
-        font.pointSize: 20;
+        font.pointSize: 13;
 
         MouseArea {
             anchors.fill: parent
@@ -51,7 +51,7 @@ Page {
         anchors.top: playMusic.bottom;
         anchors.horizontalCenter: parent.horizontalCenter;
         width: 200; height: 60;
-        font.pointSize: 20;
+        font.pointSize: 13;
         color: "gray";
 
         MouseArea {

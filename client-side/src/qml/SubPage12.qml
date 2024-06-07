@@ -12,14 +12,14 @@ Page {
         text: headerText
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
-        font.pointSize: 16
+        font.pointSize: 15
     }
 
     Label {
         text: subHeaderText
         anchors.top: headerLabel.bottom
         anchors.horizontalCenter: parent.horizontalCenter
-        font.pointSize: 13
+        font.pointSize: 12
     }
 
     RowLayout {
@@ -37,7 +37,7 @@ Page {
                 anchors.margins: 10
                 Label {
                     text: "C++"
-                    font.pointSize: 16
+                    font.pointSize: 12
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
                 RowLayout {
@@ -98,7 +98,7 @@ Page {
             anchors.margins: 20
             Label {
                 text: "VS."
-                font.pointSize: 16
+                font.pointSize: 12
                 anchors.horizontalCenter: parent.horizontalCenter
             }
             Rectangle {
@@ -171,7 +171,7 @@ Page {
                 anchors.margins: 10
                 Label {
                     text: "JavaScript (Qt Engine)"
-                    font.pointSize: 16
+                    font.pointSize: 12
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
                 RowLayout {
@@ -239,7 +239,7 @@ Page {
                 anchors.margins: 10
                 Label {
                     text: "JavaScript (Browser)"
-                    font.pointSize: 16
+                    font.pointSize: 12
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
                 RowLayout {

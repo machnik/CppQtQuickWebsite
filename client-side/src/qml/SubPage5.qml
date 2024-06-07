@@ -16,13 +16,13 @@ Page {
         Label {
             id: headerLabel
             text: headerText
-            font.pointSize: 20
+            font.pointSize: 15
             Layout.alignment: Qt.AlignHCenter
         }
 
         Label {
             text: subHeaderText
-            font.pointSize: 16
+            font.pointSize: 12
             Layout.alignment: Qt.AlignHCenter
         }
 

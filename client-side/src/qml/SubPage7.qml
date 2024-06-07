@@ -13,14 +13,14 @@ Page {
         text: headerText
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
-        font.pointSize: 20
+        font.pointSize: 15
     }
 
     Label {
         text: subHeaderText
         anchors.top: headerLabel.bottom
         anchors.horizontalCenter: parent.horizontalCenter
-        font.pointSize: 16
+        font.pointSize: 12
     }
 
     Rectangle {
@@ -100,7 +100,7 @@ Page {
         anchors.top: view3dContainer.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.margins: 20
-        font.pointSize: 14
+        font.pointSize: 13
         font.bold: true
     }
 

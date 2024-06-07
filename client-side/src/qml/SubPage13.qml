@@ -11,7 +11,7 @@ Page {
         text: headerText
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
-        font.pointSize: 20
+        font.pointSize: 15
     }
 
     Label {
@@ -19,7 +19,7 @@ Page {
         text: subHeaderText
         anchors.top: headerLabel.bottom
         anchors.horizontalCenter: parent.horizontalCenter
-        font.pointSize: 16
+        font.pointSize: 12
     }
 
     ScrollView {
@@ -32,7 +32,7 @@ Page {
         TextArea {
             readOnly: true
             text: "lorem ipsum dolor sit amet ".repeat(1000)
-            font.pointSize: 12
+            font.pointSize: 10
             wrapMode: Text.WordWrap
         }
     }
