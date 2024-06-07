@@ -64,12 +64,12 @@ Page {
                     anchors.horizontalCenter: parent.horizontalCenter
                     Label {
                         text: "Last Time:"
-                        font.pointSize: 13
+                        font.pointSize: 11
                         anchors.margins: 10
                     }
                     Label {
                         text: "0.00 s"
-                        font.pointSize: 13
+                        font.pointSize: 11
                         anchors.margins: 10
                     }
                 }
@@ -85,7 +85,7 @@ Page {
                         anchors.fill: parent
                         readOnly: true
                         width: parent.width
-                        font.pointSize: 10
+                        font.pointSize: 8
                         font.family: "Courier"
                         font.bold: true
                         color: "white"
@@ -198,12 +198,12 @@ Page {
                     anchors.horizontalCenter: parent.horizontalCenter
                     Label {
                         text: "Last Time:"
-                        font.pointSize: 13
+                        font.pointSize: 11
                         anchors.margins: 10
                     }
                     Label {
                         text: "0.00 s"
-                        font.pointSize: 13
+                        font.pointSize: 11
                         anchors.margins: 10
                     }
                 }
@@ -219,7 +219,7 @@ Page {
                         anchors.fill: parent
                         readOnly: true
                         width: parent.width
-                        font.pointSize: 10
+                        font.pointSize: 8
                         font.family: "Courier"
                         font.bold: true
                         color: "white"
@@ -267,12 +267,12 @@ Page {
                     anchors.horizontalCenter: parent.horizontalCenter
                     Label {
                         text: "Last Time:"
-                        font.pointSize: 13
+                        font.pointSize: 11
                         anchors.margins: 10
                     }
                     Label {
                         text: "0.00 s"
-                        font.pointSize: 13
+                        font.pointSize: 11
                         anchors.margins: 10
                     }
                 }
@@ -289,7 +289,7 @@ Page {
                         anchors.fill: parent
                         readOnly: true
                         width: parent.width
-                        font.pointSize: 10
+                        font.pointSize: 8
                         font.family: "Courier"
                         font.bold: true
                         color: "white"

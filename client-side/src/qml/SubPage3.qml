@@ -16,13 +16,13 @@ Page {
         Label {
             id: headerLabel
             text: headerText
-            font.pointSize: 24 // Increase the font size to 24
+            font.pointSize: 15
             Layout.alignment: Qt.AlignHCenter
         }
 
         Label {
             text: subHeaderText
-            font.pointSize: 15 // Increase the font size to 20
+            font.pointSize: 12
             Layout.alignment: Qt.AlignHCenter
         }
 
@@ -32,29 +32,41 @@ Page {
 
             ColumnLayout {
 
-                ListView {
-                    id: listViewQML
-                    width: 200; height: 300
-                    model: ListModel {
-                        ListElement { text: "QML Item 1" }
-                        ListElement { text: "QML Item 2" }
-                        ListElement { text: "QML Item 3" }
-                    }
-                    delegate: Text {
-                        text: model.text
-                        font.pointSize: 12
-                    }
-                }
+                width: parent.width / 3
 
                 Button {
                     text: "Add Item to QML ListView"
-                    width: listViewQML.width
+                    Layout.fillWidth: true
                     onClicked: listViewQML.model.append({"text": "QML Item " + (listViewQML.model.count + 1)})
                 }
 
+                Rectangle {
+                    Layout.fillWidth: true
+                    height: 200
+                    border.color: "black"
+                    border.width: 1
+                    clip: true
+
+                    ListView {
+                        id: listViewQML
+                        anchors.fill: parent
+                        anchors.margins: 4
+                        model: ListModel {
+                            ListElement { text: "QML Item 1" }
+                            ListElement { text: "QML Item 2" }
+                            ListElement { text: "QML Item 3" }
+                        }
+                        delegate: Text {
+                            text: model.text
+                            font.pointSize: 10
+                        }
+                    }
+                }
+
                 Button {
+                    id: removeItemFromQMLListButton
                     text: "Remove Item from QML ListView"
-                    width: listViewQML.width
+                    Layout.fillWidth: true
                     onClicked: {
                         if (listViewQML.model.count > 0) {
                             listViewQML.model.remove(0)
@@ -64,27 +76,39 @@ Page {
             }
             
             ColumnLayout {
-                ListView {
-                    id: listViewCpp
-                    width: 200; height: 300
-                    model: Backend.listModel
-                    delegate: Text { 
-                        text: model.display 
-                        font.pointSize: 12
-                    }
-                }
+
+                width: parent.width / 3
 
                 Button {
                     id: addItemFromCppListButton
                     text: "Add Item to C++ ListView"
-                    width: listViewCpp.width
+                    Layout.fillWidth: true
                     onClicked: Backend.listModel.addItem("C++ Item " + (listViewCpp.count + 1))
+                }
+
+                Rectangle {
+                    Layout.fillWidth: true
+                    height: 200
+                    border.color: "black"
+                    border.width: 1
+                    clip: true
+
+                    ListView {
+                        id: listViewCpp
+                        anchors.fill: parent
+                        anchors.margins: 4
+                        model: Backend.listModel
+                        delegate: Text { 
+                            text: model.display 
+                            font.pointSize: 10
+                        }
+                    }
                 }
 
                 Button {
                     id: removeItemFromCppListButton
                     text: "Remove Item from C++ ListView"
-                    width: listViewCpp.width
+                    Layout.fillWidth: true
                     onClicked: {
                         if (listViewCpp.count > 0) {
                             Backend.listModel.removeItem(0)

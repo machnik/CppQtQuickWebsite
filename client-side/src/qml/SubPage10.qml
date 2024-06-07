@@ -23,6 +23,20 @@ Page {
         font.pointSize: 12
     }
 
+    ComboBox {
+        id: styleComboBox
+        model: [
+            "adventurer", "avataaars", "bottts", "croodles",
+            "fun-emoji", "icons", "identicon", "lorelei",
+            "micah", "miniavs", "notionists", "open-peeps",
+            "personas", "shapes", "rings", "thumbs"
+        ]
+        currentIndex: 0
+        anchors.bottom: avatarArea.top
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.margins: 10
+    }
+
     Rectangle {
         id: avatarArea
         width: 200; height: 200
@@ -35,23 +49,9 @@ Page {
         }
     }
 
-    ComboBox {
-        id: styleComboBox
-        model: [
-            "adventurer", "avataaars", "bottts", "croodles",
-            "fun-emoji", "icons", "identicon", "lorelei",
-            "micah", "miniavs", "notionists", "open-peeps",
-            "personas", "shapes", "rings", "thumbs"
-        ]
-        currentIndex: 0
-        anchors.top: avatarArea.bottom
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.margins: 10
-    }
-
     Button {
         text: "New Avatar"
-        anchors.top: styleComboBox.bottom
+        anchors.top: avatarArea.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.margins: 10
         onClicked: {

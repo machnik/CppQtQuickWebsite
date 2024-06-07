@@ -31,8 +31,8 @@ Page {
     Text {
         id: playMusic
         text: "Click to Play Music";
-        anchors.centerIn: parent;
-        width: 200; height: 60;
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: stopMusic.top
         font.pointSize: 13;
 
         MouseArea {
@@ -48,9 +48,7 @@ Page {
     Text {
         id: stopMusic
         text: "Click to Stop Music";
-        anchors.top: playMusic.bottom;
-        anchors.horizontalCenter: parent.horizontalCenter;
-        width: 200; height: 60;
+        anchors.centerIn: parent;
         font.pointSize: 13;
         color: "gray";
 

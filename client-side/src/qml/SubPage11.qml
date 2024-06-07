@@ -35,7 +35,7 @@ Page {
 
         id: view3dContainer
         anchors.centerIn: parent
-        width: 400; height: 400
+        width: 500; height: 320
 
         color: "black"
 
@@ -109,8 +109,8 @@ Page {
         text: "W: Forward, S: Backward, A: Left, D: Right, R: Up, F: Down, Hold Mouse: Look Around"
         anchors.top: view3dContainer.bottom
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.margins: 20
-        font.pointSize: 13
+        anchors.margins: 10
+        font.pointSize: 11
         font.bold: true
     }
 
