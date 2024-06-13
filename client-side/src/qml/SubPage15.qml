@@ -4,7 +4,7 @@ import QtQuick.Controls
 Page {
 
     readonly property string headerText: "SubPage 15"
-    readonly property string subHeaderText: "Input form."
+    readonly property string subHeaderText: "JavaScript interpreter."
 
     Label {
         id: headerLabel
