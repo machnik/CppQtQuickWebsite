@@ -53,7 +53,9 @@ Page {
         id: startButton
         text: WebSocketClient.isClientRunning ? "STOP" : "START"
         checkable: true
-        anchors.centerIn: parent
+        anchors.bottom: messageToSendField.top
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.margins: 10
         onClicked: {
             if (WebSocketClient.isClientRunning) {
                 WebSocketClient.stopClient();
@@ -68,8 +70,7 @@ Page {
         id: messageToSendField
         placeholderText: "(enter message to send here)"
         width: 250
-        anchors.top: startButton.bottom
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.centerIn: parent
         anchors.margins: 10
     }
 

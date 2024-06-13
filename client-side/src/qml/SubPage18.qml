@@ -52,7 +52,9 @@ Page {
         id: startButton
         text: WebSocketServer.isServerRunning ? "STOP" : "START"
         checkable: true
-        anchors.centerIn: parent
+        anchors.bottom: bouncedMessageField.top
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.margins: 10
         onClicked: {
             if (WebSocketServer.isServerRunning) {
                 WebSocketServer.stopServer();
@@ -68,8 +70,7 @@ Page {
         placeholderText: "(last bounced message)"
         readOnly: true
         width: 250
-        anchors.top: startButton.bottom
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.centerIn: parent
         anchors.margins: 10
     }
 
