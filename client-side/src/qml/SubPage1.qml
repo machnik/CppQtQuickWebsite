@@ -1,13 +1,11 @@
 import QtQuick
 import QtQuick.Controls
 
-import CppQtQuickWebsite.CppObjects
-
 Page {
 
-    readonly property string headerText: "Subpage 1"
-    readonly property string subHeaderText: "C++ class is used to implement the counters."
-    
+    readonly property string headerText: "SubPage 1"
+    readonly property string subHeaderText: "Static webpage with much scrollable text."
+
     Label {
         id: headerLabel
         text: headerText
@@ -17,54 +15,30 @@ Page {
     }
 
     Label {
-
+        id: titleLabel
         text: subHeaderText
         anchors.top: headerLabel.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         font.pointSize: 12
     }
 
-    Counter {
-        id: counter1
-    }
+    ScrollView {
+        anchors.top: titleLabel.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: toMainPageButton.top
+        anchors.margins: 10
 
-    Counter {
-        id: counter2
-    }
-
-    Label {
-        id: countLabel
-        text: "Count 1: [" + counter1.count + "]\nCount 2: [" + counter2.count + "]"
-        anchors.centerIn: parent
-        font.pixelSize: 18
-        font.bold: true
-    }
-
-    Rectangle {
-        width: incrementButton1.width + incrementButton2.width
-        anchors.top: countLabel.bottom
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.topMargin: 20
-
-        Button {
-            id: incrementButton1
-            text: "Increment Count 1"
-            anchors.top: parent.top
-            anchors.margins: 15
-            onClicked: counter1.count++
-        }
-
-        Button {
-            id: incrementButton2
-            text: "Increment Count 2"
-            anchors.top: parent.top
-            anchors.left: incrementButton1.right
-            anchors.margins: 15
-            onClicked: counter2.count++
+        TextArea {
+            readOnly: true
+            text: "lorem ipsum dolor sit amet ".repeat(1000)
+            font.pointSize: 10
+            wrapMode: Text.WordWrap
         }
     }
 
     ToMainPageButton {
+        id: toMainPageButton
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
     }

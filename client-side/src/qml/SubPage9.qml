@@ -1,12 +1,13 @@
 import QtQuick
 import QtQuick.Controls
+
+import CppQtQuickWebsite.CppObjects
+
 Page {
 
-    readonly property string headerText: "SubPage 9"
-    readonly property string subHeaderText: "Drag and Drop"
-
-    readonly property int drawingBorderWidth: 3
-
+    readonly property string headerText: "Subpage 9"
+    readonly property string subHeaderText: "C++ class is used to implement the counters."
+    
     Label {
         id: headerLabel
         text: headerText
@@ -16,70 +17,54 @@ Page {
     }
 
     Label {
+
         text: subHeaderText
         anchors.top: headerLabel.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         font.pointSize: 12
     }
 
-    Rectangle {
-        id: draggingArea
-        width: 550; height: 350
+    Counter {
+        id: counter1
+    }
+
+    Counter {
+        id: counter2
+    }
+
+    Label {
+        id: countLabel
+        text: "Count 1: [" + counter1.count + "]\nCount 2: [" + counter2.count + "]"
         anchors.centerIn: parent
+        font.pixelSize: 18
+        font.bold: true
+    }
 
-        color: "lightyellow"
-        border.color: "orange"
-        border.width: drawingBorderWidth
+    Rectangle {
+        width: incrementButton1.width + incrementButton2.width
+        anchors.top: countLabel.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.topMargin: 20
 
-        Label {
-            text: "... AND DROP!"
-            anchors.centerIn: parent
-            font {
-                pointSize: 15
-                weight: Font.Bold
-            }
-            color: "orange"
+        Button {
+            id: incrementButton1
+            text: "Increment Count 1"
+            anchors.top: parent.top
+            anchors.margins: 15
+            onClicked: counter1.count++
         }
 
-        Rectangle {
-            id: draggableRectangle
-            width: 50; height: 50
-            color: "yellow"
-            border.color: "red"
-            border.width: drawingBorderWidth
-            x: 100; y: 100
-
-            Label {
-                text: "DRAG"
-                anchors.centerIn: parent
-                font {
-                    pointSize: 10
-                    weight: Font.Bold
-                }
-                color: "red"
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                drag.target: parent
-                drag.axis: Drag.XAndYAxis
-                onReleased: {
-                    // Constrain movement within the dragging area
-                    parent.x = Math.max(
-                        drawingBorderWidth,
-                        Math.min(parent.x, draggingArea.width - parent.width - drawingBorderWidth)
-                    );
-                    parent.y = Math.max(
-                        drawingBorderWidth,
-                        Math.min(parent.y, draggingArea.height - parent.height - drawingBorderWidth)
-                    );
-                }
-            }
+        Button {
+            id: incrementButton2
+            text: "Increment Count 2"
+            anchors.top: parent.top
+            anchors.left: incrementButton1.right
+            anchors.margins: 15
+            onClicked: counter2.count++
         }
     }
 
     ToMainPageButton {
-        id: toMainPageButton
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
     }

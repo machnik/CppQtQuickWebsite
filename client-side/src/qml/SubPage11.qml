@@ -1,117 +1,130 @@
 import QtQuick
 import QtQuick.Controls
-import QtQuick3D
-import QtQuick3D.Helpers
-import QtQuick3D.Physics
-import QtQuick3D.Physics.Helpers
+import QtQuick.Layouts
+
+import CppQtQuickWebsite.CppObjects
 
 Page {
 
     readonly property string headerText: "SubPage 11"
-    readonly property string subHeaderText: "Qt Quick 3D Physics"
+    readonly property string subHeaderText: "QML ListViews with QML and C++ models."
 
-    Label {
-        id: headerLabel
-        text: headerText
-        anchors.top: parent.top
-        anchors.horizontalCenter: parent.horizontalCenter
-        font.pointSize: 15
-    }
-
-    Label {
-        text: subHeaderText
-        anchors.top: headerLabel.bottom
-        anchors.horizontalCenter: parent.horizontalCenter
-        font.pointSize: 12
-    }
-
-    PhysicsWorld {
-        scene: view3d.scene
-        gravity: Qt.vector3d(0, -9.81, 0)
-        enableCCD: true
-    }
-
-    Rectangle {
-
-        id: view3dContainer
+    ColumnLayout {
         anchors.centerIn: parent
-        width: 500; height: 320
+        anchors.fill: parent
 
-        color: "black"
+        Label {
+            id: headerLabel
+            text: headerText
+            font.pointSize: 15
+            Layout.alignment: Qt.AlignHCenter
+        }
 
-        View3D {
-            id: view3d
-            anchors.fill: parent
-            anchors.margins: 3
+        Label {
+            text: subHeaderText
+            font.pointSize: 12
+            Layout.alignment: Qt.AlignHCenter
+        }
 
-            environment: SceneEnvironment {
-                clearColor: "lightgray"
-                backgroundMode: SceneEnvironment.Color
-            }
+        RowLayout {
+            Layout.alignment: Qt.AlignHCenter
+            Layout.margins: 40
 
-            PerspectiveCamera {
-                id: camera
-                position: Qt.vector3d(0, 200, 300)
-                eulerRotation.x: -30
-            }
+            ColumnLayout {
 
-            DirectionalLight {
-                eulerRotation.x: -30
-                eulerRotation.y: -70
-                castsShadow: true
-            }
+                width: parent.width / 3
 
-            StaticRigidBody {
-                position: Qt.vector3d(0, -200, 0)
-                collisionShapes: BoxShape {
-                    extents: Qt.vector3d(1000, 1, 1000)
-                }
-                physicsMaterial: PhysicsMaterial {
-                    staticFriction: 0.0
-                    dynamicFriction: 0.0
-                    restitution: 1.0
+                Button {
+                    text: "Add Item to QML ListView"
+                    Layout.fillWidth: true
+                    onClicked: listViewQML.model.append({"text": "QML Item " + (listViewQML.model.count + 1)})
                 }
 
-                Model {
-                    source: "#Cylinder"
-                    scale: Qt.vector3d(2, 0.1, 1)
-                    materials: [ DefaultMaterial { diffuseColor: "orange" } ]
-                    castsShadows: false
-                    receivesShadows: true
+                Rectangle {
+                    Layout.fillWidth: true
+                    height: 200
+                    border.color: "black"
+                    border.width: 1
+                    clip: true
+
+                    ListView {
+                        id: listViewQML
+                        anchors.fill: parent
+                        anchors.margins: 4
+                        model: ListModel {
+                            ListElement { text: "QML Item 1" }
+                            ListElement { text: "QML Item 2" }
+                            ListElement { text: "QML Item 3" }
+                        }
+                        delegate: Text {
+                            text: model.text
+                            font.pointSize: 10
+                        }
+                    }
+                }
+
+                Button {
+                    id: removeItemFromQMLListButton
+                    text: "Remove Item from QML ListView"
+                    Layout.fillWidth: true
+                    onClicked: {
+                        if (listViewQML.model.count > 0) {
+                            listViewQML.model.remove(0)
+                        }
+                    }
                 }
             }
+            
+            ColumnLayout {
 
-            DynamicRigidBody {
-                position: Qt.vector3d(0, 150, 0)
-                collisionShapes: SphereShape {}
-                physicsMaterial: PhysicsMaterial {
-                    staticFriction: 0.0
-                    dynamicFriction: 0.0
-                    restitution: 1.0
+                width: parent.width / 3
+
+                Button {
+                    id: addItemFromCppListButton
+                    text: "Add Item to C++ ListView"
+                    Layout.fillWidth: true
+                    onClicked: Backend.listModel.addItem("C++ Item " + (listViewCpp.count + 1))
                 }
 
-                Model {
-                    source: "#Sphere"
-                    materials: [ DefaultMaterial { diffuseColor: "green" } ]
-                    castsShadows: true
-                    receivesShadows: false
+                Rectangle {
+                    Layout.fillWidth: true
+                    height: 200
+                    border.color: "black"
+                    border.width: 1
+                    clip: true
+
+                    ListView {
+                        id: listViewCpp
+                        anchors.fill: parent
+                        anchors.margins: 4
+                        model: Backend.listModel
+                        delegate: Text { 
+                            text: model.display 
+                            font.pointSize: 10
+                        }
+                    }
+                }
+
+                Button {
+                    id: removeItemFromCppListButton
+                    text: "Remove Item from C++ ListView"
+                    Layout.fillWidth: true
+                    onClicked: {
+                        if (listViewCpp.count > 0) {
+                            Backend.listModel.removeItem(0)
+                        }
+                    }
                 }
             }
         }
 
-        WasdController {
-            controlledObject: camera
-        }
-    }
+        Component.onCompleted: {
+            listViewQML.model.append({"text": "QML Item 4"})
+            listViewQML.model.append({"text": "QML Item 5"})
 
-    Label {
-        id: wasdControlLabel
-        text: "W: Forward, S: Backward, A: Left, D: Right, R: Up, F: Down, Hold Mouse: Look Around"
-        anchors.top: view3dContainer.bottom
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.margins: 10
-        font.pointSize: 11
-        font.bold: true
+            Backend.listModel.addItem("C++ Item 4");
+            Backend.listModel.addItem("C++ Item 5");
+        }
     }
 
     ToMainPageButton {

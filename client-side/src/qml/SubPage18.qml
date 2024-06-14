@@ -1,27 +1,12 @@
 import QtQuick
 import QtQuick.Controls
 
-import CppQtQuickWebsite.CppObjects
-
 Page {
 
     readonly property string headerText: "SubPage 18"
-    readonly property string subHeaderText: "WebSocket Server."
+    readonly property string subHeaderText: "Avatar generator using DiceBear API."
 
-    function resetTextFields() {
-        bouncedMessageField.text = "";
-        errorField.text = "";
-    }
-
-    Connections {
-        target: WebSocketServer
-        function onBouncedMessage(message) {
-            bouncedMessageField.text = message;
-        }
-        function onErrorOccurred(error) {
-            errorField.text = error;
-        }
-    }
+    readonly property string avatarPlaceholder: "qrc:/resources/images/avatar_placeholder.png"
 
     Label {
         id: headerLabel
@@ -38,50 +23,55 @@ Page {
         font.pointSize: 12
     }
 
-    TextField {
-        id: portField
-        placeholderText: "(enter port number here)"
-        readOnly: WebSocketServer.isServerRunning
-        width: 250
-        anchors.bottom: startButton.top
+    ComboBox {
+        id: styleComboBox
+        model: [
+            "adventurer", "avataaars", "bottts", "croodles",
+            "fun-emoji", "icons", "identicon", "lorelei",
+            "micah", "miniavs", "notionists", "open-peeps",
+            "personas", "shapes", "rings", "thumbs"
+        ]
+        currentIndex: 0
+        anchors.bottom: avatarArea.top
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.margins: 10
     }
 
-    Button {
-        id: startButton
-        text: WebSocketServer.isServerRunning ? "STOP" : "START"
-        checkable: true
-        anchors.bottom: bouncedMessageField.top
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.margins: 10
-        onClicked: {
-            if (WebSocketServer.isServerRunning) {
-                WebSocketServer.stopServer();
-                resetTextFields();
-            } else {
-                WebSocketServer.startServer(parseInt(portField.text));
-            }
+    Rectangle {
+        id: avatarArea
+        width: 200; height: 200
+        anchors.centerIn: parent
+
+        Image {
+            id: avatarImage
+            anchors.fill: parent
+            source: avatarPlaceholder
         }
     }
 
-    TextField {
-        id: bouncedMessageField
-        placeholderText: "(last bounced message)"
-        readOnly: true
-        width: 250
-        anchors.centerIn: parent
-        anchors.margins: 10
-    }
-
-    TextField {
-        id: errorField
-        placeholderText: "(last error)"
-        readOnly: true
-        width: 250
-        anchors.top: bouncedMessageField.bottom
+    Button {
+        text: "New Avatar"
+        anchors.top: avatarArea.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.margins: 10
+        onClicked: {
+            var xhr = new XMLHttpRequest();
+            var url =
+                "https://api.dicebear.com/8.x/" + styleComboBox.currentText +
+                "/svg?seed=" + Math.random();
+            xhr.open('GET', url, true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        avatarImage.source = url;
+                    } else {
+                        console.log("Error: " + xhr.status);
+                        avatarImage.source = avatarPlaceholder;
+                    }
+                }
+            }
+            xhr.send();
+        }
     }
 
     ToMainPageButton {

@@ -1,176 +1,86 @@
 import QtQuick
 import QtQuick.Controls
-import QtQuick.Layouts
-
 Page {
+
     readonly property string headerText: "SubPage 5"
-    readonly property string subHeaderText: "UI Widget Gallery"
+    readonly property string subHeaderText: "Drag and Drop"
 
-    ColumnLayout {
-        anchors.horizontalCenter: parent.horizontalCenter
+    readonly property int drawingBorderWidth: 3
+
+    Label {
+        id: headerLabel
+        text: headerText
         anchors.top: parent.top
-        anchors.bottom: parent.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        font.pointSize: 15
+    }
 
-        spacing: 10
+    Label {
+        text: subHeaderText
+        anchors.top: headerLabel.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        font.pointSize: 12
+    }
+
+    Rectangle {
+        id: draggingArea
+        width: 550; height: 350
+        anchors.centerIn: parent
+
+        color: "lightyellow"
+        border.color: "orange"
+        border.width: drawingBorderWidth
 
         Label {
-            id: headerLabel
-            text: headerText
-            font.pointSize: 15
-            Layout.alignment: Qt.AlignHCenter
+            text: "... AND DROP!"
+            anchors.centerIn: parent
+            font {
+                pointSize: 15
+                weight: Font.Bold
+            }
+            color: "orange"
         }
 
-        Label {
-            text: subHeaderText
-            font.pointSize: 12
-            Layout.alignment: Qt.AlignHCenter
-        }
+        Rectangle {
+            id: draggableRectangle
+            width: 50; height: 50
+            color: "yellow"
+            border.color: "red"
+            border.width: drawingBorderWidth
+            x: 100; y: 100
 
-        Item {
-            Layout.preferredHeight: 20
-        }
-
-        ScrollView {
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-
-            RowLayout {
-                Layout.fillWidth: true
-                spacing: 40
-
-                ColumnLayout {
-                    spacing: 20
-
-                    Button {
-                        text: "Button"
-                    }
-
-                    Button {
-                        text: "Checkable Button"
-                        checkable: true
-                    }
-
-                    CheckBox {
-                        text: "CheckBox 1"
-                        checked: true
-                    }
-
-                    CheckBox {
-                        text: "CheckBox 2"
-                        checked: false
-                    }
-
-                    ComboBox {
-                        model: ["ComboBox", "Item 1", "Item 2", "Item 3"]
-                    }
-
-                    Dial {
-                        from: 0
-                        to: 100
-                        value: 75
-                    }
+            Label {
+                text: "DRAG"
+                anchors.centerIn: parent
+                font {
+                    pointSize: 10
+                    weight: Font.Bold
                 }
+                color: "red"
+            }
 
-                ColumnLayout {
-                    spacing: 20
-
-                    ProgressBar {
-                        from: 0
-                        to: 100
-                        value: 25
-                    }
-
-                    BusyIndicator {
-                        running: true
-                    }
-
-                    Rectangle {
-                        border.width: 1
-                        border.color: "black"
-                        radius: 4
-                        color: "lightblue"
-
-                        Layout.fillWidth: true
-                        Layout.fillHeight: true
-
-                        GridLayout {
-                            columns: 1
-
-                            RadioButton {
-                                id: darkBlueRB
-                                text: "Dark Blue"
-                                checked: true
-                                contentItem: Text {
-                                    text: darkBlueRB.text
-                                    color: "#00008B"
-                                    leftPadding: darkBlueRB.indicator.width + darkGreenRB.spacing
-                                    verticalAlignment: Text.AlignVCenter
-                                }
-                            }
-
-                            RadioButton {
-                                id: darkRedRB
-                                text: "Dark Red"
-                                checked: false
-                                contentItem: Text {
-                                    text: darkRedRB.text
-                                    color: "#8B0000"
-                                    leftPadding: darkRedRB.indicator.width + darkGreenRB.spacing
-                                    verticalAlignment: Text.AlignVCenter
-                                }
-                            }
-
-                            RadioButton {
-                                id: darkGreenRB
-                                text: "Dark Green"
-                                checked: false
-                                contentItem: Text {
-                                    text: darkGreenRB.text
-                                    color: "#006400"
-                                    leftPadding: darkGreenRB.indicator.width + darkGreenRB.spacing
-                                    verticalAlignment: Text.AlignVCenter
-                                }
-                            }
-                        }
-                    }
-
-                    Slider {
-                        from: 0
-                        to: 100
-                        value: 35
-                    }
-
-                    SpinBox {
-                        from: 0
-                        to: 100
-                        value: 80
-                    }
-
-                    Switch {
-                        text: "Switch"
-                    }
-                }
-
-                ColumnLayout {
-                    spacing: 20
-
-                    TextField {
-                        placeholderText: "TextField"
-                    }
-
-                    TextArea {
-                        placeholderText: "TextArea"
-                    }
-
-                    Tumbler {
-                        model: ["A", "B", "C", "D", "E", "F", "G", "H"]
-                    }
+            MouseArea {
+                anchors.fill: parent
+                drag.target: parent
+                drag.axis: Drag.XAndYAxis
+                onReleased: {
+                    // Constrain movement within the dragging area
+                    parent.x = Math.max(
+                        drawingBorderWidth,
+                        Math.min(parent.x, draggingArea.width - parent.width - drawingBorderWidth)
+                    );
+                    parent.y = Math.max(
+                        drawingBorderWidth,
+                        Math.min(parent.y, draggingArea.height - parent.height - drawingBorderWidth)
+                    );
                 }
             }
         }
+    }
 
-        ToMainPageButton {
-            Layout.alignment: Qt.AlignHCenter
-        }
+    ToMainPageButton {
+        id: toMainPageButton
+        anchors.bottom: parent.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
     }
 }

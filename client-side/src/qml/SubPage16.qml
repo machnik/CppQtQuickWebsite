@@ -1,10 +1,14 @@
 import QtQuick
 import QtQuick.Controls
+import QtQuick3D
+import QtQuick3D.Helpers
+import QtQuick3D.Physics
+import QtQuick3D.Physics.Helpers
 
 Page {
 
     readonly property string headerText: "SubPage 16"
-    readonly property string subHeaderText: "2D animation."
+    readonly property string subHeaderText: "Qt Quick 3D Physics"
 
     Label {
         id: headerLabel
@@ -21,111 +25,93 @@ Page {
         font.pointSize: 12
     }
 
-    Item {
-        id: animationCanvas
-        width: 400; height: 300
+    PhysicsWorld {
+        scene: view3d.scene
+        gravity: Qt.vector3d(0, -9.81, 0)
+        enableCCD: true
+    }
+
+    Rectangle {
+
+        id: view3dContainer
         anchors.centerIn: parent
+        width: 500; height: 320
 
-        Rectangle {
-            id: blueSky
+        color: "black"
 
-            anchors {
-                left: parent.left;
-                top: parent.top;
-                right: parent.right;
-                bottom: parent.verticalCenter
+        View3D {
+            id: view3d
+            anchors.fill: parent
+            anchors.margins: 3
+
+            environment: SceneEnvironment {
+                clearColor: "lightgray"
+                backgroundMode: SceneEnvironment.Color
             }
-            gradient: Gradient {
-                GradientStop {
-                    position: 0.0;
-                    color: "#1e1eaa"
+
+            PerspectiveCamera {
+                id: camera
+                position: Qt.vector3d(0, 200, 300)
+                eulerRotation.x: -30
+            }
+
+            DirectionalLight {
+                eulerRotation.x: -30
+                eulerRotation.y: -70
+                castsShadow: true
+            }
+
+            StaticRigidBody {
+                position: Qt.vector3d(0, -200, 0)
+                collisionShapes: BoxShape {
+                    extents: Qt.vector3d(1000, 1, 1000)
                 }
-                GradientStop {
-                    position: 1.0;
-                    color: "#3ac4ff"
+                physicsMaterial: PhysicsMaterial {
+                    staticFriction: 0.0
+                    dynamicFriction: 0.0
+                    restitution: 1.0
+                }
+
+                Model {
+                    source: "#Cylinder"
+                    scale: Qt.vector3d(2, 0.1, 1)
+                    materials: [ DefaultMaterial { diffuseColor: "orange" } ]
+                    castsShadows: false
+                    receivesShadows: true
                 }
             }
-        }
 
-        Rectangle {
-            id: greenGrass
-
-            anchors {
-                left: parent.left;
-                top: parent.verticalCenter;
-                right: parent.right;
-                bottom: parent.bottom
-            }
-            gradient: Gradient {
-                GradientStop {
-                    position: 0.0;
-                    color: "#a0e65a"
-                }
-                GradientStop {
-                    position: 1.0;
-                    color: "#00a03d"
-                }
-            }
-        }
-
-        Rectangle {
-            id: greyShadow
-
-            color: "#333333"
-
-            anchors.horizontalCenter: parent.horizontalCenter
-
-            y: orangeBall.minHeight + ( orangeBall.height / 1.5 )
-
-            radius: orangeBall.radius * 1.5 
-            width: orangeBall.width * 1.25;
-            height: orangeBall.height / 1.5
-
-            scale: orangeBall.y / orangeBall.minHeight
-        }
-
-        Rectangle {
-            id: orangeBall
-
-            color: "#FA8500"
-
-            readonly property int maxHeight: animationCanvas.height * 0.15
-            readonly property int minHeight: animationCanvas.height * 0.75
-
-            radius: 20
-            width: radius * 2;
-            height: radius * 2
-
-            y: minHeight
-
-            anchors.horizontalCenter: parent.horizontalCenter
-
-            SequentialAnimation on y {
-
-                loops: Animation.Infinite
-
-                NumberAnimation {
-                    // Raise...
-                    from: orangeBall.minHeight;
-                    to: orangeBall.maxHeight
-                    easing.type: Easing.OutExpo;
-                    duration: 500
+            DynamicRigidBody {
+                position: Qt.vector3d(0, 150, 0)
+                collisionShapes: SphereShape {}
+                physicsMaterial: PhysicsMaterial {
+                    staticFriction: 0.0
+                    dynamicFriction: 0.0
+                    restitution: 1.0
                 }
 
-                NumberAnimation {
-                    // ...and fall.
-                    from: orangeBall.maxHeight;
-                    to: orangeBall.minHeight
-                    easing.type: Easing.OutBounce;
-                    duration: 3000
-                }
-
-                PauseAnimation {
-                    // Wait.
-                    duration: 500
+                Model {
+                    source: "#Sphere"
+                    materials: [ DefaultMaterial { diffuseColor: "green" } ]
+                    castsShadows: true
+                    receivesShadows: false
                 }
             }
         }
+
+        WasdController {
+            controlledObject: camera
+        }
+    }
+
+    Label {
+        id: wasdControlLabel
+        text: "W: Forward, S: Backward, A: Left, D: Right, R: Up, F: Down, Hold Mouse: Look Around"
+        anchors.top: view3dContainer.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.margins: 10
+        font.pointSize: 11
+        font.bold: true
     }
 
     ToMainPageButton {

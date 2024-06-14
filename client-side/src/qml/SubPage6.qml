@@ -1,17 +1,10 @@
 import QtQuick
 import QtQuick.Controls
-import QtMultimedia
 
 Page {
-    
-    readonly property string headerText: "SubPage 6"
-    readonly property string subHeaderText: "Music Playback"
 
-    MediaPlayer {
-        id: mediaPlayer
-        source: "qrc:/resources/audio/sound.wav"
-        audioOutput: AudioOutput {}
-    }
+    readonly property string headerText: "SubPage 6"
+    readonly property string subHeaderText: "JavaScript interpreter."
 
     Label {
         id: headerLabel
@@ -28,38 +21,9 @@ Page {
         font.pointSize: 12
     }
 
-    Text {
-        id: playMusic
-        text: "Click to Play Music";
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: stopMusic.top
-        font.pointSize: 13;
-
-        MouseArea {
-            anchors.fill: parent
-            onPressed:  {
-                playMusic.color = "gray";
-                stopMusic.color = "black";
-                mediaPlayer.play();
-            }
-        }
-    }
-
-    Text {
-        id: stopMusic
-        text: "Click to Stop Music";
-        anchors.centerIn: parent;
-        font.pointSize: 13;
-        color: "gray";
-
-        MouseArea {
-            anchors.fill: parent
-            onPressed:  {
-                playMusic.color = "black"
-                stopMusic.color = "gray"
-                mediaPlayer.stop()
-            }
-        }
+    Label {
+        text: "..."
+        anchors.centerIn: parent
     }
 
     ToMainPageButton {

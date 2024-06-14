@@ -1,12 +1,41 @@
 import QtQuick
 import QtQuick.Controls
-import QtQuick3D
-import QtQuick3D.Helpers
+import QtQuick.LocalStorage
 
 Page {
 
     readonly property string headerText: "SubPage 7"
-    readonly property string subHeaderText: "3D View"
+    readonly property string subHeaderText: "Local persistent storage."
+
+    function getDatabase() {
+        return LocalStorage.openDatabaseSync("ExampleDatabase", "1.0", "Example Database", 1000000);
+    }
+
+    function saveSetting(key, value) {
+        var db = getDatabase();
+        db.transaction(function(tx) {
+            tx.executeSql('INSERT OR REPLACE INTO settings VALUES (?, ?)', [key, value]);
+        });
+    }
+
+    function loadSetting(key) {
+        var db = getDatabase();
+        var res = "";
+        db.transaction(function(tx) {
+            var rs = tx.executeSql('SELECT value FROM settings WHERE key=?', [key]);
+            if (rs.rows.length > 0) {
+                res = rs.rows.item(0).value;
+            }
+        });
+        return res;
+    }
+
+    Component.onCompleted: {
+        var db = getDatabase();
+        db.transaction(function(tx) {
+            tx.executeSql('CREATE TABLE IF NOT EXISTS settings(key TEXT UNIQUE, value TEXT)');
+        });
+    }
 
     Label {
         id: headerLabel
@@ -24,85 +53,68 @@ Page {
     }
 
     Rectangle {
+        id: inputArea
+        width: parent.width * 0.8
+        height: parent.height * 0.5
 
-        id: view3dContainer
         anchors.centerIn: parent
-        width: 500
-        height: 320
 
-        color: "black"
+        border.color: "black"
+        border.width: 1
 
-        View3D {
-            id: view3d
-            anchors.fill: parent
-            anchors.margins: 3
+        Rectangle {
+            width: keyField.width + valueField.width + 20
+            height: keyField.height
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.top: parent.top
+            anchors.topMargin: 20
 
-            environment: SceneEnvironment {
-                clearColor: "lightgray"
-                backgroundMode: SceneEnvironment.Color
-            }
-
-            PerspectiveCamera {
-                id: camera
-                position: Qt.vector3d(0, 200, 300)
-                eulerRotation.x: -30
-            }
-
-            DirectionalLight {
-                eulerRotation.x: -30
-                eulerRotation.y: -70
-                castsShadow: true
-            }
-
-            Model {
-                position: Qt.vector3d(0, -200, 0)
-                source: "#Cylinder"
-                scale: Qt.vector3d(2, 0.1, 1)
-                materials: [ DefaultMaterial { diffuseColor: "orange" } ]
-                castsShadows: false
-                receivesShadows: true
-            }
-
-            Model {
-                position: Qt.vector3d(0, 150, 0)
-                source: "#Sphere"
-
-                materials: [ DefaultMaterial { diffuseColor: "green" } ]
-
-                castsShadows: true
-                receivesShadows: false
-
-                SequentialAnimation on y {
-                    loops: Animation.Infinite
-                    NumberAnimation {
-                        duration: 2000
-                        to: -150
-                        from: 150
-                        easing.type: Easing.InQuad
+            TextField {
+                id: keyField
+                width: inputArea.width * 0.45
+                anchors.top: parent.top
+                anchors.left: parent.left
+                anchors.leftMargin: 5
+                anchors.rightMargin: 5
+                placeholderText: "Enter key and press ENTER to load entry"
+                onAccepted: {
+                    if (keyField.text === "") {
+                        resultLabel.text = "Key cannot be empty!";
+                        return;
                     }
-                    NumberAnimation {
-                        duration: 2000
-                        to: 150
-                        from: -150
-                        easing.type: Easing.OutQuad
-                    }
+                    var key = keyField.text;
+                    var value = loadSetting(key);
+                    resultLabel.text = "Loaded value for key: " + key + " is " + (value ? value : "<empty>");
+                }
+            }
+
+            TextField {
+                id: valueField
+                width: inputArea.width * 0.45
+                anchors.top: parent.top
+                anchors.right: parent.right
+                anchors.rightMargin: 5
+                anchors.leftMargin: 5
+                placeholderText: "Enter value and press ENTER to save entry"
+                onAccepted: {
+                    var key = keyField.text;
+                    var value = valueField.text;
+                    saveSetting(key, value);
+                    resultLabel.text = 
+                        "Saved value " + (value ? value : "<empty>") +
+                        " for key: " + (key ? key : "<empty>");
                 }
             }
         }
 
-        WasdController {
-            controlledObject: camera
+        Label {
+            id: resultLabel
+            width: parent.width * 0.8
+            anchors.centerIn: parent
+            font.family: "Monospace"
+            font.pointSize: 13
+            font.bold: true
         }
-    }
-
-    Label {
-        id: wasdControlLabel
-        text: "W: Forward, S: Backward, A: Left, D: Right, R: Up, F: Down, Hold Mouse: Look Around"
-        anchors.top: view3dContainer.bottom
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.margins: 10
-        font.pointSize: 11
-        font.bold: true
     }
 
     ToMainPageButton {

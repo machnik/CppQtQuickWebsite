@@ -1,23 +1,16 @@
 import QtQuick
 import QtQuick.Controls
-
-import CppQtQuickWebsite.CppObjects
+import QtMultimedia
 
 Page {
-
+    
     readonly property string headerText: "SubPage 17"
-    readonly property string subHeaderText: "Loading and saving/downloading a local file."
+    readonly property string subHeaderText: "Music Playback"
 
-    property string currentFileName: "untitled.txt"
-
-    Connections {
-        target: TextFileIO
-        function onCurrentFileNameChanged(fileName) {
-            currentFileName = fileName
-        }
-        function onFileContentReady(content) {
-            fileContentsTextArea.text = content
-        }
+    MediaPlayer {
+        id: mediaPlayer
+        source: "qrc:/resources/audio/sound.wav"
+        audioOutput: AudioOutput {}
     }
 
     Label {
@@ -35,63 +28,41 @@ Page {
         font.pointSize: 12
     }
 
-    Label {
-        text: "File name: " + currentFileName
-        anchors.bottom: fileContentsScrollView.top
+    Text {
+        id: playMusic
+        text: "Click to Play Music";
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottomMargin: 10
-        font.pointSize: 13
-    }
+        anchors.bottom: stopMusic.top
+        font.pointSize: 13;
 
-    ScrollView {
-        id: fileContentsScrollView
-        width: parent.width * 0.7
-        height: parent.height * 0.4
-        anchors.centerIn: parent
-
-        TextArea {
-            id: fileContentsTextArea
-            text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-            width: parent.width
-            height: parent.height
-            wrapMode: Text.WordWrap
-            font.pixelSize: 10
-        }
-    }
-
-    Rectangle {
-        width: openFileButton.width + saveFileButton.width + 30
-        height: openFileButton.height + 20
-        color: "lightyellow"
-        anchors.bottom: toMainPageButton.top
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottomMargin: 10
-
-        Button {
-            id: openFileButton
-            text: "Open Text File"
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.left: parent.left
-            anchors.leftMargin: 10
-            onClicked: {
-                TextFileIO.loadFileContent()
+        MouseArea {
+            anchors.fill: parent
+            onPressed:  {
+                playMusic.color = "gray";
+                stopMusic.color = "black";
+                mediaPlayer.play();
             }
         }
+    }
 
-        Button {
-            id: saveFileButton
-            text: "Save/Download Text File"
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.right: parent.right
-            anchors.rightMargin: 10
-            onClicked: {
-                TextFileIO.saveFileContent(currentFileName, fileContentsTextArea.text)
+    Text {
+        id: stopMusic
+        text: "Click to Stop Music";
+        anchors.centerIn: parent;
+        font.pointSize: 13;
+        color: "gray";
+
+        MouseArea {
+            anchors.fill: parent
+            onPressed:  {
+                playMusic.color = "black"
+                stopMusic.color = "gray"
+                mediaPlayer.stop()
             }
         }
     }
 
     ToMainPageButton {
-        id: toMainPageButton
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
     }

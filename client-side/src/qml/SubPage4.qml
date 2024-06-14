@@ -1,15 +1,14 @@
 import QtQuick
 import QtQuick.Controls
 
-import CppQtQuickWebsite.CppObjects
-
 Page {
 
     readonly property string headerText: "SubPage 4"
-    readonly property string subHeaderText: "Modifying QML properties using JavaScript or C++."
+    readonly property string subHeaderText: "Floating pop-up message."
 
-    function resetInputField(inputField) {
-        inputField.text = "Text set using JavaScript.";
+    Component {
+        id: popUpMessageComponent
+        PopUpMessage {}
     }
 
     Label {
@@ -27,32 +26,13 @@ Page {
         font.pointSize: 12
     }
 
-    TextField {
-        id: textField
+    Button {
+        text: "Show Message"
         anchors.centerIn: parent
-        width: 300
-        text: "Enter text here"
-    }
-
-    Button {
-        id: buttonSetTextJS
-        anchors.top: textField.bottom;
-        anchors.horizontalCenter: parent.horizontalCenter;
-        anchors.margins: 20
-        text: "Set text using JavaScript"
         onClicked: {
-            resetInputField(textField);
-        }
-    }
-
-    Button {
-        id: buttonSetTextCpp
-        anchors.top: buttonSetTextJS.bottom;
-        anchors.horizontalCenter: parent.horizontalCenter;
-        anchors.margins: 10
-        text: "Set text using C++"
-        onClicked: {
-            Backend.resetInputField(textField);
+            var popUpMessage = popUpMessageComponent.createObject(parent.parent);
+            popUpMessage.anchors.centerIn = parent.parent;
+            popUpMessage.visible = true;
         }
     }
 

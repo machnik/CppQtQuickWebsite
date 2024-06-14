@@ -1,15 +1,12 @@
 import QtQuick
 import QtQuick.Controls
 
+import CppQtQuickWebsite.CppObjects
+
 Page {
 
     readonly property string headerText: "SubPage 8"
-    readonly property string subHeaderText: "Floating pop-up message."
-
-    Component {
-        id: popUpMessageComponent
-        PopUpMessage {}
-    }
+    readonly property string subHeaderText: "C++ backend object (singleton) is used to implement the button."
 
     Label {
         id: headerLabel
@@ -26,14 +23,22 @@ Page {
         font.pointSize: 12
     }
 
-    Button {
-        text: "Show Message"
+    Label {
+        id: messageLabel
+        text: Backend.message
         anchors.centerIn: parent
-        onClicked: {
-            var popUpMessage = popUpMessageComponent.createObject(parent.parent);
-            popUpMessage.anchors.centerIn = parent.parent;
-            popUpMessage.visible = true;
-        }
+    }
+
+    Button {
+        text: "Change Message"
+        anchors.top: messageLabel.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.margins: 10
+        onClicked: Backend.setMessage("Message Changed!")
+    }
+
+    Component.onCompleted: {
+        Backend.message = "Hello World!"
     }
 
     ToMainPageButton {

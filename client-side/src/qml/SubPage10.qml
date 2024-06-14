@@ -1,12 +1,16 @@
 import QtQuick
 import QtQuick.Controls
 
+import CppQtQuickWebsite.CppObjects
+
 Page {
 
     readonly property string headerText: "SubPage 10"
-    readonly property string subHeaderText: "Avatar generator using DiceBear API."
+    readonly property string subHeaderText: "Modifying QML properties using JavaScript or C++."
 
-    readonly property string avatarPlaceholder: "qrc:/resources/images/avatar_placeholder.png"
+    function resetInputField(inputField) {
+        inputField.text = "Text set using JavaScript.";
+    }
 
     Label {
         id: headerLabel
@@ -23,54 +27,32 @@ Page {
         font.pointSize: 12
     }
 
-    ComboBox {
-        id: styleComboBox
-        model: [
-            "adventurer", "avataaars", "bottts", "croodles",
-            "fun-emoji", "icons", "identicon", "lorelei",
-            "micah", "miniavs", "notionists", "open-peeps",
-            "personas", "shapes", "rings", "thumbs"
-        ]
-        currentIndex: 0
-        anchors.bottom: avatarArea.top
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.margins: 10
+    TextField {
+        id: textField
+        anchors.centerIn: parent
+        width: 300
+        text: "Enter text here"
     }
 
-    Rectangle {
-        id: avatarArea
-        width: 200; height: 200
-        anchors.centerIn: parent
-
-        Image {
-            id: avatarImage
-            anchors.fill: parent
-            source: avatarPlaceholder
+    Button {
+        id: buttonSetTextJS
+        anchors.top: textField.bottom;
+        anchors.horizontalCenter: parent.horizontalCenter;
+        anchors.margins: 20
+        text: "Set text using JavaScript"
+        onClicked: {
+            resetInputField(textField);
         }
     }
 
     Button {
-        text: "New Avatar"
-        anchors.top: avatarArea.bottom
-        anchors.horizontalCenter: parent.horizontalCenter
+        id: buttonSetTextCpp
+        anchors.top: buttonSetTextJS.bottom;
+        anchors.horizontalCenter: parent.horizontalCenter;
         anchors.margins: 10
+        text: "Set text using C++"
         onClicked: {
-            var xhr = new XMLHttpRequest();
-            var url =
-                "https://api.dicebear.com/8.x/" + styleComboBox.currentText +
-                "/svg?seed=" + Math.random();
-            xhr.open('GET', url, true);
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        avatarImage.source = url;
-                    } else {
-                        console.log("Error: " + xhr.status);
-                        avatarImage.source = avatarPlaceholder;
-                    }
-                }
-            }
-            xhr.send();
+            Backend.resetInputField(textField);
         }
     }
 
