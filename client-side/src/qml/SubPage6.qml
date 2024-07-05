@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Controls
 
 Page {
-
+// https://doc.qt.io/qt-6/qtqml-javascript-resources.html
     readonly property string headerText: "SubPage 6"
     readonly property string subHeaderText: "JavaScript interpreter."
 
