@@ -2,6 +2,8 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
+import CppQtQuickWebsite.CppObjects
+
 Page {
     readonly property string headerText: "SubPage 6"
     readonly property string subHeaderText: "JavaScript interpreter."
@@ -70,8 +72,9 @@ Page {
                         Button {
                             id: browserJsEngineButton
                             text: "BROWSER JS INTERPRETER"
+                            enabled: !BrowserJS.isAvailable
                             onClicked: {
-                                console.log("Running JavaScript code with the browser's JavaScript interpreter.");
+                                BrowserJS.runJS(javascriptEditor.text);
                             }
                         }
                     }

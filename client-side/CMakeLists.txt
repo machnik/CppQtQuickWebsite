@@ -16,6 +16,7 @@ qt_standard_project_setup()
 qt_add_executable(${PROJECT_NAME}
     "src/cpp/main.cpp"
     "src/cpp/Backend.cpp"
+    "src/cpp/BrowserJS.cpp"
     "src/cpp/Counter.cpp"
     "src/cpp/FakeProcessor.cpp"
     "src/cpp/ListModel.cpp"
