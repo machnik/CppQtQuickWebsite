@@ -8,6 +8,11 @@ Page {
     readonly property string headerText: "SubPage 6"
     readonly property string subHeaderText: "JavaScript interpreter."
 
+    readonly property string exampleJSCode: "let x = 1;\n" +
+        "let y = 2;\n" +
+        "let z = x + y;\n" +
+        "console.log('The sum of x and y is: ' + z);";
+
     Label {
         id: headerLabel
         text: headerText
@@ -50,7 +55,7 @@ Page {
                             id: javascriptEditor
                             font.family: "DejaVu Sans Mono"
                             font.pixelSize: 10
-                            text: "alert(\"Hello World\");"
+                            text: exampleJSCode
                             readOnly: false
                             wrapMode: TextArea.NoWrap
                             anchors.fill: parent
@@ -65,9 +70,7 @@ Page {
                         Button {
                             id: qtJsEngineButton
                             text: "QT JS ENGINE"
-                            onClicked: {
-                                console.log("Running JavaScript code with Qt's JavaScript engine.");
-                            }
+                            onClicked: eval(javascriptEditor.text);
                         }
                         Button {
                             id: browserJsEngineButton
