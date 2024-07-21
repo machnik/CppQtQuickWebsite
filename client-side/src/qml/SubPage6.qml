@@ -103,7 +103,7 @@ Page {
                         border.width: 2
 
                         Label {
-                            text: "Code-Behind Implementation Resource"
+                            text: "Code-Behind JS Implementation"
                             font.bold: true
                             font.pointSize: 9
                             anchors.horizontalCenter: parent.horizontalCenter
@@ -115,12 +115,8 @@ Page {
                             anchors.centerIn: parent
                             Layout.alignment: Qt.AlignBottom | Qt.AlignHCenter
 
-                            Button {
-                                text: "0"
-                            }
-                            Button {
-                                text: "0"
-                            }
+                            JSCounterBtnCodeBehind {}
+                            JSCounterBtnCodeBehind {}
                         }
                     }
 
@@ -135,7 +131,7 @@ Page {
                         border.width: 2
 
                         Label {
-                            text: "Shared JavaScript Resource"
+                            text: "Shared JS Library"
                             font.bold: true
                             font.pointSize: 9
                             anchors.horizontalCenter: parent.horizontalCenter
@@ -147,12 +143,8 @@ Page {
                             anchors.centerIn: parent
                             Layout.alignment: Qt.AlignBottom | Qt.AlignHCenter
 
-                            Button {
-                                text: "0"
-                            }
-                            Button {
-                                text: "0"
-                            }
+                            JSCounterBtnCodeShared {}
+                            JSCounterBtnCodeShared {}
                         }
                     }
                 }

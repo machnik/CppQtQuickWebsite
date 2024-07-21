@@ -22,7 +22,8 @@ qt_add_executable(${PROJECT_NAME}
     "src/cpp/ListModel.cpp"
     "src/cpp/TextFileIO.cpp"
     "src/cpp/WebSocketServer.cpp"
-    "src/cpp/WebSocketClient.cpp"    
+    "src/cpp/WebSocketClient.cpp"  
+    "src/js/js.qrc" 
     "src/qml/qml.qrc"
     "resources/resources.qrc"
 )

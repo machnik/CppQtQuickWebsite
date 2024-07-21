@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/qml/">
+        <file>JSCounterBtnCodeBehind.qml</file>
+        <file>JSCounterBtnCodeShared.qml</file>
         <file>main.qml</file>
         <file>MainPage.qml</file>
         <file>SubPage1.qml</file>

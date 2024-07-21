@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/js/">
+        <file>JSCounterBtnCodeBehindImpl.js</file>
+        <file>JSCounterBtnCodeSharedImpl.js</file>
+    </qresource>
+</RCC>
