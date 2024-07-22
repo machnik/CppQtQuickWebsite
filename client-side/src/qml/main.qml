@@ -39,7 +39,7 @@ ApplicationWindow {
         id: stackView
         initialItem: mainPage
         anchors.fill: parent
-        anchors.margins: 50
+        anchors.margins: 70
     }
 
     menuBar: MenuBar {
@@ -65,6 +65,26 @@ ApplicationWindow {
                 text: "Exit"
                 onTriggered: {
                     Qt.quit();
+                }
+            }
+        }
+    }
+
+    ToolBar {
+        id: toolBar
+        anchors.top: parent.top
+        anchors.horizontalCenter: parent.horizontalCenter
+        height: 40
+
+        Row {
+            Repeater {
+                model: subPagesComponents
+                ToolButton {
+                    text: index + 1
+                    onClicked: {
+                        stackView.pop()
+                        stackView.push(modelData, StackView.PushTransition)
+                    }
                 }
             }
         }
