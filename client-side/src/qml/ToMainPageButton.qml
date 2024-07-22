@@ -5,6 +5,6 @@ Button {
     text: "To Main Page"
     font.pointSize: 12
     onClicked: {
-        stackView.replace(mainPage, StackView.PopTransition)
+        stackView.pop(StackView.PopTransition)
     }
 }

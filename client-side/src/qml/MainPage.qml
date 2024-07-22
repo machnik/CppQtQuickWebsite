@@ -37,10 +37,7 @@ Page {
                 text: "Page " + (index + 1)
                 font.pointSize: 12
                 onClicked: {
-                    stackView.replace(
-                        subPagesComponents[index],
-                        StackView.PushTransition
-                    )
+                    stackView.push(subPagesComponents[index], StackView.PushTransition)
                 }
             }
         }

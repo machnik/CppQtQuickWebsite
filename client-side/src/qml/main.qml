@@ -48,7 +48,7 @@ ApplicationWindow {
             MenuItem {
                 text: "Main Page"
                 onTriggered: {
-                    stackView.replace(mainPage.createObject(stackView), StackView.PopTransition)
+                    stackView.pop(StackView.PopTransition)
                 }
             }
             Repeater {
@@ -56,7 +56,8 @@ ApplicationWindow {
                 MenuItem {
                     text: "Page " + (index + 1)
                     onTriggered: {
-                        stackView.replace(modelData, StackView.PushTransition)
+                        stackView.pop()
+                        stackView.push(modelData, StackView.PushTransition)
                     }
                 }
             }
