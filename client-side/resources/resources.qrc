@@ -1,8 +1,28 @@
 <RCC>
     <qresource prefix="/resources/">
+        <file>audio/sound.wav</file>
+        <file>icons/pageIcon1.svg</file>
+        <file>icons/pageIcon2.svg</file>
+        <file>icons/pageIcon3.svg</file>
+        <file>icons/pageIcon4.svg</file>
+        <file>icons/pageIcon5.svg</file>
+        <file>icons/pageIcon6.svg</file>
+        <file>icons/pageIcon7.svg</file>
+        <file>icons/pageIcon8.svg</file>
+        <file>icons/pageIcon9.svg</file>
+        <file>icons/pageIcon10.svg</file>
+        <file>icons/pageIcon11.svg</file>
+        <file>icons/pageIcon12.svg</file>
+        <file>icons/pageIcon13.svg</file>
+        <file>icons/pageIcon14.svg</file>
+        <file>icons/pageIcon15.svg</file>
+        <file>icons/pageIcon16.svg</file>
+        <file>icons/pageIcon17.svg</file>
+        <file>icons/pageIcon18.svg</file>
+        <file>icons/pageIcon19.svg</file>
+        <file>icons/pageIcon20.svg</file>
         <file>images/picture.jpg</file>
         <file>images/avatar_placeholder.png</file>
-        <file>audio/sound.wav</file>
         <file>text/lorem_ipsum.html</file>
     </qresource>
 </RCC>

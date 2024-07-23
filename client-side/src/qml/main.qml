@@ -80,7 +80,7 @@ ApplicationWindow {
             Repeater {
                 model: subPagesComponents
                 ToolButton {
-                    text: index + 1
+                    icon.source: "qrc:/resources/icons/pageIcon" + (index + 1) + ".svg"
                     onClicked: {
                         stackView.pop()
                         stackView.push(modelData, StackView.PushTransition)
