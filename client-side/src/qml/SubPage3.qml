@@ -2,6 +2,8 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
+import "qrc:/qml/singletons/"
+
 Page {
     readonly property string headerText: "SubPage 3"
     readonly property string subHeaderText: "UI Widget Gallery"
@@ -16,13 +18,13 @@ Page {
         Label {
             id: headerLabel
             text: headerText
-            font.pointSize: 15
+            font.pointSize: ZoomSettings.hugeFontSize
             Layout.alignment: Qt.AlignHCenter
         }
 
         Label {
             text: subHeaderText
-            font.pointSize: 12
+            font.pointSize: ZoomSettings.bigFontSize
             Layout.alignment: Qt.AlignHCenter
         }
 

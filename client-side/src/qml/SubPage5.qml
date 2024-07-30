@@ -1,5 +1,8 @@
 import QtQuick
 import QtQuick.Controls
+
+import "qrc:/qml/singletons/"
+
 Page {
 
     readonly property string headerText: "SubPage 5"
@@ -12,14 +15,14 @@ Page {
         text: headerText
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
-        font.pointSize: 15
+        font.pointSize: ZoomSettings.hugeFontSize
     }
 
     Label {
         text: subHeaderText
         anchors.top: headerLabel.bottom
         anchors.horizontalCenter: parent.horizontalCenter
-        font.pointSize: 12
+        font.pointSize: ZoomSettings.bigFontSize
     }
 
     Rectangle {
@@ -35,7 +38,7 @@ Page {
             text: "... AND DROP!"
             anchors.centerIn: parent
             font {
-                pointSize: 15
+                pointSize: ZoomSettings.hugeFontSize
                 weight: Font.Bold
             }
             color: "orange"
@@ -53,7 +56,7 @@ Page {
                 text: "DRAG"
                 anchors.centerIn: parent
                 font {
-                    pointSize: 10
+                    pointSize: ZoomSettings.bigFontSize
                     weight: Font.Bold
                 }
                 color: "red"

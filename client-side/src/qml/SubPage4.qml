@@ -1,6 +1,8 @@
 import QtQuick
 import QtQuick.Controls
 
+import "qrc:/qml/singletons/"
+
 Page {
 
     readonly property string headerText: "SubPage 4"
@@ -16,18 +18,19 @@ Page {
         text: headerText
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
-        font.pointSize: 15
+        font.pointSize: ZoomSettings.hugeFontSize
     }
 
     Label {
         text: subHeaderText
         anchors.top: headerLabel.bottom
         anchors.horizontalCenter: parent.horizontalCenter
-        font.pointSize: 12
+        font.pointSize: ZoomSettings.bigFontSize
     }
 
     Button {
         text: "Show Message"
+        font.pointSize: ZoomSettings.bigFontSize
         anchors.centerIn: parent
         onClicked: {
             var popUpMessage = popUpMessageComponent.createObject(parent.parent);

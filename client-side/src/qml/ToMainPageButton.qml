@@ -1,9 +1,11 @@
 import QtQuick
 import QtQuick.Controls
 
+import "qrc:/qml/singletons/"
+
 Button {
     text: "To Main Page"
-    font.pointSize: 12
+    font.pointSize: ZoomSettings.bigFontSize
     onClicked: {
         stackView.pop(StackView.PopTransition)
     }

@@ -2,10 +2,13 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Dialogs
 
+import "qrc:/qml/singletons/"
+
 Dialog {
     id: popUpDialog
     width: 400; height: 300
     title: "Pop-up Window"
+    font.pixelSize: ZoomSettings.bigFontSize
     modal: true
     closePolicy: Dialog.CloseOnEscape
 

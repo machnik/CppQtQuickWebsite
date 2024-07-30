@@ -1,19 +1,24 @@
 import QtQuick
 import QtQuick.Controls
 
+import "qrc:/qml/singletons/"
+
 import CppQtQuickWebsite.CppObjects
 
 Page {
 
     readonly property string headerText: "Subpage 9"
     readonly property string subHeaderText: "C++ class is used to implement the counters."
-    
+
+    // TODO: Fix nested font sizes like this everywhere!
+    property int buttonFontSize: ZoomSettings.bigFontSize
+
     Label {
         id: headerLabel
         text: headerText
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
-        font.pointSize: 15
+        font.pointSize: ZoomSettings.hugeFontSize
     }
 
     Label {
@@ -21,7 +26,7 @@ Page {
         text: subHeaderText
         anchors.top: headerLabel.bottom
         anchors.horizontalCenter: parent.horizontalCenter
-        font.pointSize: 12
+        font.pointSize: ZoomSettings.bigFontSize
     }
 
     Counter {
@@ -36,7 +41,7 @@ Page {
         id: countLabel
         text: "Count 1: [" + counter1.count + "]\nCount 2: [" + counter2.count + "]"
         anchors.centerIn: parent
-        font.pixelSize: 18
+        font.pixelSize: ZoomSettings.hugeFontSize
         font.bold: true
     }
 
@@ -49,6 +54,7 @@ Page {
         Button {
             id: incrementButton1
             text: "Increment Count 1"
+            font.pointSize: buttonFontSize
             anchors.top: parent.top
             anchors.margins: 15
             onClicked: counter1.count++
@@ -57,6 +63,7 @@ Page {
         Button {
             id: incrementButton2
             text: "Increment Count 2"
+            font.pointSize: buttonFontSize
             anchors.top: parent.top
             anchors.left: incrementButton1.right
             anchors.margins: 15

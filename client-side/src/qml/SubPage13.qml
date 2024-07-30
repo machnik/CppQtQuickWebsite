@@ -1,6 +1,8 @@
 import QtQuick
 import QtQuick.Controls
 
+import "qrc:/qml/singletons/"
+
 import CppQtQuickWebsite.CppObjects
 
 Page {
@@ -25,14 +27,14 @@ Page {
         text: headerText
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
-        font.pointSize: 15
+        font.pointSize: ZoomSettings.hugeFontSize
     }
 
     Label {
         text: subHeaderText
         anchors.top: headerLabel.bottom
         anchors.horizontalCenter: parent.horizontalCenter
-        font.pointSize: 12
+        font.pointSize: ZoomSettings.bigFontSize
     }
 
     Label {
@@ -40,7 +42,7 @@ Page {
         anchors.bottom: fileContentsScrollView.top
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottomMargin: 10
-        font.pointSize: 13
+        font.pointSize: ZoomSettings.bigFontSize
     }
 
     ScrollView {
@@ -55,7 +57,7 @@ Page {
             width: parent.width
             height: parent.height
             wrapMode: Text.WordWrap
-            font.pixelSize: 10
+            font.pixelSize: ZoomSettings.smallFontSize
         }
     }
 

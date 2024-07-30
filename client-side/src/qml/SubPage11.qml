@@ -2,6 +2,8 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
+import "qrc:/qml/singletons/"
+
 import CppQtQuickWebsite.CppObjects
 
 Page {
@@ -16,13 +18,13 @@ Page {
         Label {
             id: headerLabel
             text: headerText
-            font.pointSize: 15
+            font.pointSize: ZoomSettings.hugeFontSize
             Layout.alignment: Qt.AlignHCenter
         }
 
         Label {
             text: subHeaderText
-            font.pointSize: 12
+            font.pointSize: ZoomSettings.bigFontSize
             Layout.alignment: Qt.AlignHCenter
         }
 
@@ -58,7 +60,7 @@ Page {
                         }
                         delegate: Text {
                             text: model.text
-                            font.pointSize: 10
+                            font.pointSize: ZoomSettings.regularFontSize
                         }
                     }
                 }
@@ -100,7 +102,7 @@ Page {
                         model: Backend.listModel
                         delegate: Text { 
                             text: model.display 
-                            font.pointSize: 10
+                            font.pointSize: ZoomSettings.regularFontSize
                         }
                     }
                 }

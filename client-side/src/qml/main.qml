@@ -1,6 +1,8 @@
 import QtQuick
 import QtQuick.Controls
 
+import "qrc:/qml/singletons/"
+
 ApplicationWindow {
 
     visible: true
@@ -34,7 +36,7 @@ ApplicationWindow {
         Component { id: subPage19; SubPage19 {}},
         Component { id: subPage20; SubPage20 {}}
     ]
-        
+
     StackView {
         id: stackView
         initialItem: mainPage
@@ -44,9 +46,10 @@ ApplicationWindow {
 
     menuBar: MenuBar {
         Menu {
-            title: "Website Menu"
+            title: "MENU"
             MenuItem {
                 text: "Main Page"
+                font.pointSize: ZoomSettings.regularFontSize
                 onTriggered: {
                     stackView.pop(StackView.PopTransition)
                 }
@@ -55,6 +58,7 @@ ApplicationWindow {
                 model: subPagesComponents
                 MenuItem {
                     text: "Page " + (index + 1)
+                    font.pointSize: ZoomSettings.regularFontSize
                     onTriggered: {
                         stackView.pop()
                         stackView.push(modelData, StackView.PushTransition)
@@ -87,6 +91,13 @@ ApplicationWindow {
                     }
                 }
             }
+
+            Rectangle {
+                width: 25
+                height: parent.height
+            }
+
+            ZoomControl {}
         }
     }
 }

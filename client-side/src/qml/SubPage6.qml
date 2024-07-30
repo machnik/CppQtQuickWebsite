@@ -2,6 +2,8 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
+import "qrc:/qml/singletons/"
+
 import CppQtQuickWebsite.CppObjects
 
 Page {
@@ -18,14 +20,14 @@ Page {
         text: headerText
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
-        font.pointSize: 15
+        font.pointSize: ZoomSettings.hugeFontSize
     }
 
     Label {
         text: subHeaderText
         anchors.top: headerLabel.bottom
         anchors.horizontalCenter: parent.horizontalCenter
-        font.pointSize: 12
+        font.pointSize: ZoomSettings.bigFontSize
     }
 
     Rectangle {
@@ -54,7 +56,7 @@ Page {
                         TextArea {
                             id: javascriptEditor
                             font.family: "DejaVu Sans Mono"
-                            font.pixelSize: 10
+                            font.pixelSize: ZoomSettings.regularFontSize
                             text: exampleJSCode
                             readOnly: false
                             wrapMode: TextArea.NoWrap
@@ -105,7 +107,7 @@ Page {
                         Label {
                             text: "Code-Behind JS Implementation"
                             font.bold: true
-                            font.pointSize: 9
+                            font.pointSize: ZoomSettings.smallFontSize
                             anchors.horizontalCenter: parent.horizontalCenter
                             anchors.top: parent.top
                             anchors.topMargin: parent.height / 8
@@ -133,7 +135,7 @@ Page {
                         Label {
                             text: "Shared JS Library"
                             font.bold: true
-                            font.pointSize: 9
+                            font.pointSize: ZoomSettings.smallFontSize
                             anchors.horizontalCenter: parent.horizontalCenter
                             anchors.top: parent.top
                             anchors.topMargin: parent.height / 8

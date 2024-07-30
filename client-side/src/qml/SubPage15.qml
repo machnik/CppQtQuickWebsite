@@ -3,6 +3,8 @@ import QtQuick.Controls
 import QtQuick3D
 import QtQuick3D.Helpers
 
+import "qrc:/qml/singletons/"
+
 Page {
 
     readonly property string headerText: "SubPage 15"
@@ -13,14 +15,14 @@ Page {
         text: headerText
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
-        font.pointSize: 15
+        font.pointSize: ZoomSettings.hugeFontSize
     }
 
     Label {
         text: subHeaderText
         anchors.top: headerLabel.bottom
         anchors.horizontalCenter: parent.horizontalCenter
-        font.pointSize: 12
+        font.pointSize: ZoomSettings.bigFontSize
     }
 
     Rectangle {
@@ -101,7 +103,7 @@ Page {
         anchors.top: view3dContainer.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.margins: 10
-        font.pointSize: 11
+        font.pointSize: ZoomSettings.regularFontSize
         font.bold: true
     }
 

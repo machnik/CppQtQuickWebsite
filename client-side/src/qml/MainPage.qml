@@ -2,6 +2,8 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
+import "qrc:/qml/singletons/"
+
 Page {
 
     Label {
@@ -9,14 +11,14 @@ Page {
         text: "Main Page"
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
-        font.pointSize: 15
+        font.pointSize: ZoomSettings.hugeFontSize
     }
 
     Label {
         text: "Table of Contents"
         anchors.top: headerLabel.bottom
         anchors.horizontalCenter: parent.horizontalCenter
-        font.pointSize: 12
+        font.pointSize: ZoomSettings.bigFontSize
     }
 
     GridLayout {
@@ -35,7 +37,7 @@ Page {
                 width: 100
                 height: 65
                 text: "Page " + (index + 1)
-                font.pointSize: 12
+                font.pointSize: ZoomSettings.regularFontSize
                 onClicked: {
                     stackView.push(subPagesComponents[index], StackView.PushTransition)
                 }

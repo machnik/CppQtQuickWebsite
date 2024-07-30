@@ -26,5 +26,8 @@
         <file>SubPage20.qml</file>
         <file>PopUpMessage.qml</file>
         <file>ToMainPageButton.qml</file>
+        <file>ZoomControl.qml</file>
+        <file>singletons/qmldir</file>
+        <file>singletons/ZoomSettings.qml</file>
     </qresource>
 </RCC>
