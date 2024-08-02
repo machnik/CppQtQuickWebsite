@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/resources/">
         <file>audio/sound.wav</file>
+        <file>icons/homePageIcon.svg</file>
         <file>icons/pageIcon1.svg</file>
         <file>icons/pageIcon2.svg</file>
         <file>icons/pageIcon3.svg</file>

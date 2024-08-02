@@ -37,11 +37,21 @@ ApplicationWindow {
         Component { id: subPage20; SubPage20 {}}
     ]
 
-    StackView {
-        id: stackView
-        initialItem: mainPage
+    Rectangle {
+        id: stackViewBorder
         anchors.fill: parent
         anchors.margins: 70
+        border.color: "black"
+        border.width: 2
+        radius: 8
+
+        StackView {
+            id: stackView
+            anchors.centerIn: parent
+            width: parent.width - 16
+            height: parent.height - 16
+            initialItem: mainPage
+        }
     }
 
     menuBar: MenuBar {
@@ -81,6 +91,18 @@ ApplicationWindow {
         height: 40
 
         Row {
+            ToolButton {
+                icon.source: "qrc:/resources/icons/homePageIcon.svg"
+                onClicked: {
+                    stackView.pop(StackView.PopTransition)
+                }
+            }
+
+            Rectangle {
+                width: 25
+                height: parent.height
+            }
+
             Repeater {
                 model: subPagesComponents
                 ToolButton {
