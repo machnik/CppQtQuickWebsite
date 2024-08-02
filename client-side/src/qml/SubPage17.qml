@@ -33,7 +33,7 @@ Page {
     Text {
         id: playMusic
         text: "Click to Play Music";
-        font.pointSize: ZoomSettings.bigFontSize
+        font.pointSize: ZoomSettings.hugeFontSize
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: stopMusic.top
 
@@ -50,7 +50,7 @@ Page {
     Text {
         id: stopMusic
         text: "Click to Stop Music";
-        font.pointSize: ZoomSettings.bigFontSize
+        font.pointSize: ZoomSettings.hugeFontSize
         anchors.centerIn: parent;
         color: "gray";
 

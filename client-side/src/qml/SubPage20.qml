@@ -10,6 +10,8 @@ Page {
     readonly property string headerText: "SubPage 20"
     readonly property string subHeaderText: "WebSocket Client."
 
+    property int smallFontSize: ZoomSettings.smallFontSize
+
     function resetTextFields() {
         messageToSendField.text = ""
         receivedMessageField.text = ""
@@ -44,6 +46,7 @@ Page {
     TextField {
         id: portField
         placeholderText: "(enter port number here)"
+        font.pointSize: smallFontSize
         readOnly: WebSocketClient.isClientRunning
         width: 250
         anchors.bottom: startButton.top
@@ -54,6 +57,7 @@ Page {
     Button {
         id: startButton
         text: WebSocketClient.isClientRunning ? "STOP" : "START"
+        font.pointSize: smallFontSize
         checkable: true
         anchors.bottom: messageToSendField.top
         anchors.horizontalCenter: parent.horizontalCenter
@@ -71,6 +75,7 @@ Page {
     TextField {
         id: messageToSendField
         placeholderText: "(enter message to send here)"
+        font.pointSize: smallFontSize
         width: 250
         anchors.centerIn: parent
         anchors.margins: 10
@@ -79,6 +84,7 @@ Page {
     Button {
         id: sendButton
         text: "SEND"
+        font.pointSize: smallFontSize
         enabled: messageToSendField.text.length > 0
         anchors.top: messageToSendField.bottom
         anchors.horizontalCenter: parent.horizontalCenter
@@ -91,6 +97,7 @@ Page {
     TextField {
         id: receivedMessageField
         placeholderText: "(last received message)"
+        font.pointSize: smallFontSize
         readOnly: true
         width: 250
         anchors.top: sendButton.bottom
@@ -101,6 +108,7 @@ Page {
     TextField {
         id: errorField
         placeholderText: "(last error)"
+        font.pointSize: smallFontSize
         readOnly: true
         width: 250
         anchors.top: receivedMessageField.bottom

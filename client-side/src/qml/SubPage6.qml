@@ -10,6 +10,10 @@ Page {
     readonly property string headerText: "SubPage 6"
     readonly property string subHeaderText: "JavaScript interpreter."
 
+    property int bigFontSize: ZoomSettings.bigFontSize
+    property int regularFontSize: ZoomSettings.regularFontSize
+    property int smallFontSize: ZoomSettings.smallFontSize
+
     readonly property string exampleJSCode: "let x = 1;\n" +
         "let y = 2;\n" +
         "let z = x + y;\n" +
@@ -56,7 +60,7 @@ Page {
                         TextArea {
                             id: javascriptEditor
                             font.family: "DejaVu Sans Mono"
-                            font.pixelSize: ZoomSettings.regularFontSize
+                            font.pixelSize: regularFontSize
                             text: exampleJSCode
                             readOnly: false
                             wrapMode: TextArea.NoWrap
@@ -72,11 +76,13 @@ Page {
                         Button {
                             id: qtJsEngineButton
                             text: "QT JS ENGINE"
+                            font.pointSize: bigFontSize
                             onClicked: eval(javascriptEditor.text);
                         }
                         Button {
                             id: browserJsEngineButton
                             text: "BROWSER JS INTERPRETER"
+                            font.pointSize: bigFontSize
                             enabled: !BrowserJS.isAvailable
                             onClicked: {
                                 BrowserJS.runJS(javascriptEditor.text);
@@ -107,7 +113,7 @@ Page {
                         Label {
                             text: "Code-Behind JS Implementation"
                             font.bold: true
-                            font.pointSize: ZoomSettings.smallFontSize
+                            font.pointSize: smallFontSize
                             anchors.horizontalCenter: parent.horizontalCenter
                             anchors.top: parent.top
                             anchors.topMargin: parent.height / 8
@@ -117,8 +123,12 @@ Page {
                             anchors.centerIn: parent
                             Layout.alignment: Qt.AlignBottom | Qt.AlignHCenter
 
-                            JSCounterBtnCodeBehind {}
-                            JSCounterBtnCodeBehind {}
+                            JSCounterBtnCodeBehind {
+                                font.pointSize: bigFontSize
+                            }
+                            JSCounterBtnCodeBehind {
+                                font.pointSize: bigFontSize
+                            }
                         }
                     }
 
@@ -135,7 +145,7 @@ Page {
                         Label {
                             text: "Shared JS Library"
                             font.bold: true
-                            font.pointSize: ZoomSettings.smallFontSize
+                            font.pointSize: smallFontSize
                             anchors.horizontalCenter: parent.horizontalCenter
                             anchors.top: parent.top
                             anchors.topMargin: parent.height / 8
@@ -145,8 +155,12 @@ Page {
                             anchors.centerIn: parent
                             Layout.alignment: Qt.AlignBottom | Qt.AlignHCenter
 
-                            JSCounterBtnCodeShared {}
-                            JSCounterBtnCodeShared {}
+                            JSCounterBtnCodeShared {
+                                font.pointSize: bigFontSize
+                            }
+                            JSCounterBtnCodeShared {
+                                font.pointSize: bigFontSize
+                            }
                         }
                     }
                 }

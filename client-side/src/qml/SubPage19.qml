@@ -10,6 +10,8 @@ Page {
     readonly property string headerText: "SubPage 19"
     readonly property string subHeaderText: "WebSocket Server."
 
+    property int smallFontSize: ZoomSettings.smallFontSize
+
     function resetTextFields() {
         bouncedMessageField.text = "";
         errorField.text = "";
@@ -43,6 +45,7 @@ Page {
     TextField {
         id: portField
         placeholderText: "(enter port number here)"
+        font.pointSize: smallFontSize
         readOnly: WebSocketServer.isServerRunning
         width: 250
         anchors.bottom: startButton.top
@@ -53,6 +56,7 @@ Page {
     Button {
         id: startButton
         text: WebSocketServer.isServerRunning ? "STOP" : "START"
+        font.pointSize: smallFontSize
         checkable: true
         anchors.bottom: bouncedMessageField.top
         anchors.horizontalCenter: parent.horizontalCenter
@@ -70,6 +74,7 @@ Page {
     TextField {
         id: bouncedMessageField
         placeholderText: "(last bounced message)"
+        font.pointSize: smallFontSize
         readOnly: true
         width: 250
         anchors.centerIn: parent
@@ -79,6 +84,7 @@ Page {
     TextField {
         id: errorField
         placeholderText: "(last error)"
+        font.pointSize: smallFontSize
         readOnly: true
         width: 250
         anchors.top: bouncedMessageField.bottom

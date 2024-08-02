@@ -10,6 +10,8 @@ Page {
 
     readonly property string avatarPlaceholder: "qrc:/resources/images/avatar_placeholder.png"
 
+    property int bigFontSize: ZoomSettings.bigFontSize
+
     Label {
         id: headerLabel
         text: headerText
@@ -34,6 +36,7 @@ Page {
             "personas", "shapes", "rings", "thumbs"
         ]
         currentIndex: 0
+        font.pointSize: bigFontSize
         anchors.bottom: avatarArea.top
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.margins: 10
@@ -53,6 +56,7 @@ Page {
 
     Button {
         text: "New Avatar"
+        font.pointSize: bigFontSize
         anchors.top: avatarArea.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.margins: 10

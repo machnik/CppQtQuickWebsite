@@ -28,11 +28,13 @@ Page {
     Label {
         id: messageLabel
         text: Backend.message
+        font.pointSize: ZoomSettings.bigFontSize
         anchors.centerIn: parent
     }
 
     Button {
         text: "Change Message"
+        font.pointSize: ZoomSettings.bigFontSize
         anchors.top: messageLabel.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.margins: 10

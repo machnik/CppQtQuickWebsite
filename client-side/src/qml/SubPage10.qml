@@ -34,6 +34,7 @@ Page {
         anchors.centerIn: parent
         width: 300
         text: "Enter text here"
+        font.pointSize: ZoomSettings.bigFontSize
     }
 
     Button {
@@ -42,6 +43,7 @@ Page {
         anchors.horizontalCenter: parent.horizontalCenter;
         anchors.margins: 20
         text: "Set text using JavaScript"
+        font.pointSize: ZoomSettings.bigFontSize
         onClicked: {
             resetInputField(textField);
         }
@@ -53,6 +55,7 @@ Page {
         anchors.horizontalCenter: parent.horizontalCenter;
         anchors.margins: 10
         text: "Set text using C++"
+        font.pointSize: ZoomSettings.bigFontSize
         onClicked: {
             Backend.resetInputField(textField);
         }

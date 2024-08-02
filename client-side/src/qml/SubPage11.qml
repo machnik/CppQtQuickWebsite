@@ -11,6 +11,8 @@ Page {
     readonly property string headerText: "SubPage 11"
     readonly property string subHeaderText: "QML ListViews with QML and C++ models."
 
+    property int regularFontSize: ZoomSettings.regularFontSize
+
     ColumnLayout {
         anchors.centerIn: parent
         anchors.fill: parent
@@ -38,6 +40,7 @@ Page {
 
                 Button {
                     text: "Add Item to QML ListView"
+                    font.pointSize: regularFontSize
                     Layout.fillWidth: true
                     onClicked: listViewQML.model.append({"text": "QML Item " + (listViewQML.model.count + 1)})
                 }
@@ -60,7 +63,7 @@ Page {
                         }
                         delegate: Text {
                             text: model.text
-                            font.pointSize: ZoomSettings.regularFontSize
+                            font.pointSize: regularFontSize
                         }
                     }
                 }
@@ -68,6 +71,7 @@ Page {
                 Button {
                     id: removeItemFromQMLListButton
                     text: "Remove Item from QML ListView"
+                    font.pointSize: regularFontSize
                     Layout.fillWidth: true
                     onClicked: {
                         if (listViewQML.model.count > 0) {
@@ -84,6 +88,7 @@ Page {
                 Button {
                     id: addItemFromCppListButton
                     text: "Add Item to C++ ListView"
+                    font.pointSize: regularFontSize
                     Layout.fillWidth: true
                     onClicked: Backend.listModel.addItem("C++ Item " + (listViewCpp.count + 1))
                 }
@@ -102,7 +107,7 @@ Page {
                         model: Backend.listModel
                         delegate: Text { 
                             text: model.display 
-                            font.pointSize: ZoomSettings.regularFontSize
+                            font.pointSize: regularFontSize
                         }
                     }
                 }
@@ -110,6 +115,7 @@ Page {
                 Button {
                     id: removeItemFromCppListButton
                     text: "Remove Item from C++ ListView"
+                    font.pointSize: regularFontSize
                     Layout.fillWidth: true
                     onClicked: {
                         if (listViewCpp.count > 0) {

@@ -9,6 +9,9 @@ Page {
     readonly property string headerText: "SubPage 7"
     readonly property string subHeaderText: "Local persistent storage."
 
+    property int bigFontSize: ZoomSettings.bigFontSize
+    property int regularFontSize: ZoomSettings.regularFontSize
+
     function getDatabase() {
         return LocalStorage.openDatabaseSync("ExampleDatabase", "1.0", "Example Database", 1000000);
     }
@@ -79,6 +82,7 @@ Page {
                 anchors.leftMargin: 5
                 anchors.rightMargin: 5
                 placeholderText: "Enter key and press ENTER to load entry"
+                font.pointSize: bigFontSize
                 onAccepted: {
                     if (keyField.text === "") {
                         resultLabel.text = "Key cannot be empty!";
@@ -98,6 +102,7 @@ Page {
                 anchors.rightMargin: 5
                 anchors.leftMargin: 5
                 placeholderText: "Enter value and press ENTER to save entry"
+                font.pointSize: bigFontSize
                 onAccepted: {
                     var key = keyField.text;
                     var value = valueField.text;
@@ -114,7 +119,7 @@ Page {
             width: parent.width * 0.8
             anchors.centerIn: parent
             font.family: "Monospace"
-            font.pointSize: ZoomSettings.bigFontSize
+            font.pointSize: bigFontSize
             font.bold: true
         }
     }

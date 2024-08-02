@@ -10,6 +10,8 @@ Page {
     readonly property string headerText: "SubPage 12"
     readonly property string subHeaderText: "Long-running parallel computations in C++."
 
+    property int regularFontSize: ZoomSettings.regularFontSize
+
     readonly property list<FakeProcessor> fakeProcessors: [
         FakeProcessor { deciseconds: 32 },
         FakeProcessor { deciseconds: 40 },
@@ -58,6 +60,7 @@ Page {
     Button {
         id: startButton
         text: "START"
+        font.pointSize: regularFontSize
         enabled: fakeProcessors.some(function(processor) { return processor.status === FakeProcessor.Idle; })
         anchors.bottom: progressBarsContainer.top
         anchors.horizontalCenter: parent.horizontalCenter
@@ -116,6 +119,7 @@ Page {
     Button {
         id: stopButton
         text: "STOP / RESET"
+        font.pointSize: regularFontSize
         enabled: fakeProcessors.some(function(processor) { return processor.status !== FakeProcessor.Idle; })
         anchors.top: progressBarsContainer.bottom
         anchors.horizontalCenter: parent.horizontalCenter

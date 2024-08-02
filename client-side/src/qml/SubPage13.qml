@@ -72,6 +72,7 @@ Page {
         Button {
             id: openFileButton
             text: "Open Text File"
+            font.pointSize: ZoomSettings.bigFontSize
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
             anchors.leftMargin: 10
@@ -83,6 +84,7 @@ Page {
         Button {
             id: saveFileButton
             text: "Save/Download Text File"
+            font.pointSize: ZoomSettings.bigFontSize
             anchors.verticalCenter: parent.verticalCenter
             anchors.right: parent.right
             anchors.rightMargin: 10

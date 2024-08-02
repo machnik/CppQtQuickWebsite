@@ -10,8 +10,7 @@ Page {
     readonly property string headerText: "Subpage 9"
     readonly property string subHeaderText: "C++ class is used to implement the counters."
 
-    // TODO: Fix nested font sizes like this everywhere!
-    property int buttonFontSize: ZoomSettings.bigFontSize
+    property int bigFontSize: ZoomSettings.bigFontSize
 
     Label {
         id: headerLabel
@@ -54,7 +53,7 @@ Page {
         Button {
             id: incrementButton1
             text: "Increment Count 1"
-            font.pointSize: buttonFontSize
+            font.pointSize: bigFontSize
             anchors.top: parent.top
             anchors.margins: 15
             onClicked: counter1.count++
@@ -63,7 +62,7 @@ Page {
         Button {
             id: incrementButton2
             text: "Increment Count 2"
-            font.pointSize: buttonFontSize
+            font.pointSize: bigFontSize
             anchors.top: parent.top
             anchors.left: incrementButton1.right
             anchors.margins: 15

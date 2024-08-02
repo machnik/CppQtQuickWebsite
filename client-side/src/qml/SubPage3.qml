@@ -8,6 +8,8 @@ Page {
     readonly property string headerText: "SubPage 3"
     readonly property string subHeaderText: "UI Widget Gallery"
 
+    property int regularFontSize: ZoomSettings.regularFontSize
+
     ColumnLayout {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
@@ -45,25 +47,30 @@ Page {
 
                     Button {
                         text: "Button"
+                        font.pointSize: regularFontSize
                     }
 
                     Button {
                         text: "Checkable Button"
+                        font.pointSize: regularFontSize
                         checkable: true
                     }
 
                     CheckBox {
                         text: "CheckBox 1"
+                        font.pointSize: regularFontSize
                         checked: true
                     }
 
                     CheckBox {
                         text: "CheckBox 2"
+                        font.pointSize: regularFontSize
                         checked: false
                     }
 
                     ComboBox {
                         model: ["ComboBox", "Item 1", "Item 2", "Item 3"]
+                        font.pointSize: regularFontSize
                     }
 
                     Dial {
@@ -104,6 +111,7 @@ Page {
                                 checked: true
                                 contentItem: Text {
                                     text: darkBlueRB.text
+                                    font.pointSize: regularFontSize
                                     color: "#00008B"
                                     leftPadding: darkBlueRB.indicator.width + darkGreenRB.spacing
                                     verticalAlignment: Text.AlignVCenter
@@ -116,6 +124,7 @@ Page {
                                 checked: false
                                 contentItem: Text {
                                     text: darkRedRB.text
+                                    font.pointSize: regularFontSize
                                     color: "#8B0000"
                                     leftPadding: darkRedRB.indicator.width + darkGreenRB.spacing
                                     verticalAlignment: Text.AlignVCenter
@@ -128,6 +137,7 @@ Page {
                                 checked: false
                                 contentItem: Text {
                                     text: darkGreenRB.text
+                                    font.pointSize: regularFontSize
                                     color: "#006400"
                                     leftPadding: darkGreenRB.indicator.width + darkGreenRB.spacing
                                     verticalAlignment: Text.AlignVCenter
@@ -146,10 +156,12 @@ Page {
                         from: 0
                         to: 100
                         value: 80
+                        font.pointSize: regularFontSize
                     }
 
                     Switch {
                         text: "Switch"
+                        font.pointSize: regularFontSize
                     }
                 }
 
@@ -158,14 +170,17 @@ Page {
 
                     TextField {
                         placeholderText: "TextField"
+                        font.pointSize: regularFontSize
                     }
 
                     TextArea {
                         placeholderText: "TextArea"
+                        font.pointSize: regularFontSize
                     }
 
                     Tumbler {
                         model: ["A", "B", "C", "D", "E", "F", "G", "H"]
+                        font.pointSize: regularFontSize
                     }
                 }
             }
