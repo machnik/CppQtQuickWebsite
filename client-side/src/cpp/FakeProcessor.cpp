@@ -54,7 +54,10 @@ int FakeProcessor::deciseconds() const
 
 void FakeProcessor::setDeciseconds(int deciseconds)
 {
-    m_deciseconds = deciseconds;
+    if (m_deciseconds != deciseconds) {
+        m_deciseconds = deciseconds;
+        emit decisecondsChanged();
+    }
 }
 
 int FakeProcessor::progress() const

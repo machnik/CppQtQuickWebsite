@@ -10,7 +10,7 @@ class FakeProcessor : public QObject
     Q_OBJECT
     QML_ELEMENT
 
-    Q_PROPERTY(int deciseconds READ deciseconds WRITE setDeciseconds)
+    Q_PROPERTY(int deciseconds READ deciseconds WRITE setDeciseconds NOTIFY decisecondsChanged)
     Q_PROPERTY(int progress READ progress NOTIFY progressChanged)
     Q_PROPERTY(Status status READ status NOTIFY statusChanged)
 
@@ -35,6 +35,7 @@ public slots:
     void stop();
 
 signals:
+    void decisecondsChanged();
     void progressChanged();
     void statusChanged();
 
