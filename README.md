@@ -3,8 +3,11 @@
 ## ✅ Requirements
 
 - **[CMake](https://cmake.org/download/)** version >= `3.30.2`
-- **[Qt](https://www.qt.io/download-open-source)** version `6.8.0` with pre-built binaries for WebAssembly (multi thread)
-- **C++Compiler**
+- **[Qt](https://www.qt.io/download-open-source)** version `6.8.0` with pre-built binaries for:
+  - 🐧 Linux: **GCC**
+  - 🪟︎ Windows: **LLVM-MinGW**
+  - **WebAssembly** (multi-threaded)
+- **C++ Compiler:**
   - 🐧 Linux: **GCC**
   - 🪟︎ Windows: **LLVM-MinGW**
 - **[emscripten](https://emscripten.org/docs/getting_started/downloads.html)** version `3.1.59`
@@ -72,6 +75,10 @@ mkdir build_wasm && cd build_wasm
 ```
 
 ### On Windows
+
+// TODO
+
+#### Run
 
 // TODO
 
