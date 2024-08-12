@@ -3,7 +3,7 @@ import QtQuick.Controls
 
 import "qrc:/qml/singletons/"
 
-Page {
+Rectangle {
 
     readonly property string headerText: "SubPage 4"
     readonly property string subHeaderText: "Floating pop-up message."

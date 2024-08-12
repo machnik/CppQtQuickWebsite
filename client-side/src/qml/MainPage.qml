@@ -4,7 +4,7 @@ import QtQuick.Layouts
 
 import "qrc:/qml/singletons/"
 
-Page {
+Rectangle {
 
     Label {
         id: headerLabel

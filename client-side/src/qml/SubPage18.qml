@@ -3,7 +3,7 @@ import QtQuick.Controls
 
 import "qrc:/qml/singletons/"
 
-Page {
+Rectangle {
 
     readonly property string headerText: "SubPage 18"
     readonly property string subHeaderText: "Avatar generator using DiceBear API."

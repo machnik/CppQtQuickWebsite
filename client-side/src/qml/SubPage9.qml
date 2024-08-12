@@ -5,7 +5,7 @@ import "qrc:/qml/singletons/"
 
 import CppQtQuickWebsite.CppObjects
 
-Page {
+Rectangle {
 
     readonly property string headerText: "Subpage 9"
     readonly property string subHeaderText: "C++ class is used to implement the counters."

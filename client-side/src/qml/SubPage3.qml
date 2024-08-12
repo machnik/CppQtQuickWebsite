@@ -10,8 +10,6 @@ Rectangle {
 
     property int regularFontSize: ZoomSettings.regularFontSize
 
-    color: "white"
-
     ColumnLayout {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
@@ -91,14 +89,14 @@ Rectangle {
                 ColumnLayout {
                     spacing: 20
 
+                    BusyIndicator {
+                        running: true
+                    }
+
                     ProgressBar {
                         from: 0
                         to: 100
                         value: 25
-                    }
-
-                    BusyIndicator {
-                        running: true
                     }
 
                     Rectangle {

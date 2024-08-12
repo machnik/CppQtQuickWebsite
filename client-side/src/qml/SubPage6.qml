@@ -6,7 +6,7 @@ import "qrc:/qml/singletons/"
 
 import CppQtQuickWebsite.CppObjects
 
-Page {
+Rectangle {
     readonly property string headerText: "SubPage 6"
     readonly property string subHeaderText: "JavaScript interpreter."
 

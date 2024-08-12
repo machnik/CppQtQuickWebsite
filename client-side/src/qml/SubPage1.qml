@@ -3,7 +3,7 @@ import QtQuick.Controls
 
 import "qrc:/qml/singletons/"
 
-Page {
+Rectangle {
 
     readonly property string headerText: "SubPage 1"
     readonly property string subHeaderText: "Static webpage with much scrollable text."

@@ -4,7 +4,7 @@ import QtQuick.LocalStorage
 
 import "qrc:/qml/singletons/"
 
-Page {
+Rectangle {
 
     readonly property string headerText: "SubPage 7"
     readonly property string subHeaderText: "Local persistent storage."

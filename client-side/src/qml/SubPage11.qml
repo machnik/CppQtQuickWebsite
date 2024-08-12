@@ -6,7 +6,7 @@ import "qrc:/qml/singletons/"
 
 import CppQtQuickWebsite.CppObjects
 
-Page {
+Rectangle {
 
     readonly property string headerText: "SubPage 11"
     readonly property string subHeaderText: "QML ListViews with QML and C++ models."

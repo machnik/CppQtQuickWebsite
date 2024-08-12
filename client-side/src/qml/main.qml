@@ -80,6 +80,7 @@ ApplicationWindow {
             }
             MenuItem {
                 text: "Exit"
+                font.pointSize: ZoomSettings.regularFontSize
                 onTriggered: {
                     Qt.quit();
                 }

@@ -5,7 +5,7 @@ import "qrc:/qml/singletons/"
 
 import CppQtQuickWebsite.CppObjects
 
-Page {
+Rectangle {
 
     readonly property string headerText: "SubPage 10"
     readonly property string subHeaderText: "Modifying QML properties using JavaScript or C++."

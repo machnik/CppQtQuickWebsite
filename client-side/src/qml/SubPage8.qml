@@ -5,7 +5,7 @@ import "qrc:/qml/singletons/"
 
 import CppQtQuickWebsite.CppObjects
 
-Page {
+Rectangle {
 
     readonly property string headerText: "SubPage 8"
     readonly property string subHeaderText: "C++ backend object (singleton) is used to implement the button."

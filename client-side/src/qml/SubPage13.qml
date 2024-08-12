@@ -5,7 +5,7 @@ import "qrc:/qml/singletons/"
 
 import CppQtQuickWebsite.CppObjects
 
-Page {
+Rectangle {
 
     readonly property string headerText: "SubPage 13"
     readonly property string subHeaderText: "Loading and saving/downloading a local file."

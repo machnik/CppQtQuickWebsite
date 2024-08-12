@@ -4,7 +4,7 @@ import QtMultimedia
 
 import "qrc:/qml/singletons/"
 
-Page {
+Rectangle {
     
     readonly property string headerText: "SubPage 17"
     readonly property string subHeaderText: "Music Playback"

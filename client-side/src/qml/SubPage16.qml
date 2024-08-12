@@ -7,7 +7,7 @@ import QtQuick3D.Physics.Helpers
 
 import "qrc:/qml/singletons/"
 
-Page {
+Rectangle {
 
     readonly property string headerText: "SubPage 16"
     readonly property string subHeaderText: "Qt Quick 3D Physics"
@@ -43,8 +43,13 @@ Page {
 
         View3D {
             id: view3d
+
             anchors.fill: parent
             anchors.margins: 3
+
+            Component.onCompleted: {
+                view3d.forceActiveFocus();
+            }
 
             environment: SceneEnvironment {
                 clearColor: "lightgray"

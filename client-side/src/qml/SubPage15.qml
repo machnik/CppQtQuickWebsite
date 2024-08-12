@@ -5,7 +5,7 @@ import QtQuick3D.Helpers
 
 import "qrc:/qml/singletons/"
 
-Page {
+Rectangle {
 
     readonly property string headerText: "SubPage 15"
     readonly property string subHeaderText: "3D View"
@@ -36,8 +36,13 @@ Page {
 
         View3D {
             id: view3d
+
             anchors.fill: parent
             anchors.margins: 3
+
+            Component.onCompleted: {
+                view3d.forceActiveFocus();
+            }
 
             environment: SceneEnvironment {
                 clearColor: "lightgray"

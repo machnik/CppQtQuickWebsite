@@ -5,7 +5,7 @@ import "qrc:/qml/singletons/"
 
 import CppQtQuickWebsite.CppObjects
 
-Page {
+Rectangle {
 
     readonly property string headerText: "SubPage 12"
     readonly property string subHeaderText: "Long-running parallel computations in C++."
