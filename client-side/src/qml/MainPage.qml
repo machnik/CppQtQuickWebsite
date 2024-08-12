@@ -39,7 +39,7 @@ Page {
                 text: "Page " + (index + 1)
                 font.pointSize: ZoomSettings.regularFontSize
                 onClicked: {
-                    stackView.push(subPagesComponents[index], StackView.PushTransition)
+                    stackView.push(subPagesComponents[index], StackView.Immediate)
                 }
             }
         }

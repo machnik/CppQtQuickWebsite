@@ -9,6 +9,8 @@ ApplicationWindow {
     width: Screen.width; height: Screen.height
     flags: Qt.Window | Qt.FramelessWindowHint
 
+    color: "gray"
+
     Component {
         id: mainPage
         MainPage {}
@@ -41,6 +43,7 @@ ApplicationWindow {
         id: stackViewBorder
         anchors.fill: parent
         anchors.margins: 70
+        color: "white"
         border.color: "black"
         border.width: 2
         radius: 8
@@ -61,7 +64,7 @@ ApplicationWindow {
                 text: "Main Page"
                 font.pointSize: ZoomSettings.regularFontSize
                 onTriggered: {
-                    stackView.pop(StackView.PopTransition)
+                    stackView.pop(StackView.Immediate)
                 }
             }
             Repeater {
@@ -70,8 +73,8 @@ ApplicationWindow {
                     text: "Page " + (index + 1)
                     font.pointSize: ZoomSettings.regularFontSize
                     onTriggered: {
-                        stackView.pop()
-                        stackView.push(modelData, StackView.PushTransition)
+                        stackView.pop(StackView.Immediate)
+                        stackView.push(modelData, StackView.Immediate)
                     }
                 }
             }
@@ -94,11 +97,11 @@ ApplicationWindow {
             ToolButton {
                 icon.source: "qrc:/resources/icons/homePageIcon.svg"
                 onClicked: {
-                    stackView.pop(StackView.PopTransition)
+                    stackView.pop(StackView, StackView.Immediate)
                 }
             }
 
-            Rectangle {
+            Item {
                 width: 25
                 height: parent.height
             }
@@ -108,13 +111,13 @@ ApplicationWindow {
                 ToolButton {
                     icon.source: "qrc:/resources/icons/pageIcon" + (index + 1) + ".svg"
                     onClicked: {
-                        stackView.pop()
-                        stackView.push(modelData, StackView.PushTransition)
+                        stackView.pop(StackView.Immediate)
+                        stackView.push(modelData, StackView.Immediate)
                     }
                 }
             }
 
-            Rectangle {
+            Item {
                 width: 25
                 height: parent.height
             }

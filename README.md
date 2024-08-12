@@ -71,7 +71,7 @@ mkdir build_wasm && cd build_wasm
 #### Run
 
 ```
-"$EMSDK/upstream/emscripten/emrun" --browser=chrome Website.html
+"$EMSDK/upstream/emscripten/emrun" --browser=chrome WebApplication.html
 ```
 
 ### On Windows
@@ -92,7 +92,7 @@ mkdir build_linux && cd build_linux
 
 ### Run
 ```
-./Website
+./WebApplication
 ```
 
 ## 🪟︎ Build for Windows
@@ -100,10 +100,10 @@ mkdir build_linux && cd build_linux
 cd CppQtQuickWebsite/client-side
 mkdir build_win && cd build_win
 "%QT_BIN_LLVM_MINGW%\bin\qt-cmake.bat" -G "MinGW Makefiles" ..
-"%QT_BIN_LLVM_MINGW%\bin\qt-cmake.bat" --build .
+cmake --build .
 ```
 
 ### Run
 ```
-Website.exe
+WebApplication.exe
 ```

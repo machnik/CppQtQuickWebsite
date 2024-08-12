@@ -7,6 +7,6 @@ Button {
     text: "To Main Page"
     font.pointSize: ZoomSettings.bigFontSize
     onClicked: {
-        stackView.pop(StackView.PopTransition)
+        stackView.pop(StackView.Immediate)
     }
 }

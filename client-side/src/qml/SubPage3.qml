@@ -4,11 +4,13 @@ import QtQuick.Layouts
 
 import "qrc:/qml/singletons/"
 
-Page {
+Rectangle {
     readonly property string headerText: "SubPage 3"
     readonly property string subHeaderText: "UI Widget Gallery"
 
     property int regularFontSize: ZoomSettings.regularFontSize
+
+    color: "white"
 
     ColumnLayout {
         anchors.horizontalCenter: parent.horizontalCenter
@@ -37,6 +39,8 @@ Page {
         ScrollView {
             Layout.fillWidth: true
             Layout.fillHeight: true
+
+            anchors.margins: 10
 
             RowLayout {
                 Layout.fillWidth: true
@@ -71,6 +75,10 @@ Page {
                     ComboBox {
                         model: ["ComboBox", "Item 1", "Item 2", "Item 3"]
                         font.pointSize: regularFontSize
+                        delegate: ItemDelegate {
+                            text: modelData
+                            font.pointSize: regularFontSize
+                        }
                     }
 
                     Dial {
