@@ -19,8 +19,10 @@ bool BrowserJS::isAvailable() const {
     return available;
 }
 
-void BrowserJS::runJS(const QString & code) {
+int BrowserJS::runJS(const QString & code) {
 #ifdef Q_OS_WASM
-    emscripten_run_script(code.toLatin1());
+    return emscripten_run_script_int(code.toLatin1().data());
+#else
+    return 0;
 #endif
 }

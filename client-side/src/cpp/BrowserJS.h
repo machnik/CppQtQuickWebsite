@@ -19,7 +19,7 @@ public:
     bool isAvailable() const;
 
 public slots:
-    void runJS(const QString & code);
+    int runJS(const QString & code);
 
 private:
     const bool available;

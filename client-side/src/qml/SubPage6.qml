@@ -10,14 +10,12 @@ Rectangle {
     readonly property string headerText: "SubPage 6"
     readonly property string subHeaderText: "JavaScript interpreter."
 
+    property int hugeFontSize: ZoomSettings.hugeFontSize
     property int bigFontSize: ZoomSettings.bigFontSize
     property int regularFontSize: ZoomSettings.regularFontSize
     property int smallFontSize: ZoomSettings.smallFontSize
 
-    readonly property string exampleJSCode: "let x = 1;\n" +
-        "let y = 2;\n" +
-        "let z = x + y;\n" +
-        "console.log('The sum of x and y is: ' + z);";
+    readonly property string exampleJSCode: "1 + 1";
 
     Label {
         id: headerLabel
@@ -49,24 +47,47 @@ Rectangle {
                 width: parent.width / 1.5
                 height: parent.height
                 border.width: 2
-                color: "darkblue"
+                color: "lightgray"
 
                 ColumnLayout {
                     anchors.fill: parent
 
-                    ScrollView {
-                        Layout.fillWidth: true
-                        Layout.fillHeight: true
-                        TextArea {
-                            id: javascriptEditor
-                            font.family: "DejaVu Sans Mono"
-                            font.pixelSize: regularFontSize
-                            text: exampleJSCode
-                            readOnly: false
-                            wrapMode: TextArea.NoWrap
-                            anchors.fill: parent
-                            color: "white"
-                        }
+                    Label {
+                        id: jsInterpreterLabel
+                        text: "JavaScript Interpreter"
+                        font.bold: true
+                        font.pointSize: hugeFontSize
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        anchors.top: parent.top
+                        anchors.topMargin: parent.height / 8
+                    }
+
+                    TextField {
+                        id: jsExpressionEditor
+                        text: exampleJSCode
+                        font.pointSize: regularFontSize
+                        width: parent.width - 20
+                        anchors.top: jsInterpreterLabel.bottom
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        anchors.topMargin: parent.height / 8
+                    }
+
+                    Label {
+                        id: resultLabel
+                        text: "Result: "
+                        font.pointSize: bigFontSize
+                        anchors.top: jsExpressionEditor.bottom
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        anchors.topMargin: parent.height / 8
+                    }
+
+                    Label {
+                        id: resultValueLabel
+                        text: "-"
+                        font.pointSize: hugeFontSize
+                        anchors.top: resultLabel.bottom
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        anchors.topMargin: parent.height / 16
                     }
 
                     RowLayout {
@@ -77,15 +98,22 @@ Rectangle {
                             id: qtJsEngineButton
                             text: "QT JS ENGINE"
                             font.pointSize: bigFontSize
-                            onClicked: eval(javascriptEditor.text);
+                            onClicked: {
+                                var result = eval(jsExpressionEditor.text);
+                                resultValueLabel.text = result;
+                            }
                         }
                         Button {
                             id: browserJsEngineButton
                             text: "BROWSER JS INTERPRETER"
                             font.pointSize: bigFontSize
-                            enabled: !BrowserJS.isAvailable
                             onClicked: {
-                                BrowserJS.runJS(javascriptEditor.text);
+                                if (BrowserJS.isAvailable) {
+                                    var result = BrowserJS.eval(jsExpressionEditor.text);
+                                    resultValueLabel.text = result;
+                                } else {
+                                    resultValueLabel.text = "Browser JS interpreter is not available.";
+                                }
                             }
                         }
                     }
