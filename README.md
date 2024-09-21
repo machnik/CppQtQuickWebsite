@@ -1,5 +1,7 @@
 # CppQtQuickWebsite
 
+This project demonstrates how to use **Qt** and **Emscripten** to create a web application using **C++** and **QML**, compile it to **WebAssembly**, and make it accessible on any device capable of running modern web browsers. The application features a graphical interface resembling typical interactive websites. Subpages showcase different functionalities offered by **Qt** that are available for **WebAssembly**. The source code of this project can be used as a template for developing your own applications.
+
 ## ✅ Requirements
 
 - **[CMake](https://cmake.org/download/)** version >= `3.30.2`
@@ -10,26 +12,27 @@
 - **C++ Compiler:**
   - 🐧 Linux: **GCC**
   - 🪟︎ Windows: **LLVM-MinGW**
-- **[emscripten](https://emscripten.org/docs/getting_started/downloads.html)** version `3.1.59`
+- **[emscripten](https://emscripten.org/docs/getting_started/downloads.html)** version `3.1.56`
 
 ## 💻 Environment Setup
 
 ### 🐧 Linux
 
-#### Qt
+#### Native
 
 ```
-export QT_BIN_WASM="$HOME/Qt/6.8.0/wasm_multithread"
 export QT_BIN_GCC="$HOME/Qt/6.8.0/gcc_64"
 ```
 
-#### emscripten
+#### For WebAssembly
 
 ```
+export QT_BIN_WASM_MT="$HOME/Qt/6.8.0/wasm_multithread"
+
 git clone https://github.com/emscripten-core/emsdk.git
 cd emsdk
-./emsdk install 3.1.59
-./emsdk activate 3.1.59
+./emsdk install 3.1.56
+./emsdk activate 3.1.56
 source emsdk_env.sh
 ```
 
@@ -37,25 +40,39 @@ source emsdk_env.sh
 
 _TIP: `setx` sets permanent system environment variables. They are available in all NEW terminal instances. To set temporary variables that are available only in the current terminal instance, use `set` instead._
 
-#### LLVM-MinGW
+#### Native
+
 Select **LLVM-MinGW** in the **Qt Maintenance Tool** (under Qt -> Developer and Designer Tools).
 
 ```
 setx PATH "%PATH%;"%USERPROFILE%\Qt\Tools\llvm-mingw1706_64\bin"
-```
 
-#### Qt
-```
-setx QT_BIN_LLVM_MINGW "%USERPROFILE%\Qt\6.8.0\llvm-mingw_64\bin"
+setx QT_BIN_LLVM_MINGW "%USERPROFILE%\Qt\6.8.0\llvm-mingw_64"
 
-setx PATH %QT_BIN_LLVM_MINGW%\bin;%PATH%
+setx PATH "%QT_BIN_LLVM_MINGW%\bin;%PATH%"
 setx QML2_IMPORT_PATH "%QT_BIN_LLVM_MINGW%\qml"
 setx QT_PLUGIN_PATH "%QT_BIN_LLVM_MINGW%\plugins"
 ```
 
-#### emscripten
+#### For WebAssembly
 
-// TODO
+```
+setx QT_BIN_WASM_MT "%USERPROFILE%\Qt\6.8.0\wasm_multithread"
+
+setx PATH "%QT_BIN_WASM_MT%\bin;%PATH%"
+setx QML2_IMPORT_PATH "%QT_BIN_WASM_MT%\qml"
+setx QT_PLUGIN_PATH "%QT_BIN_WASM_MT%\plugins"
+
+git clone https://github.com/emscripten-core/emsdk.git
+cd emsdk
+emsdk.bat install 3.1.56
+emsdk.bat activate --permanent 3.1.56
+```
+
+Instead of using the `--permanent` option you can run this script each time you open a new shell instance, to set up a temporary set of environment variables:
+```
+emsdk_env.bat
+```
 
 ## 🌐 Build for WebAssembly
 
@@ -64,8 +81,8 @@ setx QT_PLUGIN_PATH "%QT_BIN_LLVM_MINGW%\plugins"
 ```
 cd CppQtQuickWebsite/client-side
 mkdir build_wasm && cd build_wasm
-"$QT_BIN_WASM/bin/qt-cmake" ..
-"$QT_BIN_WASM/bin/qt-cmake" --build .
+"$QT_BIN_WASM_MT/bin/qt-cmake" ..
+"$QT_BIN_WASM_MT/bin/qt-cmake" --build .
 ```
 
 #### Run
@@ -76,11 +93,19 @@ mkdir build_wasm && cd build_wasm
 
 ### On Windows
 
-// TODO
+```
+cd CppQtQuickWebsite/client-side
+mkdir build_wasm && cd build_wasm
+"%QT_BIN_WASM_MT%\bin\qt-cmake.bat" -G "Ninja" ..
+cmake --build .
+```
 
 #### Run
 
-// TODO
+```
+"%EMSDK%/upstream/emscripten/emrun" WebApplication.html
+```
+
 
 ## 🐧 Build for Linux
 ```
