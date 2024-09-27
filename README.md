@@ -1,6 +1,10 @@
 # CppQtQuickWebsite
 
-This project demonstrates how to use **Qt** and **Emscripten** to create a web application using **C++** and **QML**, compile it to **WebAssembly**, and make it accessible on any device capable of running modern web browsers. The application features a graphical interface resembling typical interactive websites. Subpages showcase different functionalities offered by **Qt** that are available for **WebAssembly**. The source code of this project can be used as a template for developing your own applications.
+This project demonstrates how to use **Qt** and **Emscripten** to create a web application using **C++** and **QML**, compile it to **WebAssembly**, and make it accessible on any device capable of running modern web browsers. The application features a graphical interface resembling typical interactive websites.
+
+The subpages showcase many functionalities offered by **Qt** that are available for **WebAssembly**.
+
+You can use this codebase as a template for your own projects.
 
 ## ✅ Requirements
 
