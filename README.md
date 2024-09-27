@@ -4,15 +4,19 @@ This project demonstrates how to use **Qt** and **Emscripten** to create a web a
 
 ## ✅ Requirements
 
-- **[CMake](https://cmake.org/download/)** version >= `3.30.2`
-- **[Qt](https://www.qt.io/download-open-source)** version `6.8.0` with pre-built binaries for:
-  - 🐧 Linux: **GCC**
-  - 🪟︎ Windows: **LLVM-MinGW**
-  - **WebAssembly** (multi-threaded)
 - **C++ Compiler:**
-  - 🐧 Linux: **GCC**
-  - 🪟︎ Windows: **LLVM-MinGW**
-- **[emscripten](https://emscripten.org/docs/getting_started/downloads.html)** version `3.1.56`
+  - for 🐧 Linux: **GCC**
+  - for 🪟︎ Windows: **LLVM-MinGW**
+  - for 🌐 WebAssembly: **[emscripten](https://emscripten.org/docs/getting_started/downloads.html)** version `3.1.56`
+- **[CMake](https://cmake.org/download/)** version >= `3.30.2`
+- Build system:
+  - on 🐧 Linux: **Make**
+  - on 🪟︎ Windows: **[Ninja](https://github.com/ninja-build/ninja/releases)** version >= 1.12.1 (add to *PATH*)
+- **[Qt](https://www.qt.io/download-open-source)** version `6.8.0` with pre-built binaries for:
+  - for 🐧 Linux: **GCC**
+  - for 🪟︎ Windows: **LLVM-MinGW**
+  - for 🌐 WebAssembly: (multi-threaded)
+
 
 ## 💻 Environment Setup
 
