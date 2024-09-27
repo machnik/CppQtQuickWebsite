@@ -24,6 +24,5 @@
         <file>icons/pageIcon20.svg</file>
         <file>images/picture.jpg</file>
         <file>images/avatar_placeholder.png</file>
-        <file>text/lorem_ipsum.html</file>
     </qresource>
 </RCC>

@@ -28,6 +28,7 @@
         <file>ToMainPageButton.qml</file>
         <file>ZoomControl.qml</file>
         <file>singletons/qmldir</file>
+        <file>singletons/SubPagesDescriptions.qml</file>
         <file>singletons/ZoomSettings.qml</file>
     </qresource>
 </RCC>

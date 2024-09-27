@@ -38,6 +38,11 @@ Rectangle {
                 height: 65
                 text: "Page " + (index + 1)
                 font.pointSize: ZoomSettings.regularFontSize
+                ToolTip {
+                    text: subPagesDescriptions[index]
+                    visible: hovered
+                    delay: 0
+                }
                 onClicked: {
                     stackView.push(subPagesComponents[index], StackView.Immediate)
                 }

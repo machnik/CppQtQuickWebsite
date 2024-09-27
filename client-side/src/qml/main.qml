@@ -39,6 +39,8 @@ ApplicationWindow {
         Component { id: subPage20; SubPage20 {}}
     ]
 
+    readonly property var subPagesDescriptions: SubPagesDescriptions.description
+
     Rectangle {
         id: stackViewBorder
         anchors.fill: parent
