@@ -112,6 +112,9 @@ cmake --build .
 
 
 ## 🐧 Build for Linux
+
+### On Linux
+
 ```
 cd CppQtQuickWebsite/client-side
 mkdir build_linux && cd build_linux
@@ -119,12 +122,16 @@ mkdir build_linux && cd build_linux
 "$QT_BIN_GCC/bin/qt-cmake" --build .
 ```
 
-### Run
+#### Run
+
 ```
 ./WebApplication
 ```
 
 ## 🪟︎ Build for Windows
+
+### On Windows
+
 ```
 cd CppQtQuickWebsite/client-side
 mkdir build_win && cd build_win
