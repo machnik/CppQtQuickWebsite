@@ -14,6 +14,11 @@ class TextFileIO : public QObject
 public:
     explicit TextFileIO(QObject *parent = nullptr);
 
+/*
+    WebAssembly does not have direct access to the local file system, but it can access
+    (read and write) local files using the browser's file dialog.
+*/
+
 public slots:
     void loadFileContent();
     void saveFileContent(const QString &fileName, const QString &content);

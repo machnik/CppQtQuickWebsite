@@ -5,6 +5,11 @@
 
 #include <QtQml>
 
+/*
+    A simple WebSocket client that can be used in QML.
+    A singleton, so it is instantiated only once, automatically.
+*/
+
 class WebSocketClient : public QObject
 {
     Q_OBJECT

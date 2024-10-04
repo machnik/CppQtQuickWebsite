@@ -32,6 +32,7 @@ qt_policy(
     SET QTP0001 NEW
 )
 
+# Exposing C++ items to QML
 qt6_add_qml_module(${PROJECT_NAME}
     URI "CppQtQuickWebsite.CppObjects"
     VERSION 1.0

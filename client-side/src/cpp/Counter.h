@@ -5,6 +5,9 @@
 
 #include <QtQml/QtQml>
 
+/*  Implementing a simple counter class that can be used in QML.
+    It is not a singleton, so it can be instantiated many times.
+*/
 
 class Counter : public QObject
 {

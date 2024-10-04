@@ -3,6 +3,11 @@ import QtQuick.Controls
 
 import "qrc:/qml/singletons/"
 
+/*
+    A custom component that provides a slider to control
+    the size of text in the application's UI.
+*/
+
 Item {
     width: 200
     height: 50

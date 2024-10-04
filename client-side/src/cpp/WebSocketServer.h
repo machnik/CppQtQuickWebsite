@@ -5,6 +5,13 @@
 
 #include <QtQml>
 
+/*
+    A simple WebSocket server that can be used in QML.
+    A singleton, so it is instantiated only once, automatically.
+    WebSocket is a communication protocol that provides full-duplex communication channels
+    over a single TCP connection.
+*/
+
 class WebSocketServer : public QObject
 {
     Q_OBJECT

@@ -1,5 +1,10 @@
 import QtQuick
 import QtQuick.Controls
+/*
+    QtQuick.Layouts enable the use of complex layouts,
+    giving much better control over the positioning of elements
+    than the basic anchors system, at the cost of being more verbose.
+*/
 import QtQuick.Layouts
 
 import "qrc:/qml/singletons/"

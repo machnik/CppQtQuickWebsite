@@ -11,8 +11,9 @@ int Counter::count() const
 
 void Counter::setCount(int count)
 {
-    if (count == m_count)
+    if (count == m_count) {
         return;
+    }
 
     m_count = count;
     emit countChanged();

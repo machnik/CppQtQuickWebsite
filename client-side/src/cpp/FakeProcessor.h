@@ -5,6 +5,11 @@
 
 #include <QtQml/QtQml>
 
+/*
+    A simple fake processor that simulates a long-running task.
+    It is used to demonstrate managing asynchronous tasks in QML.
+*/
+
 class FakeProcessor : public QObject
 {
     Q_OBJECT
