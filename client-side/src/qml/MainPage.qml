@@ -45,6 +45,7 @@ Rectangle {
                 font.pointSize: ZoomSettings.regularFontSize
                 ToolTip {
                     text: subPagesDescriptions[index]
+                    y: parent.height
                     visible: hovered
                     delay: 0
                 }

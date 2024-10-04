@@ -19,8 +19,9 @@ ListModel *Backend::listModel() const
 
 void Backend::setMessage(const QString &message)
 {
-    if (message == m_message)
+    if (message == m_message) {
         return;
+    }
 
     m_message = message;
     emit messageChanged();

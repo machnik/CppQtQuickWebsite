@@ -117,6 +117,11 @@ ApplicationWindow {
                         stackView.pop(StackView.Immediate)
                         stackView.push(modelData, StackView.Immediate)
                     }
+                    ToolTip {
+                        text: subPagesDescriptions[index]
+                        visible: hovered
+                        delay: 0
+                    }
                 }
             }
 

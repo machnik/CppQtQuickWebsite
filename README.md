@@ -6,6 +6,8 @@ The subpages (described in [SubPagesDescriptions.qml](client-side/src/qml/single
 
 You can use this codebase as a template for your own projects.
 
+![WebApplication Screenshot](README-images/website.png "WebApplication")
+
 ## ✅ Requirements
 
 - **C++ Compiler:**
@@ -147,3 +149,12 @@ cmake --build .
 ```
 WebApplication.exe
 ```
+
+# 📜 Documentation
+
+- Qt
+  - [Qt 6](https://doc.qt.io/qt.html)
+  - [QML Book](https://www.qt.io/product/qt6/qml-book)
+- WebAssembly
+  - [WASM](https://developer.mozilla.org/en-US/docs/WebAssembly)
+  - [Emscripten](https://emscripten.org/docs/)
