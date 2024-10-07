@@ -29,7 +29,8 @@ Rectangle {
 
     PhysicsWorld {
         scene: view3d.scene
-        gravity: Qt.vector3d(0, -9.81, 0)
+        gravity: Qt.vector3d(0, -981, 0)
+        typicalSpeed: 200
         enableCCD: true
     }
 
@@ -76,7 +77,7 @@ Rectangle {
                 physicsMaterial: PhysicsMaterial {
                     staticFriction: 0.0
                     dynamicFriction: 0.0
-                    restitution: 1.0
+                    restitution: 0.75
                 }
 
                 Model {
@@ -94,7 +95,7 @@ Rectangle {
                 physicsMaterial: PhysicsMaterial {
                     staticFriction: 0.0
                     dynamicFriction: 0.0
-                    restitution: 1.0
+                    restitution: 0.95
                 }
 
                 Model {
