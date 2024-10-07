@@ -1,6 +1,6 @@
 # CppQtQuickWebsite
 
-**Live at: [machnik.github.io/cpp_qt_quick_website/](https://machnik.github.io/cpp_qt_quick/)**
+**Live at: [machnik.github.io/cpp_qt_quick/](https://machnik.github.io/cpp_qt_quick/)**
 
 This project demonstrates how to use **Qt** and **Emscripten** to create a web application using **C++** and **QML**, compile it to **WebAssembly**, and make it accessible on any device capable of running modern web browsers. The application features a graphical interface resembling typical interactive websites.
 
