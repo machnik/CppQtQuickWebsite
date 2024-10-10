@@ -26,6 +26,11 @@ Item {
             onValueChanged: {
                 ZoomSettings.zoomLevel = value
             }
+            ToolTip {
+                text: "Adjust the size of the text in the application's UI."
+                visible: parent.hovered
+                delay: 0
+            }
         }
 
         Label {

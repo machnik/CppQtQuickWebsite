@@ -4,6 +4,7 @@
         <file>JSCounterBtnCodeShared.qml</file>
         <file>main.qml</file>
         <file>MainPage.qml</file>
+        <file>StyleDialog.qml</file>
         <file>SubPage1.qml</file>
         <file>SubPage2.qml</file>
         <file>SubPage3.qml</file>

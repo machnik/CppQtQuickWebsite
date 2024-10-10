@@ -16,6 +16,11 @@ ApplicationWindow {
         MainPage {}
     }
 
+    Component {
+        id: styleDialogComponent
+        StyleDialog {}
+    }
+
     property list<Component> subPagesComponents: [
         Component { id: subPage1; SubPage1 {}},
         Component { id: subPage2; SubPage2 {}},
@@ -102,6 +107,41 @@ ApplicationWindow {
                 onClicked: {
                     stackView.pop(StackView, StackView.Immediate)
                 }
+                ToolTip {
+                    text: "Navigate to the main page."
+                    visible: parent.hovered
+                    delay: 0
+                }
+            }
+
+            Item {
+                width: 25
+                height: parent.height
+            }
+
+            ToolButton {
+                icon.source: "qrc:/resources/icons/colorIcon.svg"
+                onClicked: {
+                    var styleDialog = styleDialogComponent.createObject(Overlay.overlay);
+                    styleDialog.visible = true;
+                }
+                ToolTip {
+                    text: "(Placeholder!) Change the visual style of the application."
+                    visible: parent.hovered
+                    delay: 0
+                }
+            }
+
+            ToolButton {
+                icon.source: "qrc:/resources/icons/gitHubIcon.svg"
+                onClicked: {
+                    Qt.openUrlExternally("https://github.com/machnik/CppQtQuickWebsite")
+                }
+                ToolTip {
+                    text: "Visit the project's GitHub repository."
+                    visible: parent.hovered
+                    delay: 0
+                }
             }
 
             Item {
@@ -119,7 +159,7 @@ ApplicationWindow {
                     }
                     ToolTip {
                         text: subPagesDescriptions[index]
-                        visible: hovered
+                        visible: parent.hovered
                         delay: 0
                     }
                 }
