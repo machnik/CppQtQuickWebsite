@@ -42,6 +42,15 @@ Rectangle {
         font.pointSize: ZoomSettings.bigFontSize
     }
 
+    Label {
+        text: "Temporarily unsupported in WebAssembly with Qt 6.8.0!"
+        anchors.bottom: portField.top
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.margins: 20
+        font.pointSize: ZoomSettings.bigFontSize
+        color: "red"
+    }
+
     TextField {
         id: portField
         placeholderText: "(enter port number here)"
