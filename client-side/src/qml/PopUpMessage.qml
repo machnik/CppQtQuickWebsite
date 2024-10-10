@@ -4,25 +4,27 @@ import QtQuick.Dialogs
 
 import "qrc:/qml/singletons/"
 
-Dialog {
-    id: popUpDialog
+Popup {
+    id: popUpMessage
     width: 400; height: 300
-    title: "Pop-up Window"
     font.pixelSize: ZoomSettings.bigFontSize
     modal: true
-    closePolicy: Dialog.CloseOnEscape
 
-    Label {
+    Column {
         anchors.fill: parent
         anchors.margins: 10
-        width: parent.width
-        wrapMode: Label.Wrap
-        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam."
-    }
 
-    footer: DialogButtonBox {
-        standardButtons: DialogButtonBox.Ok | DialogButtonBox.Cancel
-        onAccepted: console.log("Accepted")
-        onRejected: console.log("Rejected")
+        Label {
+            width: parent.width
+            wrapMode: Label.Wrap
+            text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam."
+        }
+
+        DialogButtonBox {
+            standardButtons: DialogButtonBox.Ok
+            onAccepted: popUpMessage.close()
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
+        }
     }
 }
