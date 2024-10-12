@@ -1,10 +1,11 @@
 <RCC>
     <qresource prefix="/qml/">
+        <file>ExampleWindow.qml</file>
         <file>JSCounterBtnCodeBehind.qml</file>
         <file>JSCounterBtnCodeShared.qml</file>
         <file>main.qml</file>
         <file>MainPage.qml</file>
-        <file>StyleDialog.qml</file>
+        <file>MessageDialog.qml</file>
         <file>SubPage1.qml</file>
         <file>SubPage2.qml</file>
         <file>SubPage3.qml</file>
@@ -25,7 +26,6 @@
         <file>SubPage18.qml</file>
         <file>SubPage19.qml</file>
         <file>SubPage20.qml</file>
-        <file>PopUpMessage.qml</file>
         <file>ToMainPageButton.qml</file>
         <file>ZoomControl.qml</file>
         <file>singletons/qmldir</file>

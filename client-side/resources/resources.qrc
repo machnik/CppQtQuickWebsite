@@ -1,7 +1,7 @@
 <RCC>
     <qresource prefix="/resources/">
         <file>audio/sound.wav</file>
-        <file>icons/colorIcon.svg</file>
+        <file>icons/addWindowIcon.svg</file>
         <file>icons/gitHubIcon.svg</file>
         <file>icons/homePageIcon.svg</file>
         <file>icons/pageIcon1.svg</file>
@@ -24,6 +24,7 @@
         <file>icons/pageIcon18.svg</file>
         <file>icons/pageIcon19.svg</file>
         <file>icons/pageIcon20.svg</file>
+        <file>icons/windowIcon.svg</file>
         <file>images/picture.jpg</file>
         <file>images/avatar_placeholder.png</file>
     </qresource>

@@ -8,7 +8,7 @@ QtObject {
         "1. Extensive scrollable text. Demonstrates the use of simple QML components to create a functional layout.",
         "2. Image centered within a page. Shows the use of QML's Image component and demonstrates how to anchor elements within a layout.",
         "3. Qt Quick Controls UI Widget Gallery. Presents various controls and layouts, offering a comprehensive overview of ready-to-use UI components.",
-        "4. Floating pop-up message. Shows how to create and display dynamic message boxes using QML components.",
+        "4. Floating dialog message. Shows how to create and display dynamic message boxes using QML components.",
         "5. Drag and drop functionality. Showcases a draggable and droppable UI item.",
         "6. JavaScript interpreter UI. Allows running JavaScript code, demonstrating the integration of JavaScript within QML.",
         "7. Local persistent storage. Uses QML's LocalStorage module to save and retrieve temporary data, emulating the use of cookies.",

@@ -6,11 +6,11 @@ import "qrc:/qml/singletons/"
 Rectangle {
 
     readonly property string headerText: "SubPage 4"
-    readonly property string subHeaderText: "Floating pop-up message."
+    readonly property string subHeaderText: "Floating message dialog."
 
     Component {
-        id: popUpMessageComponent
-        PopUpMessage {}
+        id: dialogMessageComponent
+        MessageDialog {}
     }
 
     Label {
@@ -33,9 +33,9 @@ Rectangle {
         font.pointSize: ZoomSettings.bigFontSize
         anchors.centerIn: parent
         onClicked: {
-            var popUpMessage = popUpMessageComponent.createObject(parent.parent);
-            popUpMessage.anchors.centerIn = parent.parent;
-            popUpMessage.visible = true;
+            var dialogMessage = dialogMessageComponent.createObject(parent.parent);
+            dialogMessage.anchors.centerIn = parent.parent;
+            dialogMessage.visible = true;
         }
     }
 

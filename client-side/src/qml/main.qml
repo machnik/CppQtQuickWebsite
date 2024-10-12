@@ -17,8 +17,8 @@ ApplicationWindow {
     }
 
     Component {
-        id: styleDialogComponent
-        StyleDialog {}
+        id: exampleWindowComponent
+        ExampleWindow {}
     }
 
     property list<Component> subPagesComponents: [
@@ -120,13 +120,13 @@ ApplicationWindow {
             }
 
             ToolButton {
-                icon.source: "qrc:/resources/icons/colorIcon.svg"
+                icon.source: "qrc:/resources/icons/addWindowIcon.svg"
                 onClicked: {
-                    var styleDialog = styleDialogComponent.createObject(Overlay.overlay);
-                    styleDialog.visible = true;
+                    var exampleWindow = exampleWindowComponent.createObject(Overlay.overlay);
+                    exampleWindow.visible = true;
                 }
                 ToolTip {
-                    text: "(Placeholder!) Change the visual style of the application."
+                    text: "Open a new non-modal example window."
                     visible: parent.hovered
                     delay: 0
                 }

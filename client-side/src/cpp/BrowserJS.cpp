@@ -1,7 +1,5 @@
 #include "BrowserJS.h"
 
-#include <exception>
-
 #ifdef Q_OS_WASM
     #include <emscripten.h>
 #endif
