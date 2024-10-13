@@ -24,7 +24,6 @@
         <file>icons/pageIcon18.svg</file>
         <file>icons/pageIcon19.svg</file>
         <file>icons/pageIcon20.svg</file>
-        <file>icons/windowIcon.svg</file>
         <file>images/picture.jpg</file>
         <file>images/avatar_placeholder.png</file>
     </qresource>

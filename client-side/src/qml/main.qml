@@ -122,7 +122,12 @@ ApplicationWindow {
             ToolButton {
                 icon.source: "qrc:/resources/icons/addWindowIcon.svg"
                 onClicked: {
-                    var exampleWindow = exampleWindowComponent.createObject(Overlay.overlay);
+                    var exampleWindow = exampleWindowComponent.createObject(
+                        Overlay.overlay, { // Slight randomization of the window's position:
+                            x: Screen.width / 2 - (1 + Math.random()) * 100,
+                            y: Screen.height / 2 - (1+ Math.random()) * 100
+                        }
+                    );
                     exampleWindow.visible = true;
                 }
                 ToolTip {

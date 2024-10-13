@@ -1,4 +1,6 @@
 import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
 import QtQuick.Window
 
 import "qrc:/qml/singletons/"
@@ -20,11 +22,27 @@ Window {
         anchors.fill: parent
         color: "lightgray"
 
-        Text {
+        ColumnLayout {
             anchors.centerIn: parent
-            text: "This is an example window."
-            font.pixelSize: ZoomSettings.hugeFontSize
-            font.italic: true
+            spacing: 20
+
+            Label {
+                text: "This window can be resized, maximized, and dragged around."
+                font.pointSize: ZoomSettings.bigFontSize
+                Layout.alignment: Qt.AlignHCenter
+            }
+
+            Button {
+                text: "A button that does nothing"
+                font.pointSize: ZoomSettings.bigFontSize
+                Layout.alignment: Qt.AlignHCenter
+            }
+
+            TextField {
+                placeholderText: "Enter text here"
+                font.pointSize: ZoomSettings.bigFontSize
+                Layout.alignment: Qt.AlignHCenter
+            }
         }
     }
 }
