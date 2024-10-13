@@ -1,29 +1,30 @@
 import QtQuick
-import QtQuick.Controls
-import QtQuick.Dialogs
+import QtQuick.Window
 
 import "qrc:/qml/singletons/"
 
 Window {
-    id: exampleWindow
-    width: 400
-    height: 300
-    x: 100
-    y: 100
+    visible: true
+    width: 500
+    height: 350
     title: "Example Window"
-    //icon: "qrc:/resources/icons/windowIcon.svg"
+    visibility: Window.Windowed
+    flags: Qt.Window |
+           Qt.WindowTitleHint |
+           Qt.WindowSystemMenuHint |
+           Qt.WindowMinMaxButtonsHint |
+           Qt.WindowCloseButtonHint |
+           Qt.WindowResizeBorderHint
 
-    Label {
-        width: parent.width
-        anchors.centerIn: parent
-        anchors.margins: 20
-        wrapMode: Label.Wrap
-        text: "This is an example window."
-        font.pixelSize: ZoomSettings.hugeFontSize
-        font.italic: true
-    }
+    Rectangle {
+        anchors.fill: parent
+        color: "lightgray"
 
-    Button {
-        text: "Close"
+        Text {
+            anchors.centerIn: parent
+            text: "This is an example window."
+            font.pixelSize: ZoomSettings.hugeFontSize
+            font.italic: true
+        }
     }
 }
