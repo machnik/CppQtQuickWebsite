@@ -57,9 +57,8 @@ Rectangle {
                         text: "JavaScript Interpreter"
                         font.bold: true
                         font.pointSize: hugeFontSize
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.top: parent.top
-                        anchors.topMargin: parent.height / 8
+                        Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
+                        Layout.topMargin: parent.height / 8
                     }
 
                     TextField {
@@ -67,27 +66,24 @@ Rectangle {
                         text: exampleJSCode
                         font.pointSize: regularFontSize
                         width: parent.width - 20
-                        anchors.top: jsInterpreterLabel.bottom
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.topMargin: parent.height / 8
+                        Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
+                        Layout.topMargin: parent.height / 8
                     }
 
                     Label {
                         id: resultLabel
                         text: "Result: "
                         font.pointSize: bigFontSize
-                        anchors.top: jsExpressionEditor.bottom
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.topMargin: parent.height / 8
+                        Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
+                        Layout.topMargin: parent.height / 8
                     }
 
                     Label {
                         id: resultValueLabel
                         text: "-"
                         font.pointSize: hugeFontSize
-                        anchors.top: resultLabel.bottom
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.topMargin: parent.height / 16
+                        Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
+                        Layout.topMargin: parent.height / 16
                     }
 
                     RowLayout {
