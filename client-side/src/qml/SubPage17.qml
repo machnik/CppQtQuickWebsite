@@ -30,37 +30,27 @@ Rectangle {
         font.pointSize: ZoomSettings.bigFontSize
     }
 
-    Text {
+    Button {
         id: playMusic
-        text: "Click to Play Music";
+        text: "Click to Play Music"
         font.pointSize: ZoomSettings.hugeFontSize
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: stopMusic.top
-
-        MouseArea {
-            anchors.fill: parent
-            onPressed:  {
-                playMusic.color = "gray";
-                stopMusic.color = "black";
-                mediaPlayer.play();
-            }
+        anchors.bottomMargin: 20
+        enabled: mediaPlayer.playbackState !== MediaPlayer.PlayingState
+        onClicked: {
+            mediaPlayer.play()
         }
     }
 
-    Text {
+    Button {
         id: stopMusic
-        text: "Click to Stop Music";
+        text: "Click to Stop Music"
         font.pointSize: ZoomSettings.hugeFontSize
-        anchors.centerIn: parent;
-        color: "gray";
-
-        MouseArea {
-            anchors.fill: parent
-            onPressed:  {
-                playMusic.color = "black"
-                stopMusic.color = "gray"
-                mediaPlayer.stop()
-            }
+        anchors.centerIn: parent
+        enabled: mediaPlayer.playbackState === MediaPlayer.PlayingState
+        onClicked: {
+            mediaPlayer.stop()
         }
     }
 
