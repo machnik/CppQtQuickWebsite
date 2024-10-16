@@ -156,6 +156,14 @@ Rectangle {
                         }
                     }
 
+                    // Horizontal line:
+                    Rectangle {
+                        Layout.preferredWidth: parent.width - 8
+                        Layout.preferredHeight: 2
+                        Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                        color: "black"
+                    }
+
                     Rectangle {
                         Layout.preferredWidth: parent.width - 8
                         Layout.preferredHeight: parent.height / 2 - 10
