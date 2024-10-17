@@ -9,6 +9,7 @@
     #include <QtWidgets/QApplication>
 #endif
 
+#include <QtQuickControls2/QQuickStyle>
 #include <QtQml/QQmlApplicationEngine>
 
 int main(int argc, char *argv[])
@@ -18,6 +19,8 @@ int main(int argc, char *argv[])
 #else
     QApplication app(argc, argv);
 #endif
+
+    QQuickStyle::setStyle("Fusion");
 
     QQmlApplicationEngine engine;
     engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));

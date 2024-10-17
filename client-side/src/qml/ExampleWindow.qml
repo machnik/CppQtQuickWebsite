@@ -8,7 +8,7 @@ import "qrc:/qml/singletons/"
 Window {
     visible: true
     width: 500
-    height: 350
+    height: 300
     title: "Example Window"
     visibility: Window.Windowed
     flags: Qt.Window |
@@ -28,19 +28,19 @@ Window {
 
             Label {
                 text: "This window can be resized, maximized, and dragged around."
-                font.pointSize: ZoomSettings.bigFontSize
+                font.pointSize: ZoomSettings.regularFontSize
                 Layout.alignment: Qt.AlignHCenter
             }
 
             Button {
                 text: "A button that does nothing"
-                font.pointSize: ZoomSettings.bigFontSize
+                font.pointSize: ZoomSettings.regularFontSize
                 Layout.alignment: Qt.AlignHCenter
             }
 
             TextField {
                 placeholderText: "Enter text here"
-                font.pointSize: ZoomSettings.bigFontSize
+                font.pointSize: ZoomSettings.regularFontSize
                 Layout.alignment: Qt.AlignHCenter
             }
         }
