@@ -131,7 +131,7 @@ ApplicationWindow {
                     exampleWindow.visible = true;
                 }
                 ToolTip {
-                    text: "Open a new non-modal example window."
+                    text: "Open a new non-modal window."
                     visible: parent.hovered
                     delay: 0
                 }
@@ -171,11 +171,18 @@ ApplicationWindow {
             }
 
             Item {
-                width: 25
+                width: zoomControl.zoomLabelWidth / 2
                 height: parent.height
             }
 
-            ZoomControl {}
+            ZoomControl {
+                id: zoomControl
+            }
+
+            Item {
+                width: zoomControl.zoomLabelWidth / 2
+                height: parent.height
+            }
         }
     }
 }

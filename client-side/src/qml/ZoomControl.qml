@@ -12,16 +12,18 @@ Item {
     width: 200
     height: 50
 
+    property alias zoomLabelWidth: zoomLabel.width
+
     Row {
         width: parent.width
         height: parent.height
 
         Slider {
             id: zoomSlider
-            from: 0.5
-            to: 2.0
+            from: 0.75
+            to: 1.5
             value: ZoomSettings.zoomLevel
-            stepSize: 0.1
+            stepSize: 0.01
             anchors.verticalCenter: parent.verticalCenter
             onValueChanged: {
                 ZoomSettings.zoomLevel = value
@@ -34,6 +36,7 @@ Item {
         }
 
         Label {
+            id: zoomLabel
             text: (zoomSlider.value * 100).toFixed(0) + "%"
             font.pointSize: ZoomSettings.regularFontSize
             anchors.verticalCenter: zoomSlider.verticalCenter
