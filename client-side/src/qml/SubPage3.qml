@@ -100,20 +100,24 @@ Rectangle {
                     }
 
                     Rectangle {
-                        border.width: 1
-                        border.color: "black"
-                        radius: 4
-                        color: "lightblue"
+                        border.width: 3
+                        border.color: darkBlueRB.checked ? "darkblue" : darkRedRB.checked ? "darkred" : "darkgreen"
+                        radius: 10
+
+                        gradient: Gradient {
+                            GradientStop { position: 0.0; color: darkBlueRB.checked ? "lightblue" : darkRedRB.checked ? "pink" : "lightgreen" }
+                            GradientStop { position: 0.5; color: darkBlueRB.checked ? "#87CEEB" : darkRedRB.checked ? "#FFB6C1" : "#98FB98" }
+                            GradientStop { position: 1.0; color: darkBlueRB.checked ? "#4682B4" : darkRedRB.checked ? "#FF6347" : "#32CD32" }
+                        }
 
                         Layout.fillWidth: true
                         Layout.fillHeight: true
 
-                        GridLayout {
-                            columns: 1
+                        ColumnLayout {
 
                             RadioButton {
                                 id: darkBlueRB
-                                text: "Dark Blue"
+                                text: "Blue"
                                 checked: true
                                 contentItem: Text {
                                     text: darkBlueRB.text
@@ -126,7 +130,7 @@ Rectangle {
 
                             RadioButton {
                                 id: darkRedRB
-                                text: "Dark Red"
+                                text: "Red"
                                 checked: false
                                 contentItem: Text {
                                     text: darkRedRB.text
@@ -139,7 +143,7 @@ Rectangle {
 
                             RadioButton {
                                 id: darkGreenRB
-                                text: "Dark Green"
+                                text: "Green"
                                 checked: false
                                 contentItem: Text {
                                     text: darkGreenRB.text

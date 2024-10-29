@@ -34,13 +34,15 @@ Rectangle {
 
         columns: 5
         rows: 4
+        columnSpacing: 10
+        rowSpacing: 10
 
         Repeater {
             model: 20
 
             delegate: Button {
-                width: 100
-                height: 65
+                Layout.preferredWidth: 100
+                Layout.preferredHeight: 65
                 text: "Page " + (index + 1)
                 font.pointSize: ZoomSettings.regularFontSize
                 ToolTip {
