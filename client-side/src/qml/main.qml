@@ -49,7 +49,7 @@ ApplicationWindow {
     Rectangle {
         id: stackViewBorder
         anchors.fill: parent
-        anchors.margins: 70
+        anchors.margins: 60
         color: "white"
         border.color: "black"
         border.width: 2
@@ -58,8 +58,8 @@ ApplicationWindow {
         StackView {
             id: stackView
             anchors.centerIn: parent
-            width: parent.width - 16
-            height: parent.height - 16
+            width: parent.width - 60
+            height: parent.height - 60
             initialItem: mainPage
         }
     }
