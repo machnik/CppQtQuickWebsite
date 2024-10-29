@@ -152,11 +152,28 @@ cmake --build .
 WebApplication.exe
 ```
 
+# ⏩ Roadmap
+
+## ➕ Planned features
+
+- Mobile UI version for smartphones.
+- Video playback.
+- Text to speech.
+- Displaying PDF documents.
+- Accessibility.
+
+## ❗ Known issues
+
+- WebSocket server is currently not functional in the WASM build.
+- Sound does not play in all browsers.
+- 3D views do not automatically get keyboard focus.
+
 # 📜 Documentation
 
 - Qt
   - [Qt 6](https://doc.qt.io/qt.html)
   - [QML Book](https://www.qt.io/product/qt6/qml-book)
+  - [Overview - QML and C++ Integration](https://doc.qt.io/qt-6/qtqml-cppintegration-overview.html)
 - WebAssembly
   - [WASM](https://developer.mozilla.org/en-US/docs/WebAssembly)
   - [Emscripten](https://emscripten.org/docs/)
