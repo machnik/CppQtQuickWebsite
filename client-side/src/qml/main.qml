@@ -41,7 +41,11 @@ ApplicationWindow {
         Component { id: subPage17; SubPage17 {}},
         Component { id: subPage18; SubPage18 {}},
         Component { id: subPage19; SubPage19 {}},
-        Component { id: subPage20; SubPage20 {}}
+        Component { id: subPage20; SubPage20 {}},
+        Component { id: subPage21; SubPage21 {}},
+        Component { id: subPage22; SubPage22 {}},
+        Component { id: subPage23; SubPage23 {}},
+        Component { id: subPage24; SubPage24 {}}
     ]
 
     readonly property var subPagesDescriptions: SubPagesDescriptions.description

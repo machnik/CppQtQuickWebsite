@@ -24,6 +24,10 @@
         <file>icons/pageIcon18.svg</file>
         <file>icons/pageIcon19.svg</file>
         <file>icons/pageIcon20.svg</file>
+        <file>icons/pageIcon21.svg</file>
+        <file>icons/pageIcon22.svg</file>
+        <file>icons/pageIcon23.svg</file>
+        <file>icons/pageIcon24.svg</file>
         <file>images/picture.jpg</file>
         <file>images/avatar_placeholder.png</file>
     </qresource>

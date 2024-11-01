@@ -32,13 +32,13 @@ Rectangle {
         anchors.bottom: parent.bottom
         anchors.margins: 20
 
-        columns: 5
+        columns: 6
         rows: 4
         columnSpacing: 10
         rowSpacing: 10
 
         Repeater {
-            model: 20
+            model: subPagesComponents
 
             delegate: Button {
                 Layout.preferredWidth: 100

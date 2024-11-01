@@ -24,6 +24,10 @@ QtObject {
         "17. Music playback.\nIncludes controls for playing audio, showcasing multimedia capabilities within QML.",
         "18. Avatar generator using the DiceBear API.\nDemonstrates how to fetch and display data dynamically from an external source.",
         "19. WebSocket server.\nShows how to set up and manage a WebSocket server using QML and C++.",
-        "20. WebSocket client.\nShows how to set up and manage a WebSocket client that communicates with a WebSocket server."
+        "20. WebSocket client.\nShows how to set up and manage a WebSocket client that communicates with a WebSocket server.",
+        "21. Placeholder for future content.",
+        "22. Placeholder for future content.",
+        "23. Placeholder for future content.",
+        "24. Placeholder for future content."
     ]
 }
