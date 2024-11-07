@@ -14,7 +14,7 @@ Rectangle {
     property bool isAudioLoaded: false
 
     Component.onCompleted: {
-        base64Audio = Base64Converter.convertFileToBase64("qrc:/resources/audio/sound.wav")
+        base64Audio = Base64Converter.convertFileToBase64(":/resources/audio/sound.wav")
         isAudioLoaded = true
     }
 
@@ -71,7 +71,7 @@ Rectangle {
                     }
                 }
 
-                function stopAudio() {
+                window.stopAudio = function() {
                     if (source) {
                         source.stop(0);
                     }

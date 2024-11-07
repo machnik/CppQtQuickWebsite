@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
     QQuickStyle::setStyle("Fusion");
 
     QQmlApplicationEngine engine;
-    engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
+    engine.load(":/qml/main.qml");
 
     return app.exec();
 }
