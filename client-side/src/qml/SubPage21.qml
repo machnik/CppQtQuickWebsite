@@ -10,7 +10,13 @@ Rectangle {
     readonly property string headerText: "SubPage 21"
     readonly property string subHeaderText: "Music playback using the browser's Web Audio API."
 
-    readonly property string base64Audio: "data:audio/wav;base64,..." // TODO: Replace with base64 string.
+    property string base64Audio: ""
+    property bool isAudioLoaded: false
+
+    Component.onCompleted: {
+        base64Audio = Base64Converter.convertFileToBase64("qrc:/resources/audio/sound.wav")
+        isAudioLoaded = true
+    }
 
     Label {
         id: headerLabel
@@ -27,61 +33,64 @@ Rectangle {
         font.pointSize: ZoomSettings.bigFontSize
     }
 
-    // Button {
-    //     id: playMusic
-    //     text: "Click to Play Music"
-    //     font.pointSize: ZoomSettings.hugeFontSize
-    //     anchors.horizontalCenter: parent.horizontalCenter
-    //     anchors.bottom: stopMusic.top
-    //     anchors.bottomMargin: 20
-    //     onClicked: {
-    //         BrowserJS.runJS(`
-    //             var audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    //             var audioBuffer;
-    //             var source;
+    Button {
+        id: playMusic
+        text: isAudioLoaded ? "Click to Play Music" : "Loading audio... please wait."
+        font.pointSize: ZoomSettings.hugeFontSize
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: stopMusic.top
+        anchors.bottomMargin: 20
+        enabled: isAudioLoaded
+        onClicked: {
+            BrowserJS.runJS(`
+                var audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                var audioBuffer;
+                var source;
 
-    //             function loadAudio(base64) {
-    //                 var binaryString = window.atob(base64.split(',')[1]);
-    //                 var len = binaryString.length;
-    //                 var bytes = new Uint8Array(len);
-    //                 for (var i = 0; i < len; i++) {
-    //                     bytes[i] = binaryString.charCodeAt(i);
-    //                 }
-    //                 audioContext.decodeAudioData(bytes.buffer, function(buffer) {
-    //                     audioBuffer = buffer;
-    //                 });
-    //             }
+                function loadAudio(base64) {
+                    var binaryString = window.atob(base64);
+                    var len = binaryString.length;
+                    var bytes = new Uint8Array(len);
+                    for (var i = 0; i < len; i++) {
+                        bytes[i] = binaryString.charCodeAt(i);
+                    }
+                    audioContext.decodeAudioData(bytes.buffer, function(buffer) {
+                        audioBuffer = buffer;
+                        playAudio();
+                    }, function(e) {
+                        console.error('Error decoding audio data:', e);
+                    });
+                }
 
-    //             function playAudio() {
-    //                 if (audioBuffer) {
-    //                     source = audioContext.createBufferSource();
-    //                     source.buffer = audioBuffer;
-    //                     source.connect(audioContext.destination);
-    //                     source.start(0);
-    //                 }
-    //             }
+                function playAudio() {
+                    if (audioBuffer) {
+                        source = audioContext.createBufferSource();
+                        source.buffer = audioBuffer;
+                        source.connect(audioContext.destination);
+                        source.start(0);
+                    }
+                }
 
-    //             function stopAudio() {
-    //                 if (source) {
-    //                     source.stop(0);
-    //                 }
-    //             }
+                function stopAudio() {
+                    if (source) {
+                        source.stop(0);
+                    }
+                }
 
-    //             loadAudio('${base64Audio}');
-    //             playAudio();
-    //         `);
-    //     }
-    // }
+                loadAudio('${base64Audio}');
+            `);
+        }
+    }
 
-    // Button {
-    //     id: stopMusic
-    //     text: "Click to Stop Music"
-    //     font.pointSize: ZoomSettings.hugeFontSize
-    //     anchors.centerIn: parent
-    //     onClicked: {
-    //         BrowserJS.runJS("stopAudio();");
-    //     }
-    // }
+    Button {
+        id: stopMusic
+        text: "Click to Stop Music"
+        font.pointSize: ZoomSettings.hugeFontSize
+        anchors.centerIn: parent
+        onClicked: {
+            BrowserJS.runJS("stopAudio();");
+        }
+    }
 
     ToMainPageButton {
         anchors.bottom: parent.bottom
