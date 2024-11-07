@@ -21,6 +21,7 @@ qt_add_executable(${PROJECT_NAME}
     "src/cpp/Counter.cpp"
     "src/cpp/FakeProcessor.cpp"
     "src/cpp/ListModel.cpp"
+    "src/cpp/SomeLibrary.cpp"
     "src/cpp/TextFileIO.cpp"
     "src/cpp/WebSocketServer.cpp"
     "src/cpp/WebSocketClient.cpp"  

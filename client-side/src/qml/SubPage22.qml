@@ -6,7 +6,7 @@ import "qrc:/qml/singletons/"
 Rectangle {
 
     readonly property string headerText: "SubPage 22"
-    readonly property string subHeaderText: "Placeholder for future content."
+    readonly property string subHeaderText: "Using a pure C++ library in QML."
 
     Label {
         id: headerLabel
