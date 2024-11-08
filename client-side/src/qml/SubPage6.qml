@@ -104,7 +104,7 @@ Rectangle {
                             text: "BROWSER JS INTERPRETER"
                             font.pointSize: bigFontSize
                             onClicked: {
-                                if (BrowserJS.available) {
+                                if (BrowserJS.browserEnvironment) {
                                     var result = BrowserJS.runJS(jsExpressionEditor.text);
                                     resultValueLabel.text = result;
                                 } else {

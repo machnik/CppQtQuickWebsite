@@ -7,14 +7,14 @@
 BrowserJS::BrowserJS(QObject *parent)
     :   QObject{parent},
 #ifdef Q_OS_WASM
-        available{true}
+        b_browserEnvironment{true}
 #else
-        available{false}
+        b_browserEnvironment{false}
 #endif
 {}
 
-bool BrowserJS::isAvailable() const {
-    return available;
+bool BrowserJS::isBrowserEnvionment() const {
+    return b_browserEnvironment;
 }
 
 int BrowserJS::runJS(const QString & code) {

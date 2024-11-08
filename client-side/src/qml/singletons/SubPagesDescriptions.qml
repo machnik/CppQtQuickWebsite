@@ -21,11 +21,11 @@ QtObject {
         "14. 2D animation.\nIncludes animated items, demonstrating the capabilities of QML for creating dynamic UIs.",
         "15. 3D animation.\nShowcases the use of Qt Quick 3D to create and display 3D models within a QML application.",
         "16. Qt Quick 3D Physics.\nDemonstrates the integration of physics simulations within a 3D scene using QML.",
-        "17. Music playback using Qt's MediaPlayer.\nShows how to play audio files using Qt's MediaPlayer component.",
+        "17. Music playback using Qt's MediaPlayer.\nShows how to play audio files (embedded in the application) using Qt's MediaPlayer component.",
         "18. Avatar generator using the DiceBear API.\nDemonstrates how to fetch and display data dynamically from an external source.",
         "19. WebSocket server.\nShows how to set up and manage a WebSocket server using QML and C++.",
         "20. WebSocket client.\nShows how to set up and manage a WebSocket client that communicates with a WebSocket server.",
-        "21. Music playback using browser JS envionment.\nDemonstrates how to play audio in a browser environment using its JavaScript engine.",
+        "21. Music playback using browser JS environment.\nDemonstrates how to play audio (embedded in the application) in a browser environment using its JavaScript engine.",
         "22. Placeholder for future content.",
         "23. Placeholder for future content.",
         "24. Placeholder for future content."

@@ -14,8 +14,14 @@ Rectangle {
     property bool isAudioLoaded: false
 
     Component.onCompleted: {
-        base64Audio = Base64Converter.convertFileToBase64(":/resources/audio/sound.wav")
-        isAudioLoaded = true
+        // Data embedded within the application with the Qt resource system
+        // is not directly accessible in the browser's JS environment.
+        // However, we can work around this limitation by passing any data
+        // we need to the browser's JS environment using the Base64 encoding.
+        if (BrowserJS.browserEnvironment) {
+            base64Audio = Base64Converter.convertFileToBase64(":/resources/audio/sound.wav")
+            isAudioLoaded = true
+        }
     }
 
     Label {
@@ -35,13 +41,15 @@ Rectangle {
 
     Button {
         id: playMusic
-        text: isAudioLoaded ? "Click to Play Music" : "Loading audio... please wait."
+        text: isAudioLoaded ? "Click to Play Music" : (BrowserJS.browserEnvironment ? "Loading audio..." : "Playback not available in this environment!")
         font.pointSize: ZoomSettings.hugeFontSize
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: stopMusic.top
         anchors.bottomMargin: 20
         enabled: isAudioLoaded
         onClicked: {
+            enabled = false;
+            stopMusic.enabled = true;
             BrowserJS.runJS(`
                 var audioContext = new (window.AudioContext || window.webkitAudioContext)();
                 var audioBuffer;
@@ -66,6 +74,7 @@ Rectangle {
                     if (audioBuffer) {
                         source = audioContext.createBufferSource();
                         source.buffer = audioBuffer;
+                        source.loop = true;
                         source.connect(audioContext.destination);
                         source.start(0);
                     }
@@ -87,7 +96,10 @@ Rectangle {
         text: "Click to Stop Music"
         font.pointSize: ZoomSettings.hugeFontSize
         anchors.centerIn: parent
+        enabled: false
         onClicked: {
+            enabled = false;
+            playMusic.enabled = true;
             BrowserJS.runJS("stopAudio();");
         }
     }

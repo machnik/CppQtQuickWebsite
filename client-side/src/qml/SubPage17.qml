@@ -13,6 +13,7 @@ Rectangle {
         id: mediaPlayer
         source: "qrc:/resources/audio/sound.wav"
         audioOutput: AudioOutput {}
+        loops: MediaPlayer.Infinite
     }
 
     Label {
