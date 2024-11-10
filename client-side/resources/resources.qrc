@@ -28,7 +28,11 @@
         <file>icons/pageIcon22.svg</file>
         <file>icons/pageIcon23.svg</file>
         <file>icons/pageIcon24.svg</file>
+        <file>icons/pause.svg</file>
+        <file>icons/play.svg</file>
+        <file>icons/stop.svg</file>
         <file>images/picture.jpg</file>
         <file>images/avatar_placeholder.png</file>
+        <file>videos/earth.mp4</file>
     </qresource>
 </RCC>
