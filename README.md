@@ -202,17 +202,16 @@ If you are using _wasm_multithread_ binaries, sharing memory via `SharedArrayBuf
 
 ## ➕ Planned features
 
-- Mobile UI version for smartphones.
-- Video playback.
-- Text to speech.
-- Displaying PDF documents.
-- Accessibility.
+- Mobile UI version for smartphones (horizontal layout?).
+- Video playback using the browser's JavaScript engine.
+- Text to speech (Qt Speech and/or Web Speech API).
+- Accessibility (support for screenreaders).
 
 ## ❗ Known issues
 
 - WebSocket server is currently not functional in the WASM build.
-- Sound does not play in all browsers.
-- 3D views do not automatically get keyboard focus.
+- Qt Multimedia doesn't seem to work with WASM, even though it did in earlier Qt 6 versions.
+- 3D views do not always automatically get keyboard focus.
 
 # 📜 Documentation
 

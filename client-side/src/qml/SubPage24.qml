@@ -18,10 +18,20 @@ Rectangle {
     }
 
     Label {
+        id: subHeaderLabel
         text: subHeaderText
         anchors.top: headerLabel.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         font.pointSize: ZoomSettings.bigFontSize
+    }
+
+    Label {
+        text: "Does not work in WebAssembly with Qt 6.8!"
+        anchors.top: subHeaderLabel.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.margins: 20
+        font.pointSize: ZoomSettings.bigFontSize
+        color: "red"
     }
 
     Video {
@@ -29,7 +39,7 @@ Rectangle {
         width: parent.width * 0.8
         height: parent.height * 0.6
         anchors.centerIn: parent
-        source: "qrc:/resources/video/earth.mp4"
+        source: "qrc:/earth.mp4"
         autoPlay: false
         fillMode: VideoOutput.PreserveAspectFit
     }

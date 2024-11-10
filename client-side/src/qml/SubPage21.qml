@@ -18,6 +18,8 @@ Rectangle {
         // is not directly accessible in the browser's JS environment.
         // However, we can work around this limitation by passing any data
         // we need to the browser's JS environment using the Base64 encoding.
+        // Another idea worth considering would be to use the virtual file system
+        // provided by Emscripten.
         if (BrowserJS.browserEnvironment) {
             base64Audio = Base64Converter.convertFileToBase64(":/resources/audio/sound.wav")
             isAudioLoaded = true
@@ -57,9 +59,9 @@ Rectangle {
 
                 function loadAudio(base64) {
                     var binaryString = window.atob(base64);
-                    var len = binaryString.length;
-                    var bytes = new Uint8Array(len);
-                    for (var i = 0; i < len; i++) {
+                    var length = binaryString.length;
+                    var bytes = new Uint8Array(length);
+                    for (var i = 0; i < length; i++) {
                         bytes[i] = binaryString.charCodeAt(i);
                     }
                     audioContext.decodeAudioData(bytes.buffer, function(buffer) {

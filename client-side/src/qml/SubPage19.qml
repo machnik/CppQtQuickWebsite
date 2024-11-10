@@ -43,7 +43,7 @@ Rectangle {
     }
 
     Label {
-        text: "Temporarily unsupported in WebAssembly with Qt 6.8.0!"
+        text: "Temporarily unsupported in WebAssembly with Qt 6.8!"
         anchors.bottom: portField.top
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.margins: 20

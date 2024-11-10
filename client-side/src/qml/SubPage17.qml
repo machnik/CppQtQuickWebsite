@@ -11,7 +11,7 @@ Rectangle {
 
     MediaPlayer {
         id: mediaPlayer
-        source: "qrc:/resources/audio/sound.wav"
+        source: "qrc:/sound.wav"
         audioOutput: AudioOutput {}
         loops: MediaPlayer.Infinite
     }
@@ -25,10 +25,20 @@ Rectangle {
     }
 
     Label {
+        id: subHeaderLabel
         text: subHeaderText
         anchors.top: headerLabel.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         font.pointSize: ZoomSettings.bigFontSize
+    }
+
+    Label {
+        text: "Does not work in WebAssembly with Qt 6.8!"
+        anchors.top: subHeaderLabel.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.margins: 20
+        font.pointSize: ZoomSettings.bigFontSize
+        color: "red"
     }
 
     Button {
