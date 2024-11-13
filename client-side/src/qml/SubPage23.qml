@@ -6,7 +6,7 @@ import "qrc:/qml/singletons/"
 Rectangle {
 
     readonly property string headerText: "SubPage 23"
-    readonly property string subHeaderText: "PDF file viewer."
+    readonly property string subHeaderText: "PLACEHOLDER."
 
     Label {
         id: headerLabel
