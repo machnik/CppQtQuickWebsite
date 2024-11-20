@@ -3,10 +3,20 @@ import QtQuick.Controls
 
 import "qrc:/qml/singletons/"
 
+import CppQtQuickWebsite.CppObjects
+
 Rectangle {
 
     readonly property string headerText: "SubPage 22"
-    readonly property string subHeaderText: "Using a pure C++ library in QML."
+    readonly property string subHeaderText: "Using QSysInfo in QML."
+
+    SystemInformation {
+        id: sysInfo
+    }
+
+    function displayField(value) {
+        return value === "" ? "---" : value;
+    }
 
     Label {
         id: headerLabel
@@ -23,10 +33,70 @@ Rectangle {
         font.pointSize: ZoomSettings.bigFontSize
     }
 
-    Label {
-        text: "This page is a placeholder for future content."
+    Column {
         anchors.centerIn: parent
-        font.pointSize: ZoomSettings.bigFontSize
+        spacing: 10
+
+        Label {
+            text: "System Information:"
+            font.pointSize: ZoomSettings.defaultFontSize
+            font.bold: true
+        }
+
+        Label {
+            text: "- Boot Unique ID: " + displayField(sysInfo.bootUniqueId)
+            font.pointSize: ZoomSettings.smallFontSize
+        }
+
+        Label {
+            text: "- Build ABI: " + displayField(sysInfo.buildAbi)
+            font.pointSize: ZoomSettings.smallFontSize
+        }
+
+        Label {
+            text: "- Build CPU Architecture: " + displayField(sysInfo.buildCpuArchitecture)
+            font.pointSize: ZoomSettings.smallFontSize
+        }
+
+        Label {
+            text: "- Current CPU Architecture: " + displayField(sysInfo.currentCpuArchitecture)
+            font.pointSize: ZoomSettings.smallFontSize
+        }
+
+        Label {
+            text: "- Host Name: " + displayField(sysInfo.machineHostName)
+            font.pointSize: ZoomSettings.smallFontSize
+        }
+
+        Label {
+            text: "- Kernel Type: " + displayField(sysInfo.kernelType)
+            font.pointSize: ZoomSettings.smallFontSize
+        }
+
+        Label {
+            text: "- Kernel Version: " + displayField(sysInfo.kernelVersion)
+            font.pointSize: ZoomSettings.smallFontSize
+        }
+
+        Label {
+            text: "- Machine Unique ID: " + displayField(sysInfo.machineUniqueId)
+            font.pointSize: ZoomSettings.smallFontSize
+        }
+
+        Label {
+            text: "- Product Name: " + displayField(sysInfo.prettyProductName)
+            font.pointSize: ZoomSettings.smallFontSize
+        }
+
+        Label {
+            text: "- Product Type: " + displayField(sysInfo.productType)
+            font.pointSize: ZoomSettings.smallFontSize
+        }
+
+        Label {
+            text: "- Product Version: " + displayField(sysInfo.productVersion)
+            font.pointSize: ZoomSettings.smallFontSize
+        }
     }
 
     ToMainPageButton {

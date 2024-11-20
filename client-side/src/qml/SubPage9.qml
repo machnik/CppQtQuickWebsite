@@ -12,6 +12,14 @@ Rectangle {
 
     property int bigFontSize: ZoomSettings.bigFontSize
 
+    Counter {
+        id: counter1
+    }
+
+    Counter {
+        id: counter2
+    }
+
     Label {
         id: headerLabel
         text: headerText
@@ -26,14 +34,6 @@ Rectangle {
         anchors.top: headerLabel.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         font.pointSize: ZoomSettings.bigFontSize
-    }
-
-    Counter {
-        id: counter1
-    }
-
-    Counter {
-        id: counter2
     }
 
     Label {
