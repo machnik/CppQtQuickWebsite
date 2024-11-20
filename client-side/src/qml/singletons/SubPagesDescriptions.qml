@@ -27,7 +27,7 @@ QtObject {
         "20. WebSocket client.\nShows how to set up and manage a WebSocket client that communicates with a WebSocket server.",
         "21. Music playback using browser JS environment.\nDemonstrates how to play audio (embedded in the application) in a browser environment using its JavaScript engine.",
         "22. Using QSysInfo in QML.\nDisplays system information by accessing QSysInfo through a C++ interface exposed to QML.",
-        "23. Placeholder for future content.",
+        "23. Using ColorDialog in QML.\nShows how to use Qt's ColorDialog component within a QML application.",
         "24. Video player.\nShows how to implement a video player using Qt's Multimedia module within a QML application."
     ]
 }

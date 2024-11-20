@@ -1,12 +1,16 @@
 import QtQuick
 import QtQuick.Controls
 
+import Qt.labs.platform
+
 import "qrc:/qml/singletons/"
 
 Rectangle {
 
     readonly property string headerText: "SubPage 23"
-    readonly property string subHeaderText: "PLACEHOLDER."
+    readonly property string subHeaderText: "Using ColorDialog in QML."
+
+    property color selectedColor: "blue"
 
     Label {
         id: headerLabel
@@ -23,10 +27,28 @@ Rectangle {
         font.pointSize: ZoomSettings.bigFontSize
     }
 
-    Label {
-        text: "This page is a placeholder for future content."
+    Rectangle {
+        id: colorPreview
+        width: 160
+        height: 160
+        color: selectedColor
         anchors.centerIn: parent
-        font.pointSize: ZoomSettings.bigFontSize
+        border.width: 3
+        radius: 12
+    }
+
+    Button {
+        text: "Select Color"
+        anchors.top: colorPreview.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.topMargin: 20
+        onClicked: colorDialog.open()
+    }
+
+    ColorDialog {
+        id: colorDialog
+        currentColor: selectedColor
+        onAccepted: selectedColor = colorDialog.currentColor
     }
 
     ToMainPageButton {

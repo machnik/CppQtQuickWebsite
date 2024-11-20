@@ -4,21 +4,17 @@
     on the web at near-native speed.
 */
     #include <emscripten.h>
-    #include <QtGui/QGuiApplication>
-#else
-    #include <QtWidgets/QApplication>
 #endif
 
-#include <QtQuickControls2/QQuickStyle>
+#include <QtWidgets/QApplication>
+
 #include <QtQml/QQmlApplicationEngine>
+#include <QtQuickControls2/QQuickStyle>
 
 int main(int argc, char *argv[])
 {
-#ifdef Q_OS_WASM
-    QGuiApplication app(argc, argv);
-#else
+//  If the Widgets module is not needed, you can use QGuiApplication instead of QApplication:
     QApplication app(argc, argv);
-#endif
 
     QQuickStyle::setStyle("Fusion");
 
