@@ -39,6 +39,7 @@ Rectangle {
 
     Button {
         text: "Select Color"
+        font.pointSize: ZoomSettings.bigFontSize
         anchors.top: colorPreview.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.topMargin: 20
