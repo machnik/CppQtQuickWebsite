@@ -22,6 +22,8 @@ Rectangle {
         }
     }
 
+    color: "transparent"
+
     Label {
         id: headerLabel
         text: headerText
@@ -51,20 +53,30 @@ Rectangle {
         height: parent.height * 0.4
         anchors.centerIn: parent
 
-        TextArea {
-            id: fileContentsTextArea
-            text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+        Rectangle {
             width: parent.width
             height: parent.height
-            wrapMode: Text.WordWrap
-            font.pixelSize: ZoomSettings.smallFontSize
+            border.color: "black"
+            color: "white"
+
+            TextArea {
+                id: fileContentsTextArea
+                text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                width: parent.width
+                height: parent.height
+                wrapMode: Text.WordWrap
+                font.pixelSize: ZoomSettings.smallFontSize
+            }
         }
     }
 
     Rectangle {
         width: openFileButton.width + saveFileButton.width + 30
         height: openFileButton.height + 20
-        color: "lightyellow"
+        color: "transparent"
+        border.color: "black"
+        border.width: 1
+        radius: 8
         anchors.bottom: toMainPageButton.top
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottomMargin: 10

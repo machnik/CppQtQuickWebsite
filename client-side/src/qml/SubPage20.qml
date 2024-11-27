@@ -28,6 +28,8 @@ Rectangle {
         }
     }
 
+    color: "transparent"
+
     Label {
         id: headerLabel
         text: headerText

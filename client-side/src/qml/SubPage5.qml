@@ -10,6 +10,8 @@ Rectangle {
 
     readonly property int drawingBorderWidth: 3
 
+    color: "transparent"
+
     Label {
         id: headerLabel
         text: headerText

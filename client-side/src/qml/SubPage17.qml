@@ -16,6 +16,8 @@ Rectangle {
         loops: MediaPlayer.Infinite
     }
 
+    color: "transparent"
+
     Label {
         id: headerLabel
         text: headerText

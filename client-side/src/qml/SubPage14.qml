@@ -8,6 +8,8 @@ Rectangle {
     readonly property string headerText: "SubPage 14"
     readonly property string subHeaderText: "2D animation."
 
+    color: "transparent"
+
     Label {
         id: headerLabel
         text: headerText

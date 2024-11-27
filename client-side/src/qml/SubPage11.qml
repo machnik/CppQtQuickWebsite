@@ -13,6 +13,8 @@ Rectangle {
 
     property int regularFontSize: ZoomSettings.regularFontSize
 
+    color: "transparent"
+
     ColumnLayout {
         anchors.centerIn: parent
         anchors.fill: parent

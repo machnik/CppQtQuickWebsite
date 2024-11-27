@@ -12,6 +12,8 @@ Rectangle {
 
     property int bigFontSize: ZoomSettings.bigFontSize
 
+    color: "transparent"
+
     Counter {
         id: counter1
     }

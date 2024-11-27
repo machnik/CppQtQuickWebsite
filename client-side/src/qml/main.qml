@@ -9,7 +9,14 @@ ApplicationWindow {
     width: Screen.width; height: Screen.height
     flags: Qt.Window | Qt.FramelessWindowHint
 
-    color: "gray"
+    background: Rectangle {
+        anchors.fill: parent
+        gradient: Gradient {
+            orientation: Gradient.Diagonal
+            GradientStop { position: 0.0; color: "#A0A0A0" }
+            GradientStop { position: 1.0; color: "#202020" }
+        }
+    }
 
     Component {
         id: mainPage
@@ -54,10 +61,15 @@ ApplicationWindow {
         id: stackViewBorder
         anchors.fill: parent
         anchors.margins: 60
-        color: "white"
         border.color: "black"
         border.width: 2
         radius: 8
+
+        gradient: Gradient {
+            orientation: Gradient.Diagonal
+            GradientStop { position: 0.0; color: "#F5F5F5" }
+            GradientStop { position: 1.0; color: "#B0B0B0" }
+        }
 
         StackView {
             id: stackView

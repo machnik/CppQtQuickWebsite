@@ -11,6 +11,8 @@ import "qrc:/qml/singletons/"
 
 Rectangle {
 
+    color: "transparent"
+
     Label {
         id: headerLabel
         text: "Main Page"

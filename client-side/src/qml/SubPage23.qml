@@ -12,6 +12,8 @@ Rectangle {
 
     property color selectedColor: "blue"
 
+    color: "transparent"
+
     Label {
         id: headerLabel
         text: headerText

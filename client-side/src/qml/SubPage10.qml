@@ -14,6 +14,8 @@ Rectangle {
         inputField.text = "Text set using JavaScript.";
     }
 
+    color: "transparent"
+
     Label {
         id: headerLabel
         text: headerText

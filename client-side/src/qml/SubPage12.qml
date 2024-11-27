@@ -42,6 +42,8 @@ Rectangle {
         });
     }
 
+    color: "transparent"
+
     Label {
         id: headerLabel
         text: headerText
@@ -77,7 +79,10 @@ Rectangle {
 
         width: 600
         height: 200
-        color: "lightyellow"
+        color: "transparent"
+        border.color: "black"
+        border.width: 1
+        radius: 8
         anchors.centerIn: parent
 
         Grid {

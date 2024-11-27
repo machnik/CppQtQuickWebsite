@@ -18,6 +18,8 @@ Rectangle {
         return value === "" ? "---" : value;
     }
 
+    color: "transparent"
+
     Label {
         id: headerLabel
         text: headerText

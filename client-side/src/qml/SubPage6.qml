@@ -7,6 +7,7 @@ import "qrc:/qml/singletons/"
 import CppQtQuickWebsite.CppObjects
 
 Rectangle {
+
     readonly property string headerText: "SubPage 6"
     readonly property string subHeaderText: "JavaScript interpreter."
 
@@ -16,6 +17,8 @@ Rectangle {
     property int smallFontSize: ZoomSettings.smallFontSize
 
     readonly property string exampleJSCode: "1 + 1";
+
+    color: "transparent"
 
     Label {
         id: headerLabel

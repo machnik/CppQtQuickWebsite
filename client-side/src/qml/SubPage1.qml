@@ -8,6 +8,8 @@ Rectangle {
     readonly property string headerText: "SubPage 1"
     readonly property string subHeaderText: "Static webpage with much scrollable text."
 
+    color: "transparent"
+
     Label {
         id: headerLabel
         text: headerText

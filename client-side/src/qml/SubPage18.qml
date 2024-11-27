@@ -12,6 +12,8 @@ Rectangle {
 
     property int bigFontSize: ZoomSettings.bigFontSize
 
+    color: "transparent"
+
     Label {
         id: headerLabel
         text: headerText

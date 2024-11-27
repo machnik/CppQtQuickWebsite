@@ -8,6 +8,8 @@ Rectangle {
     readonly property string headerText: "SubPage 4"
     readonly property string subHeaderText: "Floating message dialog."
 
+    color: "transparent"
+
     Component {
         id: dialogMessageComponent
         MessageDialog {}
