@@ -1,5 +1,8 @@
 #include "Backend.h"
 
+#include <QtCore/QFile>
+#include <QtCore/QTextStream>
+
 Backend::Backend(QObject *parent) : QObject(parent), m_listModel(new ListModel(this))
 {
     m_listModel->addItem("C++ Item 1");
@@ -15,6 +18,19 @@ QString Backend::message() const
 ListModel *Backend::listModel() const
 {
     return m_listModel;
+}
+
+QString Backend::textResource(const QString &resourceName) const
+{
+    QString text;
+
+    QFile file(":/resources/text/" + resourceName);
+    if (file.open(QIODevice::ReadOnly)) {
+        QTextStream in(&file);
+        text = in.readAll();
+    }
+
+    return text;
 }
 
 void Backend::setMessage(const QString &message)

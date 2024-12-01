@@ -33,6 +33,7 @@
         <file>icons/stop.svg</file>
         <file>images/picture.jpg</file>
         <file>images/avatar_placeholder.png</file>
+        <file>text/long_text.txt</file>
         <file>videos/earth.mp4</file>
     </qresource>
 </RCC>

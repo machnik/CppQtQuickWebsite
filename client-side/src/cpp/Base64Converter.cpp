@@ -1,7 +1,6 @@
 #include "Base64Converter.h"
 
 #include <QtCore/QFile>
-#include <QtCore/QByteArray>
 #include <QtCore/QTextStream>
 
 Base64Converter::Base64Converter(QObject *parent) : QObject(parent)

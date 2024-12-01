@@ -3,6 +3,8 @@ import QtQuick.Controls
 
 import "qrc:/qml/singletons/"
 
+import CppQtQuickWebsite.CppObjects
+
 Rectangle {
 
     readonly property string headerText: "SubPage 1"
@@ -35,7 +37,7 @@ Rectangle {
 
         TextArea {
             readOnly: true
-            text: "lorem ipsum dolor sit amet ".repeat(1000)
+            text: Backend.textResource("long_text.txt")
             font.pointSize: ZoomSettings.regularFontSize
             wrapMode: Text.WordWrap
         }

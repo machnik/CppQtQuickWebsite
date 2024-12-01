@@ -61,7 +61,7 @@ Rectangle {
 
             TextArea {
                 id: fileContentsTextArea
-                text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                text: Backend.textResource("long_text.txt")
                 width: parent.width
                 height: parent.height
                 wrapMode: Text.WordWrap
