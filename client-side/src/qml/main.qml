@@ -12,7 +12,6 @@ ApplicationWindow {
     background: Rectangle {
         anchors.fill: parent
         gradient: Gradient {
-            orientation: Gradient.Diagonal
             GradientStop { position: 0.0; color: "#A0A0A0" }
             GradientStop { position: 1.0; color: "#202020" }
         }
@@ -66,7 +65,6 @@ ApplicationWindow {
         radius: 8
 
         gradient: Gradient {
-            orientation: Gradient.Diagonal
             GradientStop { position: 0.0; color: "#F5F5F5" }
             GradientStop { position: 1.0; color: "#B0B0B0" }
         }

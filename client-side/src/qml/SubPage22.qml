@@ -41,7 +41,7 @@ Rectangle {
 
         Label {
             text: "System Information:"
-            font.pointSize: ZoomSettings.defaultFontSize
+            font.pointSize: ZoomSettings.regularFontSize
             font.bold: true
         }
 
