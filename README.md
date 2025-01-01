@@ -202,6 +202,7 @@ If you are using _wasm_multithread_ binaries, sharing memory via `SharedArrayBuf
 
 ## ➕ Planned features
 
+- Internationalization ([Writing Source Code for Translation](https://doc.qt.io/qt-6/i18n-source-translation.html#mark-strings-for-translation))
 - Mobile UI version for smartphones (horizontal layout?).
 - Video playback using the browser's JavaScript engine.
 - Text to speech (Qt Speech and/or Web Speech API).
