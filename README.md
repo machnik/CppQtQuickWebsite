@@ -200,13 +200,14 @@ If you are using _wasm_multithread_ binaries, sharing memory via `SharedArrayBuf
 
 # ⏩ Roadmap
 
-## ➕ Planned features
+## ➕ Ideas for new features
 
-- Internationalization ([Writing Source Code for Translation](https://doc.qt.io/qt-6/i18n-source-translation.html#mark-strings-for-translation))
+- Internationalization - See [Writing Source Code for Translation](https://doc.qt.io/qt-6/i18n-source-translation.html#mark-strings-for-translation).
+- Better clipboard support: Use mouse for cut, copy and paste. See [Qt WebAssembly clipboard](https://www.qt.io/blog/qt-webassembly-clipboard).
 - Mobile UI version for smartphones (horizontal layout?).
 - Video playback using the browser's JavaScript engine.
-- Text to speech (Qt Speech and/or Web Speech API).
-- Accessibility (support for screenreaders).
+- Text to speech (Qt Speech and/or JavaScript Web Speech API).
+- Accessibility: Support for screenreaders.
 
 ## ❗ Known issues
 
