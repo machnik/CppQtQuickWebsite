@@ -34,6 +34,8 @@
         <file>images/picture.jpg</file>
         <file>images/avatar_placeholder.png</file>
         <file>text/long_text.txt</file>
+        <file>translation/local_strings_en_US.json</file>
+        <file>translation/local_strings_pl_PL.json</file>
         <file>videos/earth.mp4</file>
     </qresource>
 </RCC>

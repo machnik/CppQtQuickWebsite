@@ -107,6 +107,23 @@ ApplicationWindow {
                 }
             }
         }
+        Menu {
+            title: "LANGUAGE"
+            MenuItem {
+                text: "English"
+                font.pointSize: ZoomSettings.regularFontSize
+                onTriggered: {
+                    // TODO
+                }
+            }
+            MenuItem {
+                text: "Polski"
+                font.pointSize: ZoomSettings.regularFontSize
+                onTriggered: {
+                    // TODO
+                }
+            }
+        }
     }
 
     ToolBar {

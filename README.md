@@ -202,7 +202,6 @@ If you are using _wasm_multithread_ binaries, sharing memory via `SharedArrayBuf
 
 ## ➕ Ideas for new features
 
-- Internationalization - See [Writing Source Code for Translation](https://doc.qt.io/qt-6/i18n-source-translation.html#mark-strings-for-translation).
 - Better clipboard support: Use mouse for cut, copy and paste. See [Qt WebAssembly clipboard](https://www.qt.io/blog/qt-webassembly-clipboard).
 - Mobile UI version for smartphones (horizontal layout?).
 - Video playback using the browser's JavaScript engine.
