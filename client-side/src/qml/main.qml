@@ -57,7 +57,7 @@ ApplicationWindow {
         Component { id: subPage24; SubPage24 {}}
     ]
 
-    readonly property var subPagesDescriptions: SubPagesDescriptions.description
+    readonly property var subPagesDescriptions: SubPagesDescriptions.descriptions(Localization.currentLanguage)
 
     function switchLanguage(language) {
         console.log("Switching language to " + language)
