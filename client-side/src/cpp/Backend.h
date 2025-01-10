@@ -30,6 +30,7 @@ class Backend : public QObject
     The Q_INVOKABLE macro can be used to expose other methods (that are not slots) to QML.
 */
 
+        Q_INVOKABLE void reloadQML();
         Q_INVOKABLE QString message() const;
         Q_INVOKABLE ListModel *listModel() const;
         Q_INVOKABLE QString textResource(const QString &resourceName) const;

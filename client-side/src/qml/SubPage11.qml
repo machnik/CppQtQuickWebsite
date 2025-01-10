@@ -8,7 +8,7 @@ import CppQtQuickWebsite.CppObjects
 
 Rectangle {
 
-    readonly property string headerText: "SubPage 11"
+    readonly property string headerText: (Localization.string("SubPage %1")).arg(11)
     readonly property string subHeaderText: "QML ListViews with QML and C++ models."
 
     property int regularFontSize: ZoomSettings.regularFontSize

@@ -5,9 +5,11 @@ import QtQuick3D.Helpers
 
 import "qrc:/qml/singletons/"
 
+import CppQtQuickWebsite.CppObjects
+
 Rectangle {
 
-    readonly property string headerText: "SubPage 15"
+    readonly property string headerText: (Localization.string("SubPage %1")).arg(15)
     readonly property string subHeaderText: "3D View"
     
     color: "transparent"

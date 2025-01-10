@@ -7,9 +7,11 @@ import QtQuick3D.Physics.Helpers
 
 import "qrc:/qml/singletons/"
 
+import CppQtQuickWebsite.CppObjects
+
 Rectangle {
 
-    readonly property string headerText: "SubPage 16"
+    readonly property string headerText: (Localization.string("SubPage %1")).arg(16)
     readonly property string subHeaderText: "Qt Quick 3D Physics"
 
     color: "transparent"

@@ -8,7 +8,7 @@ import CppQtQuickWebsite.CppObjects
 
 Rectangle {
 
-    readonly property string headerText: "SubPage 6"
+    readonly property string headerText: (Localization.string("SubPage %1")).arg(6)
     readonly property string subHeaderText: "JavaScript interpreter."
 
     property int hugeFontSize: ZoomSettings.hugeFontSize

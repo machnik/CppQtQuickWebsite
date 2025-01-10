@@ -3,9 +3,11 @@ import QtQuick.Controls
 
 import "qrc:/qml/singletons/"
 
+import CppQtQuickWebsite.CppObjects
+
 Rectangle {
 
-    readonly property string headerText: "SubPage 5"
+    readonly property string headerText: (Localization.string("SubPage %1")).arg(5)
     readonly property string subHeaderText: "Drag and Drop"
 
     readonly property int drawingBorderWidth: 3

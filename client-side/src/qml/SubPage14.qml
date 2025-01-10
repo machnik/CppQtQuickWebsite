@@ -3,9 +3,11 @@ import QtQuick.Controls
 
 import "qrc:/qml/singletons/"
 
+import CppQtQuickWebsite.CppObjects
+
 Rectangle {
 
-    readonly property string headerText: "SubPage 14"
+    readonly property string headerText: (Localization.string("SubPage %1")).arg(14)
     readonly property string subHeaderText: "2D animation."
 
     color: "transparent"

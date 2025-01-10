@@ -7,7 +7,7 @@ import CppQtQuickWebsite.CppObjects
 
 Rectangle {
 
-    readonly property string headerText: "Subpage 9"
+    readonly property string headerText: (Localization.string("SubPage %1")).arg(9)
     readonly property string subHeaderText: "C++ class is used to implement the counters."
 
     property int bigFontSize: ZoomSettings.bigFontSize

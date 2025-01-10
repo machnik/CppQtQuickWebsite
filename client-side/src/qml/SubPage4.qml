@@ -3,9 +3,11 @@ import QtQuick.Controls
 
 import "qrc:/qml/singletons/"
 
+import CppQtQuickWebsite.CppObjects
+
 Rectangle {
 
-    readonly property string headerText: "SubPage 4"
+    readonly property string headerText: (Localization.string("SubPage %1")).arg(4)
     readonly property string subHeaderText: "Floating message dialog."
 
     color: "transparent"

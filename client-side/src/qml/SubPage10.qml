@@ -7,7 +7,7 @@ import CppQtQuickWebsite.CppObjects
 
 Rectangle {
 
-    readonly property string headerText: "SubPage 10"
+    readonly property string headerText: (Localization.string("SubPage %1")).arg(10)
     readonly property string subHeaderText: "Modifying QML properties using JavaScript or C++."
 
     function resetInputField(inputField) {

@@ -5,9 +5,11 @@ import Qt.labs.platform
 
 import "qrc:/qml/singletons/"
 
+import CppQtQuickWebsite.CppObjects
+
 Rectangle {
 
-    readonly property string headerText: "SubPage 23"
+    readonly property string headerText: (Localization.string("SubPage %1")).arg(23)
     readonly property string subHeaderText: "Using ColorDialog in QML."
 
     property color selectedColor: "blue"

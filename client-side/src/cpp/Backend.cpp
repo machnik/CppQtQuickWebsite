@@ -2,6 +2,8 @@
 
 #include <QtCore/QFile>
 #include <QtCore/QTextStream>
+#include <QtQml/QQmlApplicationEngine>
+#include <QtQml/QQmlContext>
 
 Backend::Backend(QObject *parent) : QObject(parent), m_listModel(new ListModel(this))
 {
@@ -9,6 +11,15 @@ Backend::Backend(QObject *parent) : QObject(parent), m_listModel(new ListModel(t
     m_listModel->addItem("C++ Item 2");
     m_listModel->addItem("C++ Item 3");
 }
+
+void Backend::reloadQML()
+{
+    auto appEngine = qobject_cast<QQmlApplicationEngine*>(QQmlEngine::contextForObject(this)->engine());
+    if (appEngine) {
+        appEngine->clearComponentCache();
+        appEngine->load(":/qml/main.qml");
+    }
+} 
 
 QString Backend::message() const
 {

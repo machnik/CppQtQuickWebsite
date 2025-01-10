@@ -7,7 +7,7 @@ import CppQtQuickWebsite.CppObjects
 
 Rectangle {
 
-    readonly property string headerText: "SubPage 22"
+    readonly property string headerText: (Localization.string("SubPage %1")).arg(22)
     readonly property string subHeaderText: "Using QSysInfo in QML."
 
     SystemInformation {

@@ -7,7 +7,7 @@ import CppQtQuickWebsite.CppObjects
 
 Rectangle {
 
-    readonly property string headerText: "SubPage 1"
+    readonly property string headerText: (Localization.string("SubPage %1")).arg(1)
     readonly property string subHeaderText: "Static webpage with much scrollable text."
 
     color: "transparent"

@@ -1,7 +1,10 @@
 import QtQuick
 import QtQuick.Controls
+import QtQml
 
 import "qrc:/qml/singletons/"
+
+import CppQtQuickWebsite.CppObjects
 
 ApplicationWindow {
 
@@ -56,6 +59,12 @@ ApplicationWindow {
 
     readonly property var subPagesDescriptions: SubPagesDescriptions.description
 
+    function switchLanguage(language) {
+        console.log("Switching language to " + language)
+        Localization.setLanguage(language)
+        Backend.reloadQML()
+    }
+
     Rectangle {
         id: stackViewBorder
         anchors.fill: parent
@@ -80,9 +89,9 @@ ApplicationWindow {
 
     menuBar: MenuBar {
         Menu {
-            title: "MENU"
+            title: Localization.string("MENU")
             MenuItem {
-                text: "Main Page"
+                text: Localization.string("Main Page")
                 font.pointSize: ZoomSettings.regularFontSize
                 onTriggered: {
                     stackView.pop(StackView.Immediate)
@@ -108,19 +117,26 @@ ApplicationWindow {
             }
         }
         Menu {
-            title: "LANGUAGE"
+            title: Localization.string("LANGUAGE")
             MenuItem {
-                text: "English"
+                text: "Restart in English"
                 font.pointSize: ZoomSettings.regularFontSize
                 onTriggered: {
-                    // TODO
+                    switchLanguage(Locale.English)
                 }
             }
             MenuItem {
-                text: "Polski"
+                text: "Zrestartuj po polsku"
                 font.pointSize: ZoomSettings.regularFontSize
                 onTriggered: {
-                    // TODO
+                    switchLanguage(Locale.Polish)
+                }
+            }
+            MenuItem {
+                text: "Neustart auf Deutsch"
+                font.pointSize: ZoomSettings.regularFontSize
+                onTriggered: {
+                    switchLanguage(Locale.German)
                 }
             }
         }

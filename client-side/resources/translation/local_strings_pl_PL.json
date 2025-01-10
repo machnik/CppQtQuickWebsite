@@ -1,5 +1,7 @@
 {
-    "Welcome": "Witaj",
-    "Hello": "Cześć",
-    "Goodbye": "Do zobaczenia"
+    "Main Page": "Strona główna",
+    "MENU": "MENU",
+    "LANGUAGE": "JĘZYK",
+    "SubPage": "Podstrona",
+    "SubPage %1": "Podstrona %1"
 }

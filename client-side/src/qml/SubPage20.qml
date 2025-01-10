@@ -7,7 +7,7 @@ import CppQtQuickWebsite.CppObjects
 
 Rectangle {
 
-    readonly property string headerText: "SubPage 20"
+    readonly property string headerText: (Localization.string("SubPage %1")).arg(20)
     readonly property string subHeaderText: "WebSocket Client."
 
     property int smallFontSize: ZoomSettings.smallFontSize

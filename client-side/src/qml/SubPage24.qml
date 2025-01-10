@@ -4,9 +4,11 @@ import QtMultimedia
 
 import "qrc:/qml/singletons/"
 
+import CppQtQuickWebsite.CppObjects
+
 Rectangle {
 
-    readonly property string headerText: "SubPage 24"
+    readonly property string headerText: (Localization.string("SubPage %1")).arg(24)
     readonly property string subHeaderText: "Video player."
 
     color: "transparent"

@@ -9,13 +9,15 @@ import QtQuick.Layouts
 
 import "qrc:/qml/singletons/"
 
+import CppQtQuickWebsite.CppObjects
+
 Rectangle {
 
     color: "transparent"
 
     Label {
         id: headerLabel
-        text: "Main Page"
+        text: Localization.string("Main Page")
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
         font.pointSize: ZoomSettings.hugeFontSize

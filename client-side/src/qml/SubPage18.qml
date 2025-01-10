@@ -3,9 +3,11 @@ import QtQuick.Controls
 
 import "qrc:/qml/singletons/"
 
+import CppQtQuickWebsite.CppObjects
+
 Rectangle {
 
-    readonly property string headerText: "SubPage 18"
+    readonly property string headerText: (Localization.string("SubPage %1")).arg(18)
     readonly property string subHeaderText: "Avatar generator using DiceBear API."
 
     readonly property string avatarPlaceholder: "qrc:/resources/images/avatar_placeholder.png"

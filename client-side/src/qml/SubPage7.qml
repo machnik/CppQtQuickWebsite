@@ -4,9 +4,11 @@ import QtQuick.LocalStorage
 
 import "qrc:/qml/singletons/"
 
+import CppQtQuickWebsite.CppObjects
+
 Rectangle {
 
-    readonly property string headerText: "SubPage 7"
+    readonly property string headerText: (Localization.string("SubPage %1")).arg(7)
     readonly property string subHeaderText: "Local persistent storage."
 
     property int bigFontSize: ZoomSettings.bigFontSize

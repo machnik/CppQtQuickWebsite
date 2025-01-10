@@ -7,7 +7,7 @@ import CppQtQuickWebsite.CppObjects
 
 Rectangle {
 
-    readonly property string headerText: "SubPage 21"
+    readonly property string headerText: (Localization.string("SubPage %1")).arg(21)
     readonly property string subHeaderText: "Music playback using the browser's Web Audio API."
 
     property string base64Audio: ""
