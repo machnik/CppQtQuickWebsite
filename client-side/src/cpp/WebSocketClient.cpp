@@ -2,6 +2,8 @@
 
 #include <QAbstractSocket>
 
+#include "Localization.h"
+
 WebSocketClient::WebSocketClient(QObject *parent) :
     QObject(parent),
     m_isClientRunning(false)
@@ -40,7 +42,7 @@ void WebSocketClient::sendMessage(const QString & message)
 
 void WebSocketClient::onConnected()
 {
-    m_webSocket.sendTextMessage(QStringLiteral("[server is running]"));
+    m_webSocket.sendTextMessage(Localization::strCpp("[server is running]"));
 }
 
 void WebSocketClient::onTextMessageReceived(const QString & message)

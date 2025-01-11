@@ -5,11 +5,13 @@ import QtQuick.Window
 
 import "qrc:/qml/singletons/"
 
+import CppQtQuickWebsite.CppObjects
+
 Window {
     visible: true
     width: 500
     height: 300
-    title: "Example Window"
+    title: Localization.string("Example Window")
     visibility: Window.Windowed
     flags: Qt.Window |
            Qt.WindowTitleHint |
@@ -27,19 +29,19 @@ Window {
             spacing: 20
 
             Label {
-                text: "This window can be resized, maximized, and dragged around."
+                text: Localization.string("This window can be resized, maximized, and dragged around.")
                 font.pointSize: ZoomSettings.regularFontSize
                 Layout.alignment: Qt.AlignHCenter
             }
 
             Button {
-                text: "A button that does nothing"
+                text: Localization.string("A button that does nothing")
                 font.pointSize: ZoomSettings.regularFontSize
                 Layout.alignment: Qt.AlignHCenter
             }
 
             TextField {
-                placeholderText: "Enter text here"
+                placeholderText: Localization.string("Enter text here")
                 font.pointSize: ZoomSettings.regularFontSize
                 Layout.alignment: Qt.AlignHCenter
             }

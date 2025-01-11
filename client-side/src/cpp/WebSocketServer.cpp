@@ -2,13 +2,11 @@
 
 #include <QtWebSockets/QWebSocket>
 
+#include "Localization.h"
+
 WebSocketServer::WebSocketServer(QObject * parent) :
     QObject(parent),
-    m_webSocketServer(
-        new QWebSocketServer(QStringLiteral("Echo Server"),
-        QWebSocketServer::NonSecureMode,
-        this)
-    ),
+    m_webSocketServer(new QWebSocketServer(Localization::strCpp("Echo Server"), QWebSocketServer::NonSecureMode, this)),
     m_isServerRunning(false)
 {
     connect(m_webSocketServer, &QWebSocketServer::newConnection,

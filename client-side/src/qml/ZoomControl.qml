@@ -3,6 +3,8 @@ import QtQuick.Controls
 
 import "qrc:/qml/singletons/"
 
+import CppQtQuickWebsite.CppObjects
+
 /*
     A custom component that provides a slider to control
     the size of text in the application's UI.
@@ -29,7 +31,7 @@ Item {
                 ZoomSettings.zoomLevel = value
             }
             ToolTip {
-                text: "Adjust the size of the text in the application's UI."
+                text: Localization.string("Adjust the size of the text in the application's UI.")
                 visible: parent.hovered
                 delay: 0
             }

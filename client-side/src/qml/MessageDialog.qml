@@ -4,6 +4,8 @@ import QtQuick.Dialogs
 
 import "qrc:/qml/singletons/"
 
+import CppQtQuickWebsite.CppObjects
+
 Dialog {
     id: messageDialog
     width: 400; height: 300
@@ -13,13 +15,13 @@ Dialog {
     spacing: 10
 
     Text {
-        text: "This is a message dialog."
+        text: Localization.string("This is a message dialog.")
         font.pixelSize: ZoomSettings.bigFontSize
         anchors.centerIn: parent
     }
 
     Button {
-        text: "OK"
+        text: Localization.string("OK")
         onClicked: messageDialog.close()
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom

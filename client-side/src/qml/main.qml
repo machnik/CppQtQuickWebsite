@@ -60,7 +60,6 @@ ApplicationWindow {
     readonly property var subPagesDescriptions: SubPagesDescriptions.descriptions(Localization.currentLanguage)
 
     function switchLanguage(language) {
-        console.log("Switching language to " + language)
         Localization.setLanguage(language)
         Backend.reloadQML()
     }
@@ -100,7 +99,7 @@ ApplicationWindow {
             Repeater {
                 model: subPagesComponents
                 MenuItem {
-                    text: "Page " + (index + 1)
+                    text: Localization.string("Page %1").arg(index + 1)
                     font.pointSize: ZoomSettings.regularFontSize
                     onTriggered: {
                         stackView.pop(StackView.Immediate)
@@ -109,7 +108,7 @@ ApplicationWindow {
                 }
             }
             MenuItem {
-                text: "Exit"
+                text: Localization.string("Exit")
                 font.pointSize: ZoomSettings.regularFontSize
                 onTriggered: {
                     Qt.quit();
@@ -119,21 +118,21 @@ ApplicationWindow {
         Menu {
             title: Localization.string("LANGUAGE")
             MenuItem {
-                text: "Restart in English"
+                text: Localization.string("Restart in English")
                 font.pointSize: ZoomSettings.regularFontSize
                 onTriggered: {
                     switchLanguage(Locale.English)
                 }
             }
             MenuItem {
-                text: "Zrestartuj po polsku"
+                text: Localization.string("Restart in Polish")
                 font.pointSize: ZoomSettings.regularFontSize
                 onTriggered: {
                     switchLanguage(Locale.Polish)
                 }
             }
             MenuItem {
-                text: "Neustart auf Deutsch"
+                text: Localization.string("Restart in German")
                 font.pointSize: ZoomSettings.regularFontSize
                 onTriggered: {
                     switchLanguage(Locale.German)
@@ -155,7 +154,7 @@ ApplicationWindow {
                     stackView.pop(StackView, StackView.Immediate)
                 }
                 ToolTip {
-                    text: "Navigate to the main page."
+                    text: Localization.string("Navigate to the main page.")
                     visible: parent.hovered
                     delay: 0
                 }
@@ -178,7 +177,7 @@ ApplicationWindow {
                     exampleWindow.visible = true;
                 }
                 ToolTip {
-                    text: "Open a new non-modal window."
+                    text: Localization.string("Open a new non-modal window.")
                     visible: parent.hovered
                     delay: 0
                 }
@@ -190,7 +189,7 @@ ApplicationWindow {
                     Qt.openUrlExternally("https://github.com/machnik/CppQtQuickWebsite")
                 }
                 ToolTip {
-                    text: "Visit the project's GitHub repository."
+                    text: Localization.string("Visit the project's GitHub repository.")
                     visible: parent.hovered
                     delay: 0
                 }

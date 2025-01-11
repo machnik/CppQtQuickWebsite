@@ -24,7 +24,7 @@ Rectangle {
     }
 
     Label {
-        text: "Table of Contents"
+        text: Localization.string("Table of Contents")
         anchors.top: headerLabel.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         font.pointSize: ZoomSettings.bigFontSize
@@ -47,7 +47,7 @@ Rectangle {
             delegate: Button {
                 Layout.preferredWidth: 100
                 Layout.preferredHeight: 65
-                text: "Page " + (index + 1)
+                text: Localization.string("Page %1").arg(index + 1)
                 font.pointSize: ZoomSettings.regularFontSize
                 ToolTip {
                     text: subPagesDescriptions[index]

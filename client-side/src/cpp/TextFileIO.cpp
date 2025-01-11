@@ -1,5 +1,7 @@
 #include "TextFileIO.h"
 
+#include "Localization.h"
+
 TextFileIO::TextFileIO(QObject *parent) : QObject(parent)
 {
 }
@@ -7,7 +9,7 @@ TextFileIO::TextFileIO(QObject *parent) : QObject(parent)
 void TextFileIO::loadFileContent()
 {
     QFileDialog::getOpenFileContent(
-        "Text Files (*.txt)",
+        Localization::strCpp("Text Files (*.txt)"),
         [this](const QString &fileName, const QByteArray &fileContent) {
             emit currentFileNameChanged(fileName);
             emit fileContentReady(QString::fromUtf8(fileContent));

@@ -9,9 +9,9 @@
 
 Backend::Backend(QObject *parent) : QObject(parent), m_listModel(new ListModel(this))
 {
-    m_listModel->addItem("C++ Item 1");
-    m_listModel->addItem("C++ Item 2");
-    m_listModel->addItem("C++ Item 3");
+    m_listModel->addItem(Localization::strCpp("C++ Item %1").arg(1));
+    m_listModel->addItem(Localization::strCpp("C++ Item %1").arg(2));
+    m_listModel->addItem(Localization::strCpp("C++ Item %1").arg(3));
 }
 
 void Backend::reloadQML()
