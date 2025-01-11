@@ -5,6 +5,8 @@
 #include <QtQml/QQmlApplicationEngine>
 #include <QtQml/QQmlContext>
 
+#include "Localization.h"
+
 Backend::Backend(QObject *parent) : QObject(parent), m_listModel(new ListModel(this))
 {
     m_listModel->addItem("C++ Item 1");
@@ -56,5 +58,5 @@ void Backend::setMessage(const QString &message)
 
 void Backend::resetInputField(QObject* textField)
 {
-    QQmlProperty::write(textField, "text", "Text set using C++.");
+    QQmlProperty::write(textField, "text", Localization::strCpp("Text set using C++."));
 }

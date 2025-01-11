@@ -3,5 +3,6 @@
     "MENU": "MENÜ",
     "LANGUAGE": "SPRACHE",
     "SubPage": "Unterseite",
-    "SubPage %1": "Unterseite %1"
+    "SubPage %1": "Unterseite %1",
+    "Text set using C++." : "Text, der mit C++ festgelegt wurde."
 }
