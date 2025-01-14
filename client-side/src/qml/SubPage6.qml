@@ -57,7 +57,7 @@ Rectangle {
 
                     Label {
                         id: jsInterpreterLabel
-                        text: "JavaScript Interpreter"
+                        text: Localization.string("JavaScript Interpreter")
                         font.bold: true
                         font.pointSize: hugeFontSize
                         Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
@@ -95,7 +95,7 @@ Rectangle {
                         Layout.margins: 32
                         Button {
                             id: qtJsEngineButton
-                            text: "QT JS ENGINE"
+                            text: Localization.string("QT JS ENGINE")
                             font.pointSize: bigFontSize
                             onClicked: {
                                 var result = eval(jsExpressionEditor.text);
@@ -104,7 +104,7 @@ Rectangle {
                         }
                         Button {
                             id: browserJsEngineButton
-                            text: "BROWSER JS INTERPRETER"
+                            text: Localization.string("BROWSER JS INTERPRETER")
                             font.pointSize: bigFontSize
                             onClicked: {
                                 if (BrowserJS.browserEnvironment) {
@@ -138,7 +138,7 @@ Rectangle {
                         border.width: 2
 
                         Label {
-                            text: "Code-Behind JS Implementation"
+                            text: Localization.string("Code-Behind JS Implementation")
                             font.bold: true
                             font.pointSize: smallFontSize
                             anchors.horizontalCenter: parent.horizontalCenter
@@ -178,7 +178,7 @@ Rectangle {
                         border.width: 2
 
                         Label {
-                            text: "Shared JS Library"
+                            text: Localization.string("Shared JS Library")
                             font.bold: true
                             font.pointSize: smallFontSize
                             anchors.horizontalCenter: parent.horizontalCenter

@@ -8,7 +8,7 @@ import CppQtQuickWebsite.CppObjects
 Rectangle {
 
     readonly property string headerText: (Localization.string("SubPage %1")).arg(18)
-    readonly property string subHeaderText: "Avatar generator using DiceBear API."
+    readonly property string subHeaderText: Localization.string("Avatar generator using DiceBear API.")
 
     readonly property string avatarPlaceholder: "qrc:/resources/images/avatar_placeholder.png"
 
@@ -59,7 +59,7 @@ Rectangle {
     }
 
     Button {
-        text: "New Avatar"
+        text: Localization.string("New Avatar")
         font.pointSize: bigFontSize
         anchors.top: avatarArea.bottom
         anchors.horizontalCenter: parent.horizontalCenter

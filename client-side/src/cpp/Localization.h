@@ -19,7 +19,7 @@ class Localization : public QObject
     QML_ELEMENT
     QML_SINGLETON
 
-    Q_PROPERTY(QLocale::Language currentLanguage READ currentLanguage)
+    Q_PROPERTY(QLocale::Language currentLanguage READ currentLanguage NOTIFY languageChanged)
 
 public:
     explicit Localization(QObject *parent = nullptr);
@@ -29,6 +29,9 @@ public:
 
     Q_INVOKABLE QString string(const QString &key) const; // Returns the localized string for the given key.
     static QString strCpp(const QString &key); // Convenience method with functionality similar to Qt's tr().
+
+signals:
+    void languageChanged();
 
 private:
     QLocale::Language m_currentLanguage;

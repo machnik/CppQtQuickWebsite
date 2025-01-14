@@ -61,7 +61,7 @@ Rectangle {
 
     Button {
         id: startButton
-        text: "START"
+        text: Localization.string("START")
         font.pointSize: regularFontSize
         enabled: fakeProcessors.some(function(processor) { return processor.status === FakeProcessor.Idle; })
         anchors.bottom: progressBarsContainer.top
@@ -123,7 +123,7 @@ Rectangle {
 
     Button {
         id: stopButton
-        text: "STOP / RESET"
+        text: Localization.string("STOP / RESET")
         font.pointSize: regularFontSize
         enabled: fakeProcessors.some(function(processor) { return processor.status !== FakeProcessor.Idle; })
         anchors.top: progressBarsContainer.bottom

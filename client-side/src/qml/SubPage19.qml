@@ -8,7 +8,7 @@ import CppQtQuickWebsite.CppObjects
 Rectangle {
 
     readonly property string headerText: (Localization.string("SubPage %1")).arg(19)
-    readonly property string subHeaderText: "WebSocket Server."
+    readonly property string subHeaderText: Localization.string("WebSocket Server.")
 
     property int smallFontSize: ZoomSettings.smallFontSize
 
@@ -45,7 +45,7 @@ Rectangle {
     }
 
     Label {
-        text: "Temporarily unsupported in WebAssembly with Qt 6.8!"
+        text: Localization.string("Temporarily unsupported in WebAssembly with Qt 6.8!")
         anchors.bottom: portField.top
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.margins: 20
@@ -55,7 +55,7 @@ Rectangle {
 
     TextField {
         id: portField
-        placeholderText: "(enter port number here)"
+        placeholderText: Localization.string("(enter port number here)")
         font.pointSize: smallFontSize
         readOnly: WebSocketServer.isServerRunning
         width: 250
@@ -84,7 +84,7 @@ Rectangle {
 
     TextField {
         id: bouncedMessageField
-        placeholderText: "(last bounced message)"
+        placeholderText: Localization.string("(last bounced message)")
         font.pointSize: smallFontSize
         readOnly: true
         width: 250
@@ -94,7 +94,7 @@ Rectangle {
 
     TextField {
         id: errorField
-        placeholderText: "(last error)"
+        placeholderText: Localization.string("(last error)")
         font.pointSize: smallFontSize
         readOnly: true
         width: 250

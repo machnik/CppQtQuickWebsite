@@ -8,7 +8,7 @@ import CppQtQuickWebsite.CppObjects
 Rectangle {
 
     readonly property string headerText: (Localization.string("SubPage %1")).arg(22)
-    readonly property string subHeaderText: "Using QSysInfo in QML."
+    readonly property string subHeaderText: Localization.string("Using QSysInfo in QML.")
 
     SystemInformation {
         id: sysInfo
@@ -40,63 +40,63 @@ Rectangle {
         spacing: 10
 
         Label {
-            text: "System Information:"
+            text: Localization.string("System Information:")
             font.pointSize: ZoomSettings.regularFontSize
             font.bold: true
         }
 
         Label {
-            text: "- Boot Unique ID: " + displayField(sysInfo.bootUniqueId)
+            text: Localization.string("- Boot Unique ID: ") + displayField(sysInfo.bootUniqueId)
             font.pointSize: ZoomSettings.smallFontSize
         }
 
         Label {
-            text: "- Build ABI: " + displayField(sysInfo.buildAbi)
+            text: Localization.string("- Build ABI: ") + displayField(sysInfo.buildAbi)
             font.pointSize: ZoomSettings.smallFontSize
         }
 
         Label {
-            text: "- Build CPU Architecture: " + displayField(sysInfo.buildCpuArchitecture)
+            text: Localization.string("- Build CPU Architecture: ") + displayField(sysInfo.buildCpuArchitecture)
             font.pointSize: ZoomSettings.smallFontSize
         }
 
         Label {
-            text: "- Current CPU Architecture: " + displayField(sysInfo.currentCpuArchitecture)
+            text: Localization.string("- Current CPU Architecture: ") + displayField(sysInfo.currentCpuArchitecture)
             font.pointSize: ZoomSettings.smallFontSize
         }
 
         Label {
-            text: "- Host Name: " + displayField(sysInfo.machineHostName)
+            text: Localization.string("- Host Name: ") + displayField(sysInfo.machineHostName)
             font.pointSize: ZoomSettings.smallFontSize
         }
 
         Label {
-            text: "- Kernel Type: " + displayField(sysInfo.kernelType)
+            text: Localization.string("- Kernel Type: ") + displayField(sysInfo.kernelType)
             font.pointSize: ZoomSettings.smallFontSize
         }
 
         Label {
-            text: "- Kernel Version: " + displayField(sysInfo.kernelVersion)
+            text: Localization.string("- Kernel Version: ") + displayField(sysInfo.kernelVersion)
             font.pointSize: ZoomSettings.smallFontSize
         }
 
         Label {
-            text: "- Machine Unique ID: " + displayField(sysInfo.machineUniqueId)
+            text: Localization.string("- Machine Unique ID: ") + displayField(sysInfo.machineUniqueId)
             font.pointSize: ZoomSettings.smallFontSize
         }
 
         Label {
-            text: "- Product Name: " + displayField(sysInfo.prettyProductName)
+            text: Localization.string("- Product Name: ") + displayField(sysInfo.prettyProductName)
             font.pointSize: ZoomSettings.smallFontSize
         }
 
         Label {
-            text: "- Product Type: " + displayField(sysInfo.productType)
+            text: Localization.string("- Product Type: ") + displayField(sysInfo.productType)
             font.pointSize: ZoomSettings.smallFontSize
         }
 
         Label {
-            text: "- Product Version: " + displayField(sysInfo.productVersion)
+            text: Localization.string("- Product Version: ") + displayField(sysInfo.productVersion)
             font.pointSize: ZoomSettings.smallFontSize
         }
     }

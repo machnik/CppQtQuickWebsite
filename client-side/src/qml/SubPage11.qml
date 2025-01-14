@@ -41,10 +41,10 @@ Rectangle {
                 width: parent.width / 3
 
                 Button {
-                    text: "Add Item to QML ListView"
+                    text: Localization.string("Add Item to QML ListView")
                     font.pointSize: regularFontSize
                     Layout.fillWidth: true
-                    onClicked: listViewQML.model.append({"text": "QML Item " + (listViewQML.model.count + 1)})
+                    onClicked: listViewQML.model.append({"text": Localization.string("QML Item %1").arg(listViewQML.model.count + 1)})
                 }
 
                 Rectangle {
@@ -72,7 +72,7 @@ Rectangle {
 
                 Button {
                     id: removeItemFromQMLListButton
-                    text: "Remove Item from QML ListView"
+                    text: Localization.string("Remove Item from QML ListView")
                     font.pointSize: regularFontSize
                     Layout.fillWidth: true
                     onClicked: {
@@ -89,7 +89,7 @@ Rectangle {
 
                 Button {
                     id: addItemFromCppListButton
-                    text: "Add Item to C++ ListView"
+                    text: Localization.string("Add Item to C++ ListView")
                     font.pointSize: regularFontSize
                     Layout.fillWidth: true
                     onClicked: Backend.listModel.addItem("C++ Item " + (listViewCpp.count + 1))
@@ -116,7 +116,7 @@ Rectangle {
 
                 Button {
                     id: removeItemFromCppListButton
-                    text: "Remove Item from C++ ListView"
+                    text: Localization.string("Remove Item from C++ ListView")
                     font.pointSize: regularFontSize
                     Layout.fillWidth: true
                     onClicked: {

@@ -44,7 +44,7 @@ Rectangle {
         anchors.top: textField.bottom;
         anchors.horizontalCenter: parent.horizontalCenter;
         anchors.margins: 20
-        text: "Set text using JavaScript"
+        text: Localization.string("Set text using JavaScript")
         font.pointSize: ZoomSettings.bigFontSize
         onClicked: {
             resetInputField(textField);
@@ -56,7 +56,7 @@ Rectangle {
         anchors.top: buttonSetTextJS.bottom;
         anchors.horizontalCenter: parent.horizontalCenter;
         anchors.margins: 10
-        text: "Set text using C++"
+        text: Localization.string("Set text using C++")
         font.pointSize: ZoomSettings.bigFontSize
         onClicked: {
             Backend.resetInputField(textField);

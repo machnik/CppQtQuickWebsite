@@ -40,7 +40,7 @@ Rectangle {
     }
 
     Label {
-        text: "File name: " + currentFileName
+        text: Localization.string("File name: %1").arg(currentFileName)
         anchors.bottom: fileContentsScrollView.top
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottomMargin: 10
@@ -83,7 +83,7 @@ Rectangle {
 
         Button {
             id: openFileButton
-            text: "Open Text File"
+            text: Localization.string("Open Text File")
             font.pointSize: ZoomSettings.bigFontSize
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
@@ -95,7 +95,7 @@ Rectangle {
 
         Button {
             id: saveFileButton
-            text: "Save/Download Text File"
+            text: Localization.string("Save/Download Text File")
             font.pointSize: ZoomSettings.bigFontSize
             anchors.verticalCenter: parent.verticalCenter
             anchors.right: parent.right

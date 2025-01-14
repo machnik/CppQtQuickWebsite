@@ -9,7 +9,7 @@ import CppQtQuickWebsite.CppObjects
 Rectangle {
     
     readonly property string headerText: (Localization.string("SubPage %1")).arg(17)
-    readonly property string subHeaderText: "Music Playback"
+    readonly property string subHeaderText: Localization.string("Music Playback")
 
     MediaPlayer {
         id: mediaPlayer
@@ -37,7 +37,7 @@ Rectangle {
     }
 
     Label {
-        text: "Does not work in WebAssembly with Qt 6.8!"
+        text: Localization.string("Does not work in WebAssembly with Qt 6.8!")
         anchors.top: subHeaderLabel.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.margins: 20
@@ -47,7 +47,7 @@ Rectangle {
 
     Button {
         id: playMusic
-        text: "Click to Play Music"
+        text: Localization.string("Click to Play Music")
         font.pointSize: ZoomSettings.hugeFontSize
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: stopMusic.top
@@ -60,7 +60,7 @@ Rectangle {
 
     Button {
         id: stopMusic
-        text: "Click to Stop Music"
+        text: Localization.string("Click to Stop Music")
         font.pointSize: ZoomSettings.hugeFontSize
         anchors.centerIn: parent
         enabled: mediaPlayer.playbackState === MediaPlayer.PlayingState

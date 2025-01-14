@@ -8,7 +8,7 @@ import CppQtQuickWebsite.CppObjects
 Rectangle {
 
     readonly property string headerText: (Localization.string("SubPage %1")).arg(20)
-    readonly property string subHeaderText: "WebSocket Client."
+    readonly property string subHeaderText: Localization.string("WebSocket Client.")
 
     property int smallFontSize: ZoomSettings.smallFontSize
 
@@ -47,7 +47,7 @@ Rectangle {
 
     TextField {
         id: portField
-        placeholderText: "(enter port number here)"
+        placeholderText: Localization.string("(enter port number here)")
         font.pointSize: smallFontSize
         readOnly: WebSocketClient.isClientRunning
         width: 250
@@ -76,7 +76,7 @@ Rectangle {
 
     TextField {
         id: messageToSendField
-        placeholderText: "(enter message to send here)"
+        placeholderText: Localization.string("(enter message to send here)")
         font.pointSize: smallFontSize
         width: 250
         anchors.centerIn: parent
@@ -85,7 +85,7 @@ Rectangle {
 
     Button {
         id: sendButton
-        text: "SEND"
+        text: Localization.string("SEND")
         font.pointSize: smallFontSize
         enabled: messageToSendField.text.length > 0
         anchors.top: messageToSendField.bottom
@@ -98,7 +98,7 @@ Rectangle {
 
     TextField {
         id: receivedMessageField
-        placeholderText: "(last received message)"
+        placeholderText: Localization.string("(last received message)")
         font.pointSize: smallFontSize
         readOnly: true
         width: 250
@@ -109,7 +109,7 @@ Rectangle {
 
     TextField {
         id: errorField
-        placeholderText: "(last error)"
+        placeholderText: Localization.string("(last error)")
         font.pointSize: smallFontSize
         readOnly: true
         width: 250

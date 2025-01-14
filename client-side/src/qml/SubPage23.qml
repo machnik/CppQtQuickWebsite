@@ -10,7 +10,7 @@ import CppQtQuickWebsite.CppObjects
 Rectangle {
 
     readonly property string headerText: (Localization.string("SubPage %1")).arg(23)
-    readonly property string subHeaderText: "Using ColorDialog in QML."
+    readonly property string subHeaderText: Localization.string("Using ColorDialog in QML.")
 
     property color selectedColor: "blue"
 
@@ -42,7 +42,7 @@ Rectangle {
     }
 
     Button {
-        text: "Select Color"
+        text: Localization.string("Select Color")
         font.pointSize: ZoomSettings.bigFontSize
         anchors.top: colorPreview.bottom
         anchors.horizontalCenter: parent.horizontalCenter

@@ -35,7 +35,7 @@ Rectangle {
     }
 
     Button {
-        text: "Change Message"
+        text: Localization.string("Change Message")
         font.pointSize: ZoomSettings.bigFontSize
         anchors.top: messageLabel.bottom
         anchors.horizontalCenter: parent.horizontalCenter

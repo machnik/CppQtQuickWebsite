@@ -40,6 +40,8 @@ void Localization::setLanguage(QLocale::Language language)
         for (auto it = translations.begin(); it != translations.end(); ++it) {
             m_localStrings[it.key()] = it.value().toString();
         }
+        
+        emit languageChanged();
     }
 }
 

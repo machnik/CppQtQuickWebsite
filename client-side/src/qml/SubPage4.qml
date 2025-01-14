@@ -8,7 +8,7 @@ import CppQtQuickWebsite.CppObjects
 Rectangle {
 
     readonly property string headerText: (Localization.string("SubPage %1")).arg(4)
-    readonly property string subHeaderText: "Floating message dialog."
+    readonly property string subHeaderText: Localization.string("Floating message dialog.")
 
     color: "transparent"
 
@@ -33,7 +33,7 @@ Rectangle {
     }
 
     Button {
-        text: "Show Message"
+        text: Localization.string("Show Message")
         font.pointSize: ZoomSettings.bigFontSize
         anchors.centerIn: parent
         onClicked: {

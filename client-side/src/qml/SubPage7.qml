@@ -85,7 +85,7 @@ Rectangle {
                 anchors.left: parent.left
                 anchors.leftMargin: 5
                 anchors.rightMargin: 5
-                placeholderText: "Enter key and press ENTER to load entry"
+                placeholderText: Localization.string("Enter key and press ENTER to load entry")
                 font.pointSize: bigFontSize
                 onAccepted: {
                     if (keyField.text === "") {
@@ -105,7 +105,7 @@ Rectangle {
                 anchors.right: parent.right
                 anchors.rightMargin: 5
                 anchors.leftMargin: 5
-                placeholderText: "Enter value and press ENTER to save entry"
+                placeholderText: Localization.string("Enter value and press ENTER to save entry")
                 font.pointSize: bigFontSize
                 onAccepted: {
                     var key = keyField.text;

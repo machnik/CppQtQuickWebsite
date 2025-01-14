@@ -8,7 +8,7 @@ import CppQtQuickWebsite.CppObjects
 Rectangle {
 
     readonly property string headerText: (Localization.string("SubPage %1")).arg(21)
-    readonly property string subHeaderText: "Music playback using the browser's Web Audio API."
+    readonly property string subHeaderText: Localization.string("Music playback using the browser's Web Audio API.")
 
     property string base64Audio: ""
     property bool isAudioLoaded: false
@@ -45,7 +45,7 @@ Rectangle {
 
     Button {
         id: playMusic
-        text: isAudioLoaded ? "Click to Play Music" : (BrowserJS.browserEnvironment ? "Loading audio..." : "Playback not available in this environment!")
+        text: isAudioLoaded ? Localization.string("Click to Play Music") : (BrowserJS.browserEnvironment ? Localization.string("Loading audio...") : Localization.string("Playback not available in this environment!"))
         font.pointSize: ZoomSettings.hugeFontSize
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: stopMusic.top
@@ -97,7 +97,7 @@ Rectangle {
 
     Button {
         id: stopMusic
-        text: "Click to Stop Music"
+        text: Localization.string("Click to Stop Music")
         font.pointSize: ZoomSettings.hugeFontSize
         anchors.centerIn: parent
         enabled: false

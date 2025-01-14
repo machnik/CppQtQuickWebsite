@@ -8,7 +8,7 @@ import CppQtQuickWebsite.CppObjects
 
 Rectangle {
     readonly property string headerText: (Localization.string("SubPage %1")).arg(3)
-    readonly property string subHeaderText: "UI Widget Gallery"
+    readonly property string subHeaderText: Localization.string("UI Widget Gallery")
 
     property int regularFontSize: ZoomSettings.regularFontSize
 
@@ -52,30 +52,31 @@ Rectangle {
                     spacing: 20
 
                     Button {
-                        text: "Button"
+                        text: Localization.string("Button")
                         font.pointSize: regularFontSize
                     }
 
                     Button {
-                        text: "Checkable Button"
+                        text: Localization.string("Checkable Button")
                         font.pointSize: regularFontSize
                         checkable: true
                     }
 
                     CheckBox {
-                        text: "CheckBox 1"
+                        text: Localization.string("CheckBox 1")
                         font.pointSize: regularFontSize
                         checked: true
                     }
 
                     CheckBox {
-                        text: "CheckBox 2"
+                        text: Localization.string("CheckBox 2")
                         font.pointSize: regularFontSize
                         checked: false
                     }
 
                     ComboBox {
-                        model: ["ComboBox", "Item 1", "Item 2", "Item 3"]
+                        model: [Localization.string("ComboBox"), Localization.string("Item 1"), 
+                               Localization.string("Item 2"), Localization.string("Item 3")]
                         font.pointSize: regularFontSize
                         delegate: ItemDelegate {
                             text: modelData
@@ -121,7 +122,7 @@ Rectangle {
 
                             RadioButton {
                                 id: darkBlueRB
-                                text: "Blue"
+                                text: Localization.string("Blue")
                                 checked: true
                                 contentItem: Text {
                                     text: darkBlueRB.text
@@ -134,7 +135,7 @@ Rectangle {
 
                             RadioButton {
                                 id: darkRedRB
-                                text: "Red"
+                                text: Localization.string("Red")
                                 checked: false
                                 contentItem: Text {
                                     text: darkRedRB.text
@@ -147,7 +148,7 @@ Rectangle {
 
                             RadioButton {
                                 id: darkGreenRB
-                                text: "Green"
+                                text: Localization.string("Green")
                                 checked: false
                                 contentItem: Text {
                                     text: darkGreenRB.text
@@ -174,7 +175,7 @@ Rectangle {
                     }
 
                     Switch {
-                        text: "Switch"
+                        text: Localization.string("Switch")
                         font.pointSize: regularFontSize
                     }
                 }
@@ -183,12 +184,12 @@ Rectangle {
                     spacing: 20
 
                     TextField {
-                        placeholderText: "TextField"
+                        placeholderText: Localization.string("Enter text here")
                         font.pointSize: regularFontSize
                     }
 
                     TextArea {
-                        placeholderText: "TextArea"
+                        placeholderText: Localization.string("Enter text here")
                         font.pointSize: regularFontSize
                     }
 

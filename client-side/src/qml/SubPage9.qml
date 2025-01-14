@@ -54,7 +54,7 @@ Rectangle {
 
         Button {
             id: incrementButton1
-            text: "Increment Count 1"
+            text: Localization.string("Increment Count 1")
             font.pointSize: bigFontSize
             anchors.top: parent.top
             anchors.margins: 15
@@ -63,7 +63,7 @@ Rectangle {
 
         Button {
             id: incrementButton2
-            text: "Increment Count 2"
+            text: Localization.string("Increment Count 2")
             font.pointSize: bigFontSize
             anchors.top: parent.top
             anchors.left: incrementButton1.right

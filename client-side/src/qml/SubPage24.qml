@@ -9,7 +9,7 @@ import CppQtQuickWebsite.CppObjects
 Rectangle {
 
     readonly property string headerText: (Localization.string("SubPage %1")).arg(24)
-    readonly property string subHeaderText: "Video player."
+    readonly property string subHeaderText: Localization.string("Video player.")
 
     color: "transparent"
 
@@ -30,7 +30,7 @@ Rectangle {
     }
 
     Label {
-        text: "Does not work in WebAssembly with Qt 6.8!"
+        text: Localization.string("Does not work in WebAssembly with Qt 6.8!")
         anchors.top: subHeaderLabel.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.margins: 20

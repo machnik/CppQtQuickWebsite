@@ -39,7 +39,7 @@ Rectangle {
         border.width: drawingBorderWidth
 
         Label {
-            text: "... AND DROP!"
+            text: Localization.string("... AND DROP!")
             anchors.centerIn: parent
             font {
                 pointSize: ZoomSettings.hugeFontSize
@@ -57,7 +57,7 @@ Rectangle {
             x: 100; y: 100
 
             Label {
-                text: "DRAG"
+                text: Localization.string("DRAG")
                 anchors.centerIn: parent
                 font {
                     pointSize: ZoomSettings.bigFontSize
