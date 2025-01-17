@@ -8,7 +8,7 @@ import CppQtQuickWebsite.CppObjects
 Rectangle {
 
     readonly property string headerText: (Localization.string("SubPage %1")).arg(8)
-    readonly property string subHeaderText: "C++ backend object (singleton) is used to implement the button."
+    readonly property string subHeaderText: Localization.string("C++ backend object (singleton) is used to implement the button.")
 
     color: "transparent"
 

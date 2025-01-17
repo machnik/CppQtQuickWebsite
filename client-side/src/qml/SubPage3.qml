@@ -63,20 +63,19 @@ Rectangle {
                     }
 
                     CheckBox {
-                        text: Localization.string("CheckBox 1")
+                        text: (Localization.string("CheckBox %1")).arg(1)
                         font.pointSize: regularFontSize
                         checked: true
                     }
 
                     CheckBox {
-                        text: Localization.string("CheckBox 2")
+                        text: (Localization.string("CheckBox %1")).arg(2)
                         font.pointSize: regularFontSize
                         checked: false
                     }
 
                     ComboBox {
-                        model: [Localization.string("ComboBox"), Localization.string("Item 1"), 
-                               Localization.string("Item 2"), Localization.string("Item 3")]
+                        model: [Localization.string("ComboBox"), (Localization.string("Item %1")).arg(1), (Localization.string("Item %1")).arg(2), (Localization.string("Item %1")).arg(3)]
                         font.pointSize: regularFontSize
                         delegate: ItemDelegate {
                             text: modelData
