@@ -8,10 +8,12 @@ import CppQtQuickWebsite.CppObjects
 Rectangle {
 
     readonly property string headerText: (Localization.string("SubPage %1")).arg(10)
-    readonly property string subHeaderText: "Modifying QML properties using JavaScript or C++."
+    readonly property string subHeaderText: Localization.string("Modifying QML properties using JavaScript or C++.")
+
+    readonly property string textSetJs: Localization.string("Text set using JavaScript.")
 
     function resetInputField(inputField) {
-        inputField.text = "Text set using JavaScript.";
+        inputField.text = textSetJs;
     }
 
     color: "transparent"
@@ -35,7 +37,7 @@ Rectangle {
         id: textField
         anchors.centerIn: parent
         width: 300
-        text: "Enter text here"
+        text: Localization.string("Enter text here")
         font.pointSize: ZoomSettings.bigFontSize
     }
 

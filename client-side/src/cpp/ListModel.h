@@ -24,6 +24,7 @@ public:
 public slots:
     void addItem(const QString &item);
     void removeItem(int index);
+    void clear();
 
 private:
     QList<QString> m_items;

@@ -61,6 +61,7 @@ ApplicationWindow {
 
     function switchLanguage(language) {
         Localization.setLanguage(language)
+        Backend.resetBackend()
         Backend.reloadQML()
     }
 

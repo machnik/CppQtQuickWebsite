@@ -118,7 +118,7 @@ Rectangle {
 
     Label {
         id: wasdControlLabel
-        text: "W: Forward, S: Backward, A: Left, D: Right, R: Up, F: Down, Hold Mouse: Look Around"
+        text: Localization.string("W: Forward, S: Backward, A: Left, D: Right, R: Up, F: Down, Hold Mouse: Look Around")
         anchors.top: view3dContainer.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.margins: 10

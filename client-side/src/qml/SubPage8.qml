@@ -40,11 +40,11 @@ Rectangle {
         anchors.top: messageLabel.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.margins: 10
-        onClicked: Backend.setMessage("Message Changed!")
+        onClicked: Backend.setMessage(Localization.string("Message Changed!"))
     }
 
     Component.onCompleted: {
-        Backend.message = "Hello World!"
+        Backend.message = Localization.string("Hello World!")
     }
 
     ToMainPageButton {

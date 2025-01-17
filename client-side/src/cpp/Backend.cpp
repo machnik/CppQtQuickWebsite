@@ -9,9 +9,7 @@
 
 Backend::Backend(QObject *parent) : QObject(parent), m_listModel(new ListModel(this))
 {
-    m_listModel->addItem(Localization::strCpp("C++ Item %1").arg(1));
-    m_listModel->addItem(Localization::strCpp("C++ Item %1").arg(2));
-    m_listModel->addItem(Localization::strCpp("C++ Item %1").arg(3));
+    resetBackend();
 }
 
 void Backend::reloadQML()
@@ -21,7 +19,18 @@ void Backend::reloadQML()
         appEngine->clearComponentCache();
         appEngine->load(":/qml/main.qml");
     }
-} 
+}
+
+void Backend::resetBackend()
+{
+    m_message.clear();
+
+    m_listModel->clear();
+
+    m_listModel->addItem(Localization::strCpp("C++ Item %1").arg(1));
+    m_listModel->addItem(Localization::strCpp("C++ Item %1").arg(2));
+    m_listModel->addItem(Localization::strCpp("C++ Item %1").arg(3));
+}
 
 QString Backend::message() const
 {

@@ -9,7 +9,7 @@ import CppQtQuickWebsite.CppObjects
 Rectangle {
 
     readonly property string headerText: (Localization.string("SubPage %1")).arg(11)
-    readonly property string subHeaderText: "QML ListViews with QML and C++ models."
+    readonly property string subHeaderText: Localization.string("QML ListViews with QML and C++ models.")
 
     property int regularFontSize: ZoomSettings.regularFontSize
 
@@ -44,7 +44,7 @@ Rectangle {
                     text: Localization.string("Add Item to QML ListView")
                     font.pointSize: regularFontSize
                     Layout.fillWidth: true
-                    onClicked: listViewQML.model.append({"text": Localization.string("QML Item %1").arg(listViewQML.model.count + 1)})
+                    onClicked: listViewQML.model.append({"text": (Localization.string("QML Item %1")).arg(listViewQML.model.count + 1)})
                 }
 
                 Rectangle {
@@ -58,11 +58,7 @@ Rectangle {
                         id: listViewQML
                         anchors.fill: parent
                         anchors.margins: 4
-                        model: ListModel {
-                            ListElement { text: "QML Item 1" }
-                            ListElement { text: "QML Item 2" }
-                            ListElement { text: "QML Item 3" }
-                        }
+                        model: ListModel {} // QML model
                         delegate: Text {
                             text: model.text
                             font.pointSize: regularFontSize
@@ -92,7 +88,7 @@ Rectangle {
                     text: Localization.string("Add Item to C++ ListView")
                     font.pointSize: regularFontSize
                     Layout.fillWidth: true
-                    onClicked: Backend.listModel.addItem("C++ Item " + (listViewCpp.count + 1))
+                    onClicked: Backend.listModel.addItem((Localization.string("C++ Item %1")).arg(listViewCpp.count + 1))
                 }
 
                 Rectangle {
@@ -106,7 +102,7 @@ Rectangle {
                         id: listViewCpp
                         anchors.fill: parent
                         anchors.margins: 4
-                        model: Backend.listModel
+                        model: Backend.listModel // C++ model
                         delegate: Text { 
                             text: model.display 
                             font.pointSize: regularFontSize
@@ -129,11 +125,22 @@ Rectangle {
         }
 
         Component.onCompleted: {
-            listViewQML.model.append({"text": "QML Item 4"})
-            listViewQML.model.append({"text": "QML Item 5"})
 
-            Backend.listModel.addItem("C++ Item 4");
-            Backend.listModel.addItem("C++ Item 5");
+            for (let i = 1; i <= 3; i++) {
+                listViewQML.model.append({
+                    "text": (Localization.string("QML Item %1")).arg(i)
+                })
+            }
+
+            listViewQML.model.append({
+                "text": (Localization.string("QML Item %1")).arg(4)
+            })
+            listViewQML.model.append({
+                "text": (Localization.string("QML Item %1")).arg(5)
+            })
+
+            Backend.listModel.addItem((Localization.string("C++ Item %1")).arg(4))
+            Backend.listModel.addItem((Localization.string("C++ Item %1")).arg(5))
         }
     }
 

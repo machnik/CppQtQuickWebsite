@@ -9,7 +9,12 @@ import CppQtQuickWebsite.CppObjects
 Rectangle {
 
     readonly property string headerText: (Localization.string("SubPage %1")).arg(7)
-    readonly property string subHeaderText: "Local persistent storage."
+    readonly property string subHeaderText: Localization.string("Local persistent storage.")
+
+    readonly property string msgKeyEmpty: Localization.string("Key cannot be empty!")
+    readonly property string msgLoaded: Localization.string("Loaded value for key: %1 is %2")
+    readonly property string msgEmpty: Localization.string("<empty>")
+    readonly property string msgSaved: Localization.string("Saved value %1 for key: %2")
 
     property int bigFontSize: ZoomSettings.bigFontSize
     property int regularFontSize: ZoomSettings.regularFontSize
@@ -89,12 +94,12 @@ Rectangle {
                 font.pointSize: bigFontSize
                 onAccepted: {
                     if (keyField.text === "") {
-                        resultLabel.text = "Key cannot be empty!";
+                        resultLabel.text = msgKeyEmpty;
                         return;
                     }
                     var key = keyField.text;
                     var value = loadSetting(key);
-                    resultLabel.text = "Loaded value for key: " + key + " is " + (value ? value : "<empty>");
+                    resultLabel.text = msgLoaded.arg(key).arg(value ? value : msgEmpty);
                 }
             }
 
@@ -111,9 +116,7 @@ Rectangle {
                     var key = keyField.text;
                     var value = valueField.text;
                     saveSetting(key, value);
-                    resultLabel.text = 
-                        "Saved value " + (value ? value : "<empty>") +
-                        " for key: " + (key ? key : "<empty>");
+                    resultLabel.text = msgSaved.arg(value ? value : msgEmpty).arg(key ? key : msgEmpty);
                 }
             }
         }

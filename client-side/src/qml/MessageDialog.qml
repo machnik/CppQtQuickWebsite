@@ -11,7 +11,7 @@ Dialog {
     width: 400; height: 300
     font.pixelSize: ZoomSettings.bigFontSize
     modal: true
-    title: "Message"
+    title: Localization.string("Message")
     spacing: 10
 
     Text {

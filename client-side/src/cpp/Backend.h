@@ -31,6 +31,7 @@ class Backend : public QObject
 */
 
         Q_INVOKABLE void reloadQML();
+        Q_INVOKABLE void resetBackend();
         Q_INVOKABLE QString message() const;
         Q_INVOKABLE ListModel *listModel() const;
         Q_INVOKABLE QString textResource(const QString &resourceName) const;

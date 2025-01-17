@@ -41,3 +41,14 @@ void ListModel::removeItem(int index)
     m_items.removeAt(index);
     endRemoveRows();
 }
+
+void ListModel::clear()
+{
+    if (m_items.isEmpty()) {
+        return;
+    }
+
+    beginRemoveRows(QModelIndex(), 0, m_items.count() - 1);
+    m_items.clear();
+    endRemoveRows();
+}

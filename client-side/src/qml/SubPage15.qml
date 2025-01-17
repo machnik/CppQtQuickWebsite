@@ -10,7 +10,7 @@ import CppQtQuickWebsite.CppObjects
 Rectangle {
 
     readonly property string headerText: (Localization.string("SubPage %1")).arg(15)
-    readonly property string subHeaderText: "3D View"
+    readonly property string subHeaderText: Localization.string("3D View.")
     
     color: "transparent"
 

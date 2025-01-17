@@ -9,7 +9,7 @@ import CppQtQuickWebsite.CppObjects
 Rectangle {
 
     readonly property string headerText: (Localization.string("SubPage %1")).arg(6)
-    readonly property string subHeaderText: "JavaScript interpreter."
+    readonly property string subHeaderText: Localization.string("JavaScript interpreter.")
 
     property int hugeFontSize: ZoomSettings.hugeFontSize
     property int bigFontSize: ZoomSettings.bigFontSize
@@ -75,7 +75,7 @@ Rectangle {
 
                     Label {
                         id: resultLabel
-                        text: "Result: "
+                        text: Localization.string("Result: ")
                         font.pointSize: bigFontSize
                         Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
                         Layout.topMargin: parent.height / 8
@@ -138,10 +138,11 @@ Rectangle {
                         border.width: 2
 
                         Label {
-                            text: Localization.string("Code-Behind JS Implementation")
+                            text: Localization.string("Code-Behind JS Implementation\n(separate instances)")
                             font.bold: true
                             font.pointSize: smallFontSize
-                            anchors.horizontalCenter: parent.horizontalCenter
+                            anchors.left: parent.left
+                            anchors.leftMargin: parent.width / 8
                             anchors.top: parent.top
                             anchors.topMargin: parent.height / 8
                         }
@@ -178,10 +179,11 @@ Rectangle {
                         border.width: 2
 
                         Label {
-                            text: Localization.string("Shared JS Library")
+                            text: Localization.string("Shared JS Library\n(one common instance)")
                             font.bold: true
                             font.pointSize: smallFontSize
-                            anchors.horizontalCenter: parent.horizontalCenter
+                            anchors.left: parent.left
+                            anchors.leftMargin: parent.width / 8
                             anchors.top: parent.top
                             anchors.topMargin: parent.height / 8
                         }

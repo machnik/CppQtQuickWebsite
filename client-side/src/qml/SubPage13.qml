@@ -8,7 +8,7 @@ import CppQtQuickWebsite.CppObjects
 Rectangle {
 
     readonly property string headerText: (Localization.string("SubPage %1")).arg(13)
-    readonly property string subHeaderText: "Loading and saving/downloading a local file."
+    readonly property string subHeaderText: Localization.string("Loading and saving/downloading a local file.")
 
     property string currentFileName: "untitled.txt"
 
