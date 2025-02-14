@@ -1,7 +1,6 @@
 import QtQuick
 import QtQuick.Controls
-
-import Qt.labs.platform
+import QtQuick.Dialogs
 
 import "qrc:/qml/singletons/"
 
@@ -52,8 +51,8 @@ Rectangle {
 
     ColorDialog {
         id: colorDialog
-        currentColor: selectedColor
-        onAccepted: selectedColor = colorDialog.currentColor
+        selectedColor: selectedColor
+        onAccepted: selectedColor = colorDialog.selectedColor
     }
 
     ToMainPageButton {

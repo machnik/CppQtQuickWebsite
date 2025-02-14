@@ -38,12 +38,14 @@ Window {
                 text: Localization.string("A button that does nothing")
                 font.pointSize: ZoomSettings.regularFontSize
                 Layout.alignment: Qt.AlignHCenter
+                Layout.preferredWidth: 250
             }
 
             TextField {
                 placeholderText: Localization.string("Enter text here")
                 font.pointSize: ZoomSettings.regularFontSize
                 Layout.alignment: Qt.AlignHCenter
+                Layout.preferredWidth: 250
             }
         }
     }

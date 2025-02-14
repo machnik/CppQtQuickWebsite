@@ -55,6 +55,7 @@
     "Increment Count %1": "Zähler %1 erhöhen",
     "Item %1": "Element %1",
     "JavaScript Interpreter": "JavaScript-Interpreter",
+    "JavaScript interpreter.": "JavaScript-Interpreter.",
     "Key cannot be empty!": "Schlüssel darf nicht leer sein!",
     "LANGUAGE": "SPRACHE",
     "Loaded value for key: %1 is %2": "Geladener Wert für Schlüssel: %1 ist %2",
