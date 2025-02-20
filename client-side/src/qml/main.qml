@@ -232,4 +232,13 @@ ApplicationWindow {
             }
         }
     }
+
+    Label {
+        text: "v" + Backend.version()
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        anchors.margins: 10
+        font.pointSize: ZoomSettings.smallFontSize
+        color: "#FFFFFF"
+    }
 }
