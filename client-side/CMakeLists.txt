@@ -7,6 +7,48 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
+# Set default build type if not specified: Release
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Build type: Debug or Release" FORCE)
+endif()
+
+# Configure build types
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    message(STATUS "Configuring Debug build")
+    # Common debug flags
+    add_compile_options(-g -O0)
+    
+    # WebAssembly-specific debug settings
+    if(EMSCRIPTEN)
+        add_link_options(
+            -gsource-map
+            -gdwarf
+            "-sASSERTIONS=1"
+            "-sSAFE_HEAP=1"
+            "-sSTACK_OVERFLOW_CHECK=2"
+            "-sSAFE_HEAP_LOG=1"
+            "--profiling-funcs"
+            "--preload-file ${CMAKE_SOURCE_DIR}/../src/cpp@/src/cpp"
+        )
+        # Allow for easier debugging in browser console
+        add_compile_definitions(QT_QML_DEBUG EMSCRIPTEN_TRACING)
+    endif()
+elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
+    message(STATUS "Configuring Release build")
+    # Common release flags
+    add_compile_options(-O3)
+    
+    # WebAssembly-specific release optimizations
+    if(EMSCRIPTEN)
+        add_link_options(
+            -O3
+            "-sASSERTIONS=0"
+            "--closure=1"
+            "-sELIMINATE_DUPLICATE_FUNCTIONS=1"
+        )
+    endif()
+endif()
+
 find_package(Qt6 REQUIRED COMPONENTS Core Quick Quick3D Multimedia WebSockets Widgets)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/cpp)

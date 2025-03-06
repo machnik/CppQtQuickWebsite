@@ -100,7 +100,8 @@ emsdk_env.bat
 ```bash
 cd CppQtQuickWebsite/client-side
 mkdir build_wasm && cd build_wasm
-"$QT_BIN_WASM/bin/qt-cmake" ..
+# Build types are Debug and Release:
+"$QT_BIN_WASM/bin/qt-cmake" -DCMAKE_BUILD_TYPE=Debug ..
 "$QT_BIN_WASM/bin/qt-cmake" --build .
 ```
 
@@ -115,7 +116,8 @@ mkdir build_wasm && cd build_wasm
 ```bat
 cd CppQtQuickWebsite/client-side
 mkdir build_wasm && cd build_wasm
-"%QT_BIN_WASM%\bin\qt-cmake.bat" -G "Ninja" ..
+:: Build types are Debug and Release:
+"%QT_BIN_WASM%\bin\qt-cmake.bat" -G "Ninja" -DCMAKE_BUILD_TYPE=Debug ..
 cmake --build .
 ```
 
@@ -133,7 +135,8 @@ cmake --build .
 ```bash
 cd CppQtQuickWebsite/client-side
 mkdir build_linux && cd build_linux
-"$QT_BIN_GCC/bin/qt-cmake" ..
+# Build types are Debug and Release:
+"$QT_BIN_GCC/bin/qt-cmake" -DCMAKE_BUILD_TYPE=Debug ..
 "$QT_BIN_GCC/bin/qt-cmake" --build .
 ```
 
@@ -150,7 +153,8 @@ mkdir build_linux && cd build_linux
 ```bat
 cd CppQtQuickWebsite/client-side
 mkdir build_win && cd build_win
-"%QT_BIN_LLVM_MINGW%\bin\qt-cmake.bat" -G "MinGW Makefiles" ..
+:: Build types are Debug and Release:
+"%QT_BIN_LLVM_MINGW%\bin\qt-cmake.bat" -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Debug ..
 cmake --build .
 ```
 
