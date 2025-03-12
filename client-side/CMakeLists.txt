@@ -7,6 +7,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
+# Option to enable WebAssembly exceptions
+option(ENABLE_WASM_EXCEPTIONS "Enable C++ exceptions in WebAssembly builds" OFF)
+
 # Set default build type if not specified: Release
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Build type: Debug or Release" FORCE)
@@ -15,37 +18,61 @@ endif()
 # Configure build types
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     message(STATUS "Configuring Debug build")
-    # Common debug flags
-    add_compile_options(-g -O0)
+
+    add_compile_options(
+        "-O0"
+        "-g"
+    )
     
     # WebAssembly-specific debug settings
     if(EMSCRIPTEN)
+        if(ENABLE_WASM_EXCEPTIONS)
+            add_compile_options("-fexceptions")
+            message(STATUS "WebAssembly exceptions enabled for Debug build")
+        endif()
+        
         add_link_options(
-            -gsource-map
-            -gdwarf
-            "-sASSERTIONS=1"
-            "-sSAFE_HEAP=1"
-            "-sSTACK_OVERFLOW_CHECK=2"
-            "-sSAFE_HEAP_LOG=1"
             "--profiling-funcs"
             "--preload-file ${CMAKE_SOURCE_DIR}/../src/cpp@/src/cpp"
+            "-O1"
+            "-g"
+            "-sASSERTIONS=1"
+            "-sSAFE_HEAP=1"
+            "-sSAFE_HEAP_LOG=1"
+            "-sSTACK_OVERFLOW_CHECK=2"
         )
+        
+        if(ENABLE_WASM_EXCEPTIONS)
+            add_link_options("-fexceptions")
+        endif()
+        
         # Allow for easier debugging in browser console
         add_compile_definitions(QT_QML_DEBUG EMSCRIPTEN_TRACING)
     endif()
 elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
     message(STATUS "Configuring Release build")
-    # Common release flags
-    add_compile_options(-O3)
+
+    add_compile_options(
+        "-O3"
+    )
     
     # WebAssembly-specific release optimizations
     if(EMSCRIPTEN)
+        if(ENABLE_WASM_EXCEPTIONS)
+            add_compile_options("-fexceptions")
+            message(STATUS "WebAssembly exceptions enabled for Release build")
+        endif()
+        
         add_link_options(
-            -O3
-            "-sASSERTIONS=0"
             "--closure=1"
+            "-O3"
+            "-sASSERTIONS=0"
             "-sELIMINATE_DUPLICATE_FUNCTIONS=1"
         )
+        
+        if(ENABLE_WASM_EXCEPTIONS)
+            add_link_options("-fexceptions")
+        endif()
     endif()
 endif()
 
