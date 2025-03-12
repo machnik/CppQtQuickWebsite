@@ -95,6 +95,14 @@ emsdk_env.bat
 
 ## 🌐 Build for WebAssembly
 
+### C++ Exceptions
+
+To enable C++ exceptions (disabled by default), in _CMakeLists.txt_ switch this option to `ON`:
+```cmake
+option(ENABLE_WASM_EXCEPTIONS "Enable C++ exceptions in WebAssembly builds" OFF)
+```
+
+
 ### On Linux
 
 ```bash
@@ -162,6 +170,11 @@ cmake --build .
 ```bat
 WebApplication.exe
 ```
+
+
+## 🐛 Debugging the WebAssembly build in the browser
+
+TODO
 
 # 📄 Publishing the website
 
