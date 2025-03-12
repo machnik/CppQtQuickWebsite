@@ -172,9 +172,15 @@ WebApplication.exe
 ```
 
 
-## 🐛 Debugging the WebAssembly build in the browser
+## 🐛 Debugging the WebAssembly build in the web browser
 
-TODO
+1. Build the project for debugging (`DCMAKE_BUILD_TYPE=Debug`).  
+2. For the best experience use the **Google Chrome** browser.  
+3. **JavaScript** code can be debugged using **Chrome DevTools** (F12) as usual.  
+4. To debug **C++** code:  
+   1. Install the [C/C++ DevTools Support (DWARF)](https://goo.gle/wasm-debugging-extension) extension in Chrome.  
+   2. **C++** code can now also be debugged using **Chrome DevTools** (F12), just like **JavaScript** code:  
+![WASM Debugging Screenshot](README-images/debugging-wasm.png "WebApplication")
 
 # 📄 Publishing the website
 
