@@ -16,7 +16,7 @@ You can use this codebase as a template for your own projects.
   - for 🐧 Linux: **GCC**
   - for 🪟︎ Windows: **LLVM-MinGW**
   - for 🌐 WebAssembly: **[emscripten](https://emscripten.org/docs/getting_started/downloads.html)** version `3.1.56`
-- **[CMake](https://cmake.org/download/)** version >= `3.30.2`
+- **[CMake](https://cmake.org/download/)** version >= `3.30.2` (add to *PATH*)
 - Build system:
   - on 🐧 Linux: **Make**
   - on 🪟︎ Windows: **[Ninja](https://github.com/ninja-build/ninja/releases)** version >= 1.12.1 (add to *PATH*)
@@ -26,6 +26,8 @@ You can use this codebase as a template for your own projects.
   - for 🌐 WebAssembly - choose one:
     - single-threaded (better compatibility and stability)
     - multi-threaded (allows using C++ threads)
+
+_TIP: **CMake**, **Ninja** and **LLVM-MinGW** can be installed on Windows using the official **Qt Maintenance Tool** (installer)._
 
 ## 💻 Environment Setup
 
@@ -132,7 +134,7 @@ cmake --build .
 #### Run
 
 ```bat
-"%EMSDK%/upstream/emscripten/emrun" WebApplication.html
+"%EMSDK%/upstream/emscripten/emrun" --browser=chrome WebApplication.html
 ```
 
 
