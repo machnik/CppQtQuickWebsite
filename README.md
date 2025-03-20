@@ -20,7 +20,7 @@ You can use this codebase as a template for your own projects.
 - Build system:
   - on 🐧 Linux: **Make**
   - on 🪟︎ Windows: **[Ninja](https://github.com/ninja-build/ninja/releases)** version >= 1.12.1 (add to *PATH*)
-- **[Qt](https://www.qt.io/download-open-source)** version `6.8.0` with pre-built binaries for:
+- **[Qt](https://www.qt.io/download-open-source)** version `6.8.2` with pre-built binaries for:
   - for 🐧 Linux: **GCC**
   - for 🪟︎ Windows: **LLVM-MinGW**
   - for 🌐 WebAssembly - choose one:
@@ -36,16 +36,16 @@ _TIP: **CMake**, **Ninja** and **LLVM-MinGW** can be installed on Windows using 
 #### Native
 
 ```bash
-export QT_BIN_GCC="$HOME/Qt/6.8.0/gcc_64"
+export QT_BIN_GCC="$HOME/Qt/6.8.2/gcc_64"
 ```
 
 #### For WebAssembly
 
 ```bash
 # Either single-thread:
-export QT_BIN_WASM="$HOME/Qt/6.8.0/wasm_singlethread"
+export QT_BIN_WASM="$HOME/Qt/6.8.2/wasm_singlethread"
 # ... or multi-thread:
-export QT_BIN_WASM="$HOME/Qt/6.8.0/wasm_multithread"
+export QT_BIN_WASM="$HOME/Qt/6.8.2/wasm_multithread"
 
 git clone https://github.com/emscripten-core/emsdk.git
 cd emsdk
@@ -65,7 +65,7 @@ Select **LLVM-MinGW** in the **Qt Maintenance Tool** (under Qt -> Developer and 
 ```bat
 setx PATH "%PATH%;"%USERPROFILE%\Qt\Tools\llvm-mingw1706_64\bin"
 
-setx QT_BIN_LLVM_MINGW "%USERPROFILE%\Qt\6.8.0\llvm-mingw_64"
+setx QT_BIN_LLVM_MINGW "%USERPROFILE%\Qt\6.8.2\llvm-mingw_64"
 
 setx PATH "%QT_BIN_LLVM_MINGW%\bin;%PATH%"
 setx QML2_IMPORT_PATH "%QT_BIN_LLVM_MINGW%\qml"
@@ -76,9 +76,9 @@ setx QT_PLUGIN_PATH "%QT_BIN_LLVM_MINGW%\plugins"
 
 ```bat
 :: Either single-thread:
-setx QT_BIN_WASM "%USERPROFILE%\Qt\6.8.0\wasm_singlethread"
+setx QT_BIN_WASM "%USERPROFILE%\Qt\6.8.2\wasm_singlethread"
 :: ... or multi-thread:
-setx QT_BIN_WASM "%USERPROFILE%\Qt\6.8.0\wasm_multithread"
+setx QT_BIN_WASM "%USERPROFILE%\Qt\6.8.2\wasm_multithread"
 
 setx PATH "%QT_BIN_WASM%\bin;%PATH%"
 setx QML2_IMPORT_PATH "%QT_BIN_WASM%\qml"

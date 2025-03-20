@@ -6,3 +6,6 @@
 ## [1.0.1] - 2025-03-12
 - Debug build type added.
 - C++ exceptions toggle added.
+
+## [1.0.2] - 2025-03-20
+- Update: Qt 6.8.2.
