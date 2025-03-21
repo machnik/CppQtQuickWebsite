@@ -15,8 +15,8 @@ ApplicationWindow {
     background: Rectangle {
         anchors.fill: parent
         gradient: Gradient {
-            GradientStop { position: 0.0; color: "#A0A0A0" }
-            GradientStop { position: 1.0; color: "#202020" }
+            GradientStop { position: 0.0; color: "#808080" }
+            GradientStop { position: 1.0; color: "#101010" }
         }
     }
 
@@ -74,8 +74,8 @@ ApplicationWindow {
         radius: 8
 
         gradient: Gradient {
-            GradientStop { position: 0.0; color: "#F5F5F5" }
-            GradientStop { position: 1.0; color: "#B0B0B0" }
+            GradientStop { position: 0.0; color: "#D0D0D0" }
+            GradientStop { position: 1.0; color: "#909090" }
         }
 
         StackView {
@@ -227,7 +227,7 @@ ApplicationWindow {
             }
 
             Item {
-                width: zoomControl.zoomLabelWidth / 2
+                width: zoomControl.zoomLabelWidth * 1.5
                 height: parent.height
             }
         }

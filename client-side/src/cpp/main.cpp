@@ -16,8 +16,6 @@ int main(int argc, char *argv[])
 //  If the Widgets module is not needed, you can use QGuiApplication instead of QApplication:
     QApplication app(argc, argv);
 
-    QQuickStyle::setStyle("Fusion");
-
     QQmlApplicationEngine engine;
     engine.load(":/qml/main.qml");
 
