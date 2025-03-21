@@ -90,6 +90,11 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/cpp)
 # Sets Qt-specific settings for the project
 qt_standard_project_setup()
 
+# Disables CMake warning about default resource prefix for QML files
+qt_policy(
+    SET QTP0001 NEW
+)
+
 # Add the executable target
 qt_add_executable(${PROJECT_NAME}
     "src/cpp/main.cpp"
