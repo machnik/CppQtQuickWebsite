@@ -45,7 +45,7 @@ Rectangle {
     }
 
     Label {
-        text: Localization.string("Temporarily unsupported in WebAssembly with Qt 6.8!")
+        text: Localization.string("Temporarily unsupported in WebAssembly with Qt 6.10!")
         anchors.bottom: portField.top
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.margins: 20

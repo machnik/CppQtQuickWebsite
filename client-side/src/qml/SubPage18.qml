@@ -33,6 +33,7 @@ Rectangle {
 
     ComboBox {
         id: styleComboBox
+        width: 200
         model: [
             "adventurer", "avataaars", "bottts", "croodles",
             "fun-emoji", "icons", "identicon", "lorelei",

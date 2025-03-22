@@ -9,7 +9,7 @@ import CppQtQuickWebsite.CppObjects
 
 Window {
     visible: true
-    width: 500
+    width: 600
     height: 300
     title: Localization.string("Example Window")
     visibility: Window.Windowed
@@ -38,14 +38,14 @@ Window {
                 text: Localization.string("A button that does nothing")
                 font.pointSize: ZoomSettings.regularFontSize
                 Layout.alignment: Qt.AlignHCenter
-                Layout.preferredWidth: 250
+                Layout.preferredWidth: 350
             }
 
             TextField {
                 placeholderText: Localization.string("Enter text here")
                 font.pointSize: ZoomSettings.regularFontSize
                 Layout.alignment: Qt.AlignHCenter
-                Layout.preferredWidth: 250
+                Layout.preferredWidth: 350
             }
         }
     }

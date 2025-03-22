@@ -146,7 +146,19 @@ ApplicationWindow {
         id: toolBar
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
-        height: 40
+        height: 48
+
+        background: Rectangle {
+            anchors.fill: parent
+            radius: 8
+            border.color: "black"
+            border.width: 2
+
+            gradient: Gradient {
+                GradientStop { position: 0.0; color: "#A9A9A9" }
+                GradientStop { position: 1.0; color: "#606060" }
+            }
+        }
 
         Row {
             ToolButton {
