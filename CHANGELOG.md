@@ -8,4 +8,4 @@
 - C++ exceptions toggle added.
 
 ## [1.0.2] - 2025-03-21
-- Update: Qt 6.10.0.
+- Update: Qt 6.9.0.
