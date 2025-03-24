@@ -45,8 +45,8 @@ Rectangle {
             model: subPagesComponents
 
             delegate: Button {
-                Layout.preferredWidth: 100
-                Layout.preferredHeight: 65
+                Layout.preferredWidth: 128
+                Layout.preferredHeight: 64
                 text: Localization.string("Page %1").arg(index + 1)
                 font.pointSize: ZoomSettings.regularFontSize
                 ToolTip {

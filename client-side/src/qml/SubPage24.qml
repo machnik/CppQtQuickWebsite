@@ -30,7 +30,7 @@ Rectangle {
     }
 
     Label {
-        text: Localization.string("Does not work in WebAssembly with Qt 6.8!")
+        text: Localization.string("Does not work in WebAssembly with Qt 6.10!")
         anchors.top: subHeaderLabel.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.margins: 20
