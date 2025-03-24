@@ -33,15 +33,17 @@ void Localization::setLanguage(QLocale::Language language)
         QString languageCode = QLocale(language).name();
 
         QFile jsonFile{ QString(":/resources/translation/local_strings_%1.json").arg(languageCode) };
-        jsonFile.open(QIODevice::ReadOnly);
-        QJsonDocument jsonDocument = QJsonDocument::fromJson(jsonFile.readAll());
-        QJsonObject translations = jsonDocument.object();
 
-        for (auto it = translations.begin(); it != translations.end(); ++it) {
-            m_localStrings[it.key()] = it.value().toString();
-        }
+        if (jsonFile.open(QIODevice::ReadOnly)) {
+            QJsonDocument jsonDocument = QJsonDocument::fromJson(jsonFile.readAll());
+            QJsonObject translations = jsonDocument.object();
+
+            for (auto it = translations.begin(); it != translations.end(); ++it) {
+                m_localStrings[it.key()] = it.value().toString();
+            }
         
-        emit languageChanged();
+            emit languageChanged();
+        }
     }
 }
 
