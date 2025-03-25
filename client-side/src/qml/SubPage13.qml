@@ -65,7 +65,7 @@ Rectangle {
                 width: parent.width
                 height: parent.height
                 wrapMode: Text.WordWrap
-                font.pixelSize: ZoomSettings.smallFontSize
+                font.pixelSize: ZoomSettings.regularFontSize
             }
         }
     }

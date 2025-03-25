@@ -75,7 +75,7 @@ Rectangle {
                     }
 
                     ComboBox {
-                        model: [Localization.string("ComboBox"), (Localization.string("Item %1")).arg(1), (Localization.string("Item %1")).arg(2), (Localization.string("Item %1")).arg(3)]
+                        model: [(Localization.string("Item %1")).arg(1), (Localization.string("Item %1")).arg(2), (Localization.string("Item %1")).arg(3)]
                         font.pointSize: regularFontSize
                         delegate: ItemDelegate {
                             text: modelData
@@ -183,12 +183,12 @@ Rectangle {
                     spacing: 20
 
                     TextField {
-                        placeholderText: Localization.string("Enter text here")
+                        placeholderText: Localization.string("Text Field")
                         font.pointSize: regularFontSize
                     }
 
                     TextArea {
-                        placeholderText: Localization.string("Enter text here")
+                        placeholderText: Localization.string("Text Area")
                         font.pointSize: regularFontSize
                     }
 

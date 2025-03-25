@@ -30,7 +30,7 @@ Rectangle {
     Label {
         id: messageLabel
         text: Backend.message
-        font.pointSize: ZoomSettings.bigFontSize
+        font.pointSize: ZoomSettings.hugeFontSize
         anchors.centerIn: parent
     }
 

@@ -43,7 +43,7 @@ Rectangle {
         text: (Localization.string("Count %1")).arg(1) + ": [" + counter1.count + "]\n" +
               (Localization.string("Count %1")).arg(2) + ": [" + counter2.count + "]"
         anchors.centerIn: parent
-        font.pixelSize: ZoomSettings.hugeFontSize
+        font.pixelSize: ZoomSettings.hugeFontSize * 2.5
         font.bold: true
     }
 
