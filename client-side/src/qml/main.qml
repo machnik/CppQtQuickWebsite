@@ -145,6 +145,7 @@ ApplicationWindow {
     ToolBar {
         id: toolBar
         anchors.top: parent.top
+        anchors.topMargin: 7
         anchors.horizontalCenter: parent.horizontalCenter
         height: 48
 

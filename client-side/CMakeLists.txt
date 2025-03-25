@@ -67,7 +67,6 @@ elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
         endif()
         
         add_link_options(
-            "--closure=1" # Enable Closure Compiler optimizations
             "-O3" # Full optimization
             "-sASSERTIONS=0" # Disable runtime assertions
             "-sSAFE_HEAP=0" # Disable safe heap
