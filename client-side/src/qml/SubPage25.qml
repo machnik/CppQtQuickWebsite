@@ -11,12 +11,23 @@ Rectangle {
     readonly property string subHeaderText: (Localization.string("SubPage %1 description")).arg(25)
 
     property string base64Video: ""
-    property bool isVideoLoaded: false
+    property bool isVideoLoaded: false // Video loaded from base64 string of embedded file earth.mp4?
+    property bool isVideoPlaying: false // Is the browser's video player active?
 
     Component.onCompleted: {
         if (BrowserJS.browserEnvironment) {
             base64Video = Base64Converter.convertFileToBase64(":/resources/videos/earth.mp4")
             isVideoLoaded = true
+        }
+    }
+
+    Component.onDestruction: {
+        // Remove the browser's video player when the component is destroyed:
+        if (BrowserJS.browserEnvironment) {
+            BrowserJS.runJS(`
+                var vid = document.getElementById('qml-video-player');
+                if (vid) vid.remove();
+            `);
         }
     }
 
@@ -37,6 +48,7 @@ Rectangle {
         font.pointSize: ZoomSettings.bigFontSize
     }
 
+    // Container for the video player:
     Rectangle {
         id: videoContainer
         width: parent.width * 0.8
@@ -45,53 +57,66 @@ Rectangle {
         anchors.top: headerLabel.bottom
         anchors.topMargin: 80
         color: "black"
-        border.color: "#888"
+        border.color: "black"
         border.width: 1
 
-        // Only show the button if in browser environment
         Button {
-            id: showVideoButton
             visible: BrowserJS.browserEnvironment
             anchors.centerIn: parent
-            text: isVideoLoaded ? Localization.string("Show Video Player") : Localization.string("Loading video...")
+            text: isVideoLoaded ? Localization.string("Load Video") : Localization.string("Loading Video...")
             enabled: isVideoLoaded
             onClicked: {
-                // Remove any previous video element
+                // Remove any previous video element:
                 BrowserJS.runJS(`
                     var oldVid = document.getElementById('qml-video-player');
                     if (oldVid) oldVid.remove();
                 `);
 
-                // Inject the video element
+                // Calculate absolute position of videoContainer:
+                var pos = videoContainer.mapToItem(null, 0, 0);
+
+                // Inject the video element at the correct position:
                 BrowserJS.runJS(`
                     var video = document.createElement('video');
                     video.id = 'qml-video-player';
                     video.controls = true;
                     video.style.position = 'absolute';
-                    video.style.left = '${videoContainer.x + videoContainer.parent.x}px';
-                    video.style.top = '${videoContainer.y + videoContainer.parent.y}px';
+                    video.style.left = '${pos.x}px';
+                    video.style.top = '${pos.y}px';
                     video.width = ${videoContainer.width};
                     video.height = ${videoContainer.height};
                     video.src = 'data:video/mp4;base64,${base64Video}';
                     video.style.zIndex = 1000;
                     document.body.appendChild(video);
                 `);
+
+                isVideoPlaying = true;
             }
+        }
+
+        // Show this label if not in browser environment:
+        Label {
+            visible: !BrowserJS.browserEnvironment
+            anchors.centerIn: parent
+            text: Localization.string("Playback not available in this environment!")
+            color: "red"
+            font.pointSize: ZoomSettings.bigFontSize
         }
     }
 
     Button {
-        id: hideVideoButton
-        visible: BrowserJS.browserEnvironment
+        visible: true
+        enabled: BrowserJS.browserEnvironment && isVideoPlaying
         anchors.top: videoContainer.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.topMargin: 20
-        text: Localization.string("Hide Video Player")
+        text: Localization.string("Close Video")
         onClicked: {
             BrowserJS.runJS(`
                 var vid = document.getElementById('qml-video-player');
                 if (vid) vid.remove();
             `);
+            isVideoPlaying = false;
         }
     }
 
