@@ -36,10 +36,10 @@ Rectangle {
         anchors.bottom: parent.bottom
         anchors.margins: 20
 
-        columns: 6
-        rows: 4
-        columnSpacing: 10
-        rowSpacing: 10
+        columns: 5
+        rows: 5
+        columnSpacing: 8
+        rowSpacing: 8
 
         Repeater {
             model: subPagesComponents

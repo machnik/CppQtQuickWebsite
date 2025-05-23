@@ -39,7 +39,8 @@ QtObject {
         "21. Music playback using browser JS environment.\nDemonstrates how to play audio (embedded in the application) in a browser environment using its JavaScript engine.",
         "22. Using QSysInfo in QML.\nDisplays system information by accessing QSysInfo through a C++ interface exposed to QML.",
         "23. Using ColorDialog in QML.\nShows how to use Qt's ColorDialog component within a QML application.",
-        "24. Video player.\nShows how to implement a video player using Qt's Multimedia module within a QML application."
+        "24. Video player.\nShows how to implement a video player using Qt's Multimedia module within a QML application.",
+        "25. Video player using browser JS environment.\nDemonstrates how to play video (embedded in the application) in a browser environment using its JavaScript engine."
     ]
 
     readonly property var descriptionsPolish: [
@@ -66,7 +67,8 @@ QtObject {
         "21. Odtwarzanie muzyki za pomocą środowiska JS przeglądarki.\nDemonstruje, jak odtwarzać dźwięk (osadzony w aplikacji) w środowisku przeglądarki za pomocą jej silnika JavaScript.",
         "22. Użycie QSysInfo w QML.\nWyświetla informacje o systemie, uzyskując dostęp do QSysInfo za pośrednictwem interfejsu C++ udostępnionego w QML.",
         "23. Użycie ColorDialog w QML.\nPokazuje, jak używać komponentu ColorDialog w Qt w aplikacji QML.",
-        "24. Odtwarzacz wideo.\nPokazuje, jak zaimplementować odtwarzacz wideo za pomocą modułu Multimedia w Qt w aplikacji QML."
+        "24. Odtwarzacz wideo.\nPokazuje, jak zaimplementować odtwarzacz wideo za pomocą modułu Multimedia w Qt w aplikacji QML.",
+        "25. Odtwarzacz wideo za pomocą środowiska JS przeglądarki.\nDemonstruje, jak odtwarzać wideo (osadzone w aplikacji) w środowisku przeglądarki za pomocą jej silnika JavaScript."
     ]
 
     readonly property var descriptionsGerman: [
@@ -93,6 +95,7 @@ QtObject {
         "21. Musikwiedergabe mit Browser-JS-Umgebung.\nDemonstriert, wie Audio (das in der Anwendung eingebettet ist) in einer Browser-Umgebung mit seiner JavaScript-Engine abgespielt werden kann.",
         "22. Verwendung von QSysInfo in QML.\nZeigt Systeminformationen an, indem auf QSysInfo über ein C++-Interface zugegriffen wird, das in QML verfügbar gemacht wurde.",
         "23. Verwendung von ColorDialog in QML.\nZeigt, wie das Qt ColorDialog-Komponente in einer QML-Anwendung verwendet werden kann.",
-        "24. Videoplayer.\nZeigt, wie ein Videoplayer mit Qt's Multimedia-Modul in einer QML-Anwendung implementiert werden kann."
+        "24. Videoplayer.\nZeigt, wie ein Videoplayer mit Qt's Multimedia-Modul in einer QML-Anwendung implementiert werden kann.",
+        "25. Videoplayer mit Browser-JS-Umgebung.\nDemonstriert, wie Video (das in der Anwendung eingebettet ist) in einer Browser-Umgebung mit seiner JavaScript-Engine abgespielt werden kann."
     ]
 }

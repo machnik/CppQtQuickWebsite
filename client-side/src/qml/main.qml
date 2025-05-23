@@ -54,7 +54,8 @@ ApplicationWindow {
         Component { id: subPage21; SubPage21 {}},
         Component { id: subPage22; SubPage22 {}},
         Component { id: subPage23; SubPage23 {}},
-        Component { id: subPage24; SubPage24 {}}
+        Component { id: subPage24; SubPage24 {}},
+        Component { id: subPage25; SubPage25 {}}
     ]
 
     readonly property var subPagesDescriptions: SubPagesDescriptions.descriptions(Localization.currentLanguage)
