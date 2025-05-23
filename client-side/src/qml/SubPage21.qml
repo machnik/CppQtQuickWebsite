@@ -21,7 +21,7 @@ Rectangle {
         // Another idea worth considering would be to use the virtual file system
         // provided by Emscripten.
         if (BrowserJS.browserEnvironment) {
-            base64Audio = Base64Converter.convertFileToBase64(":/resources/audio/sound.wav")
+            base64Audio = Base64Converter.convertFileToBase64(":/resources/audio/sound.ogg")
             isAudioLoaded = true
         }
     }

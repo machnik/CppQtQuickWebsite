@@ -13,7 +13,7 @@ Rectangle {
 
     MediaPlayer {
         id: mediaPlayer
-        source: "qrc:/sound.wav"
+        source: "qrc:/sound.ogg"
         audioOutput: AudioOutput {}
         loops: MediaPlayer.Infinite
     }

@@ -45,10 +45,11 @@ Rectangle {
             model: subPagesComponents
 
             delegate: Button {
-                Layout.preferredWidth: 128
-                Layout.preferredHeight: 64
+                Layout.preferredWidth: 180
+                Layout.preferredHeight: 70
                 text: Localization.string("Page %1").arg(index + 1)
                 font.pointSize: ZoomSettings.regularFontSize
+                icon.source: "qrc:/resources/icons/pageIcon" + (index + 1) + ".svg"
                 ToolTip {
                     text: subPagesDescriptions[index]
                     y: parent.height

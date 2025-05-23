@@ -12,3 +12,8 @@
 
 ## [1.0.3] - 2025-03-26
 - UI fixes.
+
+## [1.0.4] - 2025-05-23
+- Added JS embedded video player.
+- Replaced music clip with a nicer one.
+- Added icons to main menu buttons.
