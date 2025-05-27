@@ -9,7 +9,7 @@ import CppQtQuickWebsite.CppObjects
 Rectangle {
 
     readonly property string headerText: (Localization.string("SubPage %1")).arg(24)
-    readonly property string subHeaderText: Localization.string("Video player.")
+    readonly property string subHeaderText: Localization.string("Video playback.")
 
     color: "transparent"
 

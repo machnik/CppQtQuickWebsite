@@ -8,7 +8,7 @@ import CppQtQuickWebsite.CppObjects
 Rectangle {
 
     readonly property string headerText: (Localization.string("SubPage %1")).arg(25)
-    readonly property string subHeaderText: (Localization.string("SubPage %1 description")).arg(25)
+    readonly property string subHeaderText: (Localization.string("Video playback using the browser's built-in player."))
 
     property string base64Video: ""
     property bool isVideoLoaded: false // Video loaded from base64 string of embedded file earth.mp4?

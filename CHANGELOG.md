@@ -17,3 +17,6 @@
 - Added JS embedded video player.
 - Replaced music clip with a nicer one.
 - Added icons to main menu buttons.
+
+## [1.0.5] - 2025-05-27
+- Improved the order of subpages.

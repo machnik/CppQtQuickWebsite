@@ -32,15 +32,15 @@ QtObject {
         "14. 2D animation.\nIncludes animated items, demonstrating the capabilities of QML for creating dynamic UIs.",
         "15. 3D animation.\nShowcases the use of Qt Quick 3D to create and display 3D models within a QML application.",
         "16. Qt Quick 3D Physics.\nDemonstrates the integration of physics simulations within a 3D scene using QML.",
-        "17. Music playback using Qt's MediaPlayer.\nShows how to play audio files (embedded in the application) using Qt's MediaPlayer component.",
-        "18. Avatar generator using the DiceBear API.\nDemonstrates how to fetch and display data dynamically from an external source.",
+        "17. Music playback using Qt's MediaPlayer.\nShows how to play audio files (embedded in the application) using Qt's MediaPlayer component. Does not work in WebAssembly with Qt 6.9!",
+        "18. Music playback using the browser's Web Audio API.\nDemonstrates how to play audio (embedded in the application) in a browser environment using its JavaScript engine.",
         "19. WebSocket server.\nShows how to set up and manage a WebSocket server using QML and C++.",
         "20. WebSocket client.\nShows how to set up and manage a WebSocket client that communicates with a WebSocket server.",
-        "21. Music playback using browser JS environment.\nDemonstrates how to play audio (embedded in the application) in a browser environment using its JavaScript engine.",
+        "21. Avatar generator using the DiceBear API.\nDemonstrates how to fetch and display data dynamically from an external source.",
         "22. Using QSysInfo in QML.\nDisplays system information by accessing QSysInfo through a C++ interface exposed to QML.",
         "23. Using ColorDialog in QML.\nShows how to use Qt's ColorDialog component within a QML application.",
-        "24. Video player.\nShows how to implement a video player using Qt's Multimedia module within a QML application.",
-        "25. Video player using browser JS environment.\nDemonstrates how to play video (embedded in the application) in a browser environment using its JavaScript engine."
+        "24. Video playback.\nShows how to implement a video player using Qt's Multimedia module within a QML application. Does not work in WebAssembly with Qt 6.9!",
+        "25. Video playback using the browser's built-in player.\nDemonstrates how to play video (embedded in the application) in a browser environment using its JavaScript engine."
     ]
 
     readonly property var descriptionsPolish: [
@@ -60,15 +60,15 @@ QtObject {
         "14. Animacja 2D.\nZawiera animowane elementy, demonstrując możliwości QML do tworzenia dynamicznych interfejsów użytkownika.",
         "15. Animacja 3D.\nPrezentuje użycie Qt Quick 3D do tworzenia i wyświetlania modeli 3D w aplikacji QML.",
         "16. Fizyka Qt Quick 3D.\nDemonstruje integrację symulacji fizyki w scenie 3D za pomocą QML.",
-        "17. Odtwarzanie muzyki za pomocą MediaPlayer w Qt.\nPokazuje, jak odtwarzać pliki dźwiękowe (osadzone w aplikacji) za pomocą komponentu MediaPlayer w Qt.",
-        "18. Generator awatarów za pomocą interfejsu DiceBear API.\nDemonstruje, jak dynamicznie pobierać i wyświetlać dane z zewnętrznego źródła.",
+        "17. Odtwarzanie muzyki za pomocą MediaPlayer w Qt.\nPokazuje, jak odtwarzać pliki dźwiękowe (osadzone w aplikacji) za pomocą komponentu MediaPlayer w Qt. Nie działa w WebAssembly z Qt 6.9!",
+        "18. Odtwarzanie muzyki za pomocą Web Audio API przeglądarki.\nDemonstruje, jak odtwarzać dźwięk (osadzony w aplikacji) w środowisku przeglądarki za pomocą jej silnika JavaScript.",
         "19. Serwer WebSocket.\nPokazuje, jak skonfigurować i zarządzać serwerem WebSocket za pomocą QML i C++.",
         "20. Klient WebSocket.\nPokazuje, jak skonfigurować i zarządzać klientem WebSocket, który komunikuje się z serwerem WebSocket.",
-        "21. Odtwarzanie muzyki za pomocą środowiska JS przeglądarki.\nDemonstruje, jak odtwarzać dźwięk (osadzony w aplikacji) w środowisku przeglądarki za pomocą jej silnika JavaScript.",
+        "21. Generator awatarów za pomocą interfejsu DiceBear API.\nDemonstruje, jak dynamicznie pobierać i wyświetlać dane z zewnętrznego źródła.",
         "22. Użycie QSysInfo w QML.\nWyświetla informacje o systemie, uzyskując dostęp do QSysInfo za pośrednictwem interfejsu C++ udostępnionego w QML.",
         "23. Użycie ColorDialog w QML.\nPokazuje, jak używać komponentu ColorDialog w Qt w aplikacji QML.",
-        "24. Odtwarzacz wideo.\nPokazuje, jak zaimplementować odtwarzacz wideo za pomocą modułu Multimedia w Qt w aplikacji QML.",
-        "25. Odtwarzacz wideo za pomocą środowiska JS przeglądarki.\nDemonstruje, jak odtwarzać wideo (osadzone w aplikacji) w środowisku przeglądarki za pomocą jej silnika JavaScript."
+        "24. Odtwarzanie wideo.\nPokazuje, jak zaimplementować odtwarzacz wideo za pomocą modułu Multimedia w Qt w aplikacji QML. Nie działa w WebAssembly z Qt 6.9!",
+        "25. Odtwarzacz wideo za pomocą wbudowanego odtwarzacza przeglądarki.\nDemonstruje, jak odtwarzać wideo (osadzone w aplikacji) w środowisku przeglądarki za pomocą jej silnika JavaScript."
     ]
 
     readonly property var descriptionsGerman: [
@@ -88,14 +88,14 @@ QtObject {
         "14. 2D-Animation.\nEnthält animierte Elemente und demonstriert die Fähigkeiten von QML zur Erstellung dynamischer Benutzeroberflächen.",
         "15. 3D-Animation.\nZeigt die Verwendung von Qt Quick 3D zur Erstellung und Anzeige von 3D-Modellen in einer QML-Anwendung.",
         "16. Qt Quick 3D Physics.\nDemonstriert die Integration von Physiksimulationen in einer 3D-Szene mit QML.",
-        "17. Musikwiedergabe mit Qt's MediaPlayer.\nZeigt, wie Audiodateien (die in der Anwendung eingebettet sind) mit Qt's MediaPlayer-Komponente abgespielt werden können.",
-        "18. Avatar-Generator mit der DiceBear API.\nDemonstriert, wie Daten dynamisch von einer externen Quelle abgerufen und angezeigt werden können.",
+        "17. Musikwiedergabe mit Qt's MediaPlayer.\nZeigt, wie Audiodateien (die in der Anwendung eingebettet sind) mit Qt's MediaPlayer-Komponente abgespielt werden können. Funktioniert nicht in WebAssembly mit Qt 6.9!",
+        "18. Musikwiedergabe mit dem Web Audio API des Browsers.\nDemonstriert, wie Audio (das in der Anwendung eingebettet ist) in einer Browser-Umgebung mit seiner JavaScript-Engine abgespielt werden kann.",
         "19. WebSocket-Server.\nZeigt, wie ein WebSocket-Server mit QML und C++ eingerichtet und verwaltet werden kann.",
         "20. WebSocket-Client.\nZeigt, wie ein WebSocket-Client eingerichtet und verwaltet werden kann, der mit einem WebSocket-Server kommuniziert.",
-        "21. Musikwiedergabe mit Browser-JS-Umgebung.\nDemonstriert, wie Audio (das in der Anwendung eingebettet ist) in einer Browser-Umgebung mit seiner JavaScript-Engine abgespielt werden kann.",
+        "21. Avatar-Generator mit der DiceBear API.\nDemonstriert, wie Daten dynamisch von einer externen Quelle abgerufen und angezeigt werden können.",
         "22. Verwendung von QSysInfo in QML.\nZeigt Systeminformationen an, indem auf QSysInfo über ein C++-Interface zugegriffen wird, das in QML verfügbar gemacht wurde.",
         "23. Verwendung von ColorDialog in QML.\nZeigt, wie das Qt ColorDialog-Komponente in einer QML-Anwendung verwendet werden kann.",
-        "24. Videoplayer.\nZeigt, wie ein Videoplayer mit Qt's Multimedia-Modul in einer QML-Anwendung implementiert werden kann.",
-        "25. Videoplayer mit Browser-JS-Umgebung.\nDemonstriert, wie Video (das in der Anwendung eingebettet ist) in einer Browser-Umgebung mit seiner JavaScript-Engine abgespielt werden kann."
+        "24. Videowiedergabe.\nZeigt, wie ein Videoplayer mit Qt's Multimedia-Modul in einer QML-Anwendung implementiert werden kann. Funktioniert nicht in WebAssembly mit Qt 6.9!",
+        "25. Videowiedergabe mit dem integrierten Player des Browsers.\nDemonstriert, wie Video (das in der Anwendung eingebettet ist) in einer Browser-Umgebung mit seiner JavaScript-Engine abgespielt werden kann."
     ]
 }

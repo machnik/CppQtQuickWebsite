@@ -9,7 +9,7 @@ import CppQtQuickWebsite.CppObjects
 Rectangle {
     
     readonly property string headerText: (Localization.string("SubPage %1")).arg(17)
-    readonly property string subHeaderText: Localization.string("Music Playback")
+    readonly property string subHeaderText: Localization.string("Music playback")
 
     MediaPlayer {
         id: mediaPlayer

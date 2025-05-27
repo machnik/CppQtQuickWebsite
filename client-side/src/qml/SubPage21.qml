@@ -8,23 +8,11 @@ import CppQtQuickWebsite.CppObjects
 Rectangle {
 
     readonly property string headerText: (Localization.string("SubPage %1")).arg(21)
-    readonly property string subHeaderText: Localization.string("Music playback using the browser's Web Audio API.")
+    readonly property string subHeaderText: Localization.string("Avatar generator using DiceBear API.")
 
-    property string base64Audio: ""
-    property bool isAudioLoaded: false
+    readonly property string avatarPlaceholder: "qrc:/resources/images/avatar_placeholder.png"
 
-    Component.onCompleted: {
-        // Data embedded within the application with the Qt resource system
-        // is not directly accessible in the browser's JS environment.
-        // However, we can work around this limitation by passing any data
-        // we need to the browser's JS environment using the Base64 encoding.
-        // Another idea worth considering would be to use the virtual file system
-        // provided by Emscripten.
-        if (BrowserJS.browserEnvironment) {
-            base64Audio = Base64Converter.convertFileToBase64(":/resources/audio/sound.ogg")
-            isAudioLoaded = true
-        }
-    }
+    property int bigFontSize: ZoomSettings.bigFontSize
 
     color: "transparent"
 
@@ -43,68 +31,57 @@ Rectangle {
         font.pointSize: ZoomSettings.bigFontSize
     }
 
-    Button {
-        id: playMusic
-        text: isAudioLoaded ? Localization.string("Click to Play Music") : (BrowserJS.browserEnvironment ? Localization.string("Loading audio...") : Localization.string("Playback not available in this environment!"))
-        font.pointSize: ZoomSettings.hugeFontSize
+    ComboBox {
+        id: styleComboBox
+        width: 200
+        model: [
+            "adventurer", "avataaars", "bottts", "croodles",
+            "fun-emoji", "icons", "identicon", "lorelei",
+            "micah", "miniavs", "notionists", "open-peeps",
+            "personas", "shapes", "rings", "thumbs"
+        ]
+        currentIndex: 0
+        font.pointSize: bigFontSize
+        anchors.bottom: avatarArea.top
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: stopMusic.top
-        anchors.bottomMargin: 20
-        enabled: isAudioLoaded
-        onClicked: {
-            enabled = false;
-            stopMusic.enabled = true;
-            BrowserJS.runJS(`
-                var audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                var audioBuffer;
-                var source;
+        anchors.margins: 10
+    }
 
-                function loadAudio(base64) {
-                    var binaryString = window.atob(base64);
-                    var length = binaryString.length;
-                    var bytes = new Uint8Array(length);
-                    for (var i = 0; i < length; i++) {
-                        bytes[i] = binaryString.charCodeAt(i);
-                    }
-                    audioContext.decodeAudioData(bytes.buffer, function(buffer) {
-                        audioBuffer = buffer;
-                        playAudio();
-                    }, function(e) {
-                        console.error('Error decoding audio data:', e);
-                    });
-                }
+    Rectangle {
+        id: avatarArea
+        width: 200; height: 200
+        anchors.centerIn: parent
 
-                function playAudio() {
-                    if (audioBuffer) {
-                        source = audioContext.createBufferSource();
-                        source.buffer = audioBuffer;
-                        source.loop = true;
-                        source.connect(audioContext.destination);
-                        source.start(0);
-                    }
-                }
-
-                window.stopAudio = function() {
-                    if (source) {
-                        source.stop(0);
-                    }
-                }
-
-                loadAudio('${base64Audio}');
-            `);
+        Image {
+            id: avatarImage
+            anchors.fill: parent
+            source: avatarPlaceholder
         }
     }
 
     Button {
-        id: stopMusic
-        text: Localization.string("Click to Stop Music")
-        font.pointSize: ZoomSettings.hugeFontSize
-        anchors.centerIn: parent
-        enabled: false
+        text: Localization.string("New Avatar")
+        font.pointSize: bigFontSize
+        anchors.top: avatarArea.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.margins: 10
         onClicked: {
-            enabled = false;
-            playMusic.enabled = true;
-            BrowserJS.runJS("stopAudio();");
+            var xhr = new XMLHttpRequest();
+            var url =
+                "https://api.dicebear.com/8.x/" + styleComboBox.currentText +
+                "/svg?seed=" + Math.random();
+            xhr.open('GET', url, true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        avatarImage.source = url;
+                    } else {
+                        console.log("Error: " + xhr.status);
+                        avatarImage.source = avatarPlaceholder;
+                    }
+                }
+            }
+            xhr.send();
         }
     }
 
