@@ -26,6 +26,13 @@ Rectangle {
         }
     }
 
+    Component.onDestruction: {
+        // Stop audio playback when the component is destroyed:
+        if (BrowserJS.browserEnvironment) {
+            BrowserJS.runJS("stopAudio();");
+        }
+    }
+
     color: "transparent"
 
     Label {
