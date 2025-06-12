@@ -120,21 +120,24 @@ ApplicationWindow {
         Menu {
             title: Localization.string("LANGUAGE")
             MenuItem {
-                text: Localization.string("Restart in English")
+                icon.source: "qrc:/resources/icons/flag-us.png"
+                text: Localization.string("English")
                 font.pointSize: ZoomSettings.regularFontSize
                 onTriggered: {
                     switchLanguage(Locale.English)
                 }
             }
             MenuItem {
-                text: Localization.string("Restart in Polish")
+                icon.source: "qrc:/resources/icons/flag-pl.png"
+                text: Localization.string("Polish")
                 font.pointSize: ZoomSettings.regularFontSize
                 onTriggered: {
                     switchLanguage(Locale.Polish)
                 }
             }
             MenuItem {
-                text: Localization.string("Restart in German")
+                icon.source: "qrc:/resources/icons/flag-de.png"
+                text: Localization.string("German")
                 font.pointSize: ZoomSettings.regularFontSize
                 onTriggered: {
                     switchLanguage(Locale.German)

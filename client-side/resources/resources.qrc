@@ -2,6 +2,9 @@
     <qresource prefix="/resources/">
         <file>audio/sound.ogg</file>
         <file>icons/addWindowIcon.svg</file>
+        <file>icons/flag-de.png</file>
+        <file>icons/flag-pl.png</file>
+        <file>icons/flag-us.png</file>
         <file>icons/gitHubIcon.svg</file>
         <file>icons/homePageIcon.svg</file>
         <file>icons/pageIcon1.svg</file>

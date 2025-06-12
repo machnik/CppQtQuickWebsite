@@ -63,7 +63,7 @@ Rectangle {
         Button {
             visible: BrowserJS.browserEnvironment
             anchors.centerIn: parent
-            text: isVideoLoaded ? Localization.string("Load Video") : Localization.string("Loading Video...")
+            text: isVideoLoaded ? Localization.string("Load Video") : Localization.string("Loading video...")
             enabled: isVideoLoaded
             onClicked: {
                 // Remove any previous video element:
