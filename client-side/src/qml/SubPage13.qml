@@ -44,7 +44,8 @@ Rectangle {
         anchors.bottom: fileContentsScrollView.top
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottomMargin: 10
-        font.pointSize: ZoomSettings.bigFontSize
+        font.pointSize: ZoomSettings.hugeFontSize
+        font.bold: true
     }
 
     ScrollView {
@@ -71,37 +72,41 @@ Rectangle {
     }
 
     Rectangle {
-        width: openFileButton.width + saveFileButton.width + 30
-        height: openFileButton.height + 20
-        color: "transparent"
-        border.color: "black"
-        border.width: 1
-        radius: 8
+        width: openFileButton.width + saveFileButton.width + 80
+        height: Math.max(openFileButton.height, saveFileButton.height) + 48
+        radius: 18
         anchors.bottom: toMainPageButton.top
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottomMargin: 10
 
-        Button {
-            id: openFileButton
-            text: Localization.string("Open Text File")
-            font.pointSize: ZoomSettings.bigFontSize
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.left: parent.left
-            anchors.leftMargin: 10
-            onClicked: {
-                TextFileIO.loadFileContent()
-            }
+        gradient: Gradient {
+            GradientStop { position: 0.0; color: "#f0f0f0" }
+            GradientStop { position: 1.0; color: "#b0b0b0" }
         }
 
-        Button {
-            id: saveFileButton
-            text: Localization.string("Save/Download Text File")
-            font.pointSize: ZoomSettings.bigFontSize
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.right: parent.right
-            anchors.rightMargin: 10
-            onClicked: {
-                TextFileIO.saveFileContent(currentFileName, fileContentsTextArea.text)
+        border.color: "#7a7a7a"
+        border.width: 1.5
+
+        Row {
+            anchors.fill: parent
+            anchors.margins: 20
+            spacing: 32
+            Button {
+                id: openFileButton
+                text: Localization.string("Open Text File")
+                font.pointSize: ZoomSettings.bigFontSize
+                onClicked: {
+                    TextFileIO.loadFileContent()
+                }
+            }
+
+            Button {
+                id: saveFileButton
+                text: Localization.string("Save/Download Text File")
+                font.pointSize: ZoomSettings.bigFontSize
+                onClicked: {
+                    TextFileIO.saveFileContent(currentFileName, fileContentsTextArea.text)
+                }
             }
         }
     }

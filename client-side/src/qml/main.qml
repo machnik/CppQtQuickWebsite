@@ -121,6 +121,7 @@ ApplicationWindow {
             title: Localization.string("LANGUAGE")
             MenuItem {
                 icon.source: "qrc:/resources/icons/flag-us.png"
+                icon.color: "transparent"
                 text: Localization.string("English")
                 font.pointSize: ZoomSettings.regularFontSize
                 onTriggered: {
@@ -129,6 +130,7 @@ ApplicationWindow {
             }
             MenuItem {
                 icon.source: "qrc:/resources/icons/flag-pl.png"
+                icon.color: "transparent"
                 text: Localization.string("Polish")
                 font.pointSize: ZoomSettings.regularFontSize
                 onTriggered: {
@@ -137,6 +139,7 @@ ApplicationWindow {
             }
             MenuItem {
                 icon.source: "qrc:/resources/icons/flag-de.png"
+                icon.color: "transparent"
                 text: Localization.string("German")
                 font.pointSize: ZoomSettings.regularFontSize
                 onTriggered: {
