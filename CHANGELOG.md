@@ -23,3 +23,6 @@
 
 ## [1.0.6] - 2025-06-12
 - Adding flag icons to Language menu.
+
+## [1.0.7] - 2025-06-16
+- Visual improvements in the UI.
