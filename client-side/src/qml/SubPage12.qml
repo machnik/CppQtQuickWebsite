@@ -79,10 +79,13 @@ Rectangle {
 
         width: 600
         height: 200
-        color: "transparent"
-        border.color: "black"
-        border.width: 1
-        radius: 8
+        gradient: Gradient {
+            GradientStop { position: 0.0; color: "#f0f0f0" }
+            GradientStop { position: 1.0; color: "#b0b0b0" }
+        }
+        border.color: "#7a7a7a"
+        border.width: 1.5
+        radius: 18
         anchors.centerIn: parent
 
         Grid {

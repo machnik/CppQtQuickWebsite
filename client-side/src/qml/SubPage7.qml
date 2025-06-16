@@ -73,8 +73,13 @@ Rectangle {
 
         anchors.centerIn: parent
 
-        border.color: "black"
-        border.width: 1
+        gradient: Gradient {
+            GradientStop { position: 0.0; color: "#f0f0f0" }
+            GradientStop { position: 1.0; color: "#b0b0b0" }
+        }
+        border.color: "#7a7a7a"
+        border.width: 1.5
+        radius: 18
 
         Rectangle {
             width: keyField.width + valueField.width + 20
@@ -82,6 +87,7 @@ Rectangle {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.top: parent.top
             anchors.topMargin: 20
+            color: "transparent"
 
             TextField {
                 id: keyField
