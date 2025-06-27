@@ -9,7 +9,7 @@ import CppQtQuickWebsite.CppObjects
 Rectangle {
 
     readonly property string headerText: (Localization.string("SubPage %1")).arg(23)
-    readonly property string subHeaderText: Localization.string("Using ColorDialog in QML.")
+    readonly property string subHeaderText: Localization.string("Using IndexedDB to store files.")
 
     property color selectedColor: "blue"
 
@@ -30,29 +30,9 @@ Rectangle {
         font.pointSize: ZoomSettings.bigFontSize
     }
 
-    Rectangle {
-        id: colorPreview
-        width: 160
-        height: 160
-        color: selectedColor
+    Label {
+        text: "Placeholder for IndexedDB functionality."
         anchors.centerIn: parent
-        border.width: 3
-        radius: 12
-    }
-
-    Button {
-        text: Localization.string("Select Color")
-        font.pointSize: ZoomSettings.bigFontSize
-        anchors.top: colorPreview.bottom
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.topMargin: 20
-        onClicked: colorDialog.open()
-    }
-
-    ColorDialog {
-        id: colorDialog
-        selectedColor: selectedColor
-        onAccepted: selectedColor = colorDialog.selectedColor
     }
 
     ToMainPageButton {

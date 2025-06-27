@@ -26,3 +26,7 @@
 
 ## [1.0.7] - 2025-06-16
 - Visual improvements in the UI.
+
+## [1.0.8] - 2025-06-27
+- Color Palette dialog example merged with QSysInfo subpage.
+- Added IndexedDB subpage.
