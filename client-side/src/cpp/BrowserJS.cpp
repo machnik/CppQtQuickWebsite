@@ -2,6 +2,7 @@
 
 #ifdef Q_OS_WASM
     #include <emscripten.h>
+    #include <emscripten/val.h>
 #endif
 
 BrowserJS::BrowserJS(QObject *parent)
@@ -22,5 +23,16 @@ int BrowserJS::runJS(const QString & code) {
     return emscripten_run_script_int(code.toLatin1().data());
 #else
     return 0;
+#endif
+}
+
+QString BrowserJS::runJSString(const QString & code) {
+#ifdef Q_OS_WASM
+    char* result = emscripten_run_script_string(code.toLatin1().data());
+    QString qstr = QString::fromUtf8(result);
+    free(result);
+    return qstr;
+#else
+    return QString();
 #endif
 }

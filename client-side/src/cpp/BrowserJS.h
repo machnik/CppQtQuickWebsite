@@ -20,6 +20,7 @@ public:
 
 public slots:
     int runJS(const QString & code);
+    QString runJSString(const QString & code);
 
 private:
     const bool b_browserEnvironment;

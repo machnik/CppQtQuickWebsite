@@ -38,7 +38,7 @@ QtObject {
         "20. WebSocket client.\nShows how to set up and manage a WebSocket client that communicates with a WebSocket server.",
         "21. Avatar generator using the DiceBear API.\nDemonstrates how to fetch and display data dynamically from an external source.",
         "22. Using QSysInfo in QML.\nDisplays system information by accessing QSysInfo through a C++ interface exposed to QML.",
-        "23. Using IndexedDB to store files.\nDemonstrates how to download images from FTP servers and store them using IndexedDB for persistent browser storage.",
+        "23. Using IndexedDB to store files.\nDemonstrates how to download an example image from the internet and store it using IndexedDB for persistent browser storage.",
         "24. Video playback.\nShows how to implement a video player using Qt's Multimedia module within a QML application. Does not work in WebAssembly with Qt 6.9!",
         "25. Video playback using the browser's built-in player.\nDemonstrates how to play video (embedded in the application) in a browser environment using its JavaScript engine."
     ]
@@ -66,7 +66,7 @@ QtObject {
         "20. Klient WebSocket.\nPokazuje, jak skonfigurować i zarządzać klientem WebSocket, który komunikuje się z serwerem WebSocket.",
         "21. Generator awatarów za pomocą interfejsu DiceBear API.\nDemonstruje, jak dynamicznie pobierać i wyświetlać dane z zewnętrznego źródła.",
         "22. Użycie QSysInfo w QML.\nWyświetla informacje o systemie, uzyskując dostęp do QSysInfo za pośrednictwem interfejsu C++ udostępnionego w QML.",
-        "23. Użycie IndexedDB do przechowywania plików.\nDemonstruje, jak pobierać obrazy z serwerów FTP i przechowywać je za pomocą IndexedDB do trwałego przechowywania w przeglądarce.",
+        "23. Użycie IndexedDB do przechowywania plików.\nDemonstruje, jak pobrać przykładowy obraz z internetu i przechowywać go za pomocą IndexedDB do trwałego przechowywania w przeglądarce.",
         "24. Odtwarzanie wideo.\nPokazuje, jak zaimplementować odtwarzacz wideo za pomocą modułu Multimedia w Qt w aplikacji QML. Nie działa w WebAssembly z Qt 6.9!",
         "25. Odtwarzacz wideo za pomocą wbudowanego odtwarzacza przeglądarki.\nDemonstruje, jak odtwarzać wideo (osadzone w aplikacji) w środowisku przeglądarki za pomocą jej silnika JavaScript."
     ]
@@ -94,7 +94,7 @@ QtObject {
         "20. WebSocket-Client.\nZeigt, wie ein WebSocket-Client eingerichtet und verwaltet werden kann, der mit einem WebSocket-Server kommuniziert.",
         "21. Avatar-Generator mit der DiceBear API.\nDemonstriert, wie Daten dynamisch von einer externen Quelle abgerufen und angezeigt werden können.",
         "22. Verwendung von QSysInfo in QML.\nZeigt Systeminformationen an, indem auf QSysInfo über ein C++-Interface zugegriffen wird, das in QML verfügbar gemacht wurde.",
-        "23. Verwendung von IndexedDB zum Speichern von Dateien.\nDemonstriert, wie Bilder von FTP-Servern heruntergeladen und mit IndexedDB für persistente Browser-Speicherung gespeichert werden können.",
+        "23. Verwendung von IndexedDB zum Speichern von Dateien.\nDemonstriert, wie ein Beispielbild aus dem Internet heruntergeladen und mit IndexedDB für persistente Browser-Speicherung gespeichert wird.",
         "24. Videowiedergabe.\nZeigt, wie ein Videoplayer mit Qt's Multimedia-Modul in einer QML-Anwendung implementiert werden kann. Funktioniert nicht in WebAssembly mit Qt 6.9!",
         "25. Videowiedergabe mit dem integrierten Player des Browsers.\nDemonstriert, wie Video (das in der Anwendung eingebettet ist) in einer Browser-Umgebung mit seiner JavaScript-Engine abgespielt werden kann."
     ]
