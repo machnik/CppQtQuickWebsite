@@ -18,7 +18,7 @@ bool BrowserJS::isBrowserEnvionment() const {
     return b_browserEnvironment;
 }
 
-int BrowserJS::runJS(const QString & code) {
+int BrowserJS::runIntJS(const QString & code) {
 #ifdef Q_OS_WASM
     return emscripten_run_script_int(code.toLatin1().data());
 #else
@@ -26,7 +26,7 @@ int BrowserJS::runJS(const QString & code) {
 #endif
 }
 
-QString BrowserJS::runJSString(const QString & code) {
+QString BrowserJS::runStringJS(const QString & code) {
 #ifdef Q_OS_WASM
     char* result = emscripten_run_script_string(code.toLatin1().data());
     QString qstr = QString::fromUtf8(result);
@@ -34,5 +34,11 @@ QString BrowserJS::runJSString(const QString & code) {
     return qstr;
 #else
     return QString();
+#endif
+}
+
+void BrowserJS::runVoidJS(const QString & code) {
+#ifdef Q_OS_WASM
+    emscripten_run_script(code.toLatin1().data());
 #endif
 }

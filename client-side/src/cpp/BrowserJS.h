@@ -19,8 +19,9 @@ public:
     bool isBrowserEnvionment() const;
 
 public slots:
-    int runJS(const QString & code);
-    QString runJSString(const QString & code);
+    int runIntJS(const QString & code);
+    QString runStringJS(const QString & code);
+    void runVoidJS(const QString & code);
 
 private:
     const bool b_browserEnvironment;

@@ -211,7 +211,7 @@ Rectangle {
             0; // Return value for emscripten_run_script_int
         `;
 
-        BrowserJS.runJS(jsCode);
+        BrowserJS.runIntJS(jsCode);
         
         // Check for completion
         checkDownloadComplete();
@@ -299,9 +299,9 @@ Rectangle {
         `;
 
         // Pass the image data to JavaScript
-        BrowserJS.runJS("window.qmlImageDataToStore = '" + imageDataUrl + "';");
+        BrowserJS.runIntJS("window.qmlImageDataToStore = '" + imageDataUrl + "';");
         
-        BrowserJS.runJS(jsCode);
+        BrowserJS.runIntJS(jsCode);
         
         // Check for completion
         checkStoreComplete();
@@ -363,7 +363,7 @@ Rectangle {
             0;
         `;
 
-        BrowserJS.runJS(jsCode);
+        BrowserJS.runIntJS(jsCode);
         checkLoadComplete();
     }
 
@@ -418,7 +418,7 @@ Rectangle {
             0;
         `;
 
-        BrowserJS.runJS(jsCode);
+        BrowserJS.runIntJS(jsCode);
         checkClearComplete();
     }
 
@@ -431,7 +431,7 @@ Rectangle {
             }
         `;
         
-        const result = BrowserJS.runJS(jsCode);
+        const result = BrowserJS.runIntJS(jsCode);
         
         pollCount++;
         
@@ -445,7 +445,7 @@ Rectangle {
                 })();
             `;
             
-            const dataUrl = BrowserJS.runJSString(getDataUrlCode);
+            const dataUrl = BrowserJS.runStringJS(getDataUrlCode);
             
             if (dataUrl !== 'error' && dataUrl !== '') {
                 imageDownloaded = true;
@@ -477,7 +477,7 @@ Rectangle {
             }
         `;
         
-        const result = BrowserJS.runJS(jsCode);
+        const result = BrowserJS.runIntJS(jsCode);
         
         pollCount++;
         
@@ -492,11 +492,11 @@ Rectangle {
             isStoring = false;
             
             // Clean up the temporary data
-            BrowserJS.runJS("if (typeof window.qmlImageDataToStore !== 'undefined') { delete window.qmlImageDataToStore; }");
+            BrowserJS.runIntJS("if (typeof window.qmlImageDataToStore !== 'undefined') { delete window.qmlImageDataToStore; }");
         } else if (pollCount >= maxPollAttempts) {
             lastError = "Store timeout";
             isStoring = false;
-            BrowserJS.runJS("if (typeof window.qmlImageDataToStore !== 'undefined') { delete window.qmlImageDataToStore; }");
+            BrowserJS.runIntJS("if (typeof window.qmlImageDataToStore !== 'undefined') { delete window.qmlImageDataToStore; }");
         } else {
             pollTimer.operation = "store";
             pollTimer.start();
@@ -514,7 +514,7 @@ Rectangle {
             }
         `;
         
-        const result = BrowserJS.runJS(jsCode);
+        const result = BrowserJS.runIntJS(jsCode);
         
         pollCount++;
         
@@ -528,7 +528,7 @@ Rectangle {
                     lastSuccessMessage = "Image loaded from IndexedDB!";
                     
                     // Clean up the JavaScript side
-                    BrowserJS.runJS("if (typeof window.qmlImageLoadedData !== 'undefined') { window.qmlImageLoadedData = undefined; }");
+                    BrowserJS.runIntJS("if (typeof window.qmlImageLoadedData !== 'undefined') { window.qmlImageLoadedData = undefined; }");
                 } else {
                     // Use a safer approach - get length first, then decide how to get data
                     const getLengthCode = `
@@ -542,7 +542,7 @@ Rectangle {
                         })();
                     `;
                     
-                    const dataLength = BrowserJS.runJS(getLengthCode);
+                    const dataLength = BrowserJS.runIntJS(getLengthCode);
                     
                     if (dataLength > 0) {
                         try {
@@ -559,7 +559,7 @@ Rectangle {
                                 })();
                             `;
                             
-                            const dataUrl = BrowserJS.runJSString(getDataUrlCode);
+                            const dataUrl = BrowserJS.runStringJS(getDataUrlCode);
                             
                             if (dataUrl !== 'error' && dataUrl !== '') {
                                 imageDownloaded = true;
@@ -569,7 +569,7 @@ Rectangle {
                             }
                         } catch (e) {
                             // Clean up even if there was an error
-                            BrowserJS.runJS("if (typeof window.qmlImageLoadedData !== 'undefined') { window.qmlImageLoadedData = undefined; }");
+                            BrowserJS.runIntJS("if (typeof window.qmlImageLoadedData !== 'undefined') { window.qmlImageLoadedData = undefined; }");
                         }
                     }
                 }
@@ -598,7 +598,7 @@ Rectangle {
             }
         `;
         
-        const result = BrowserJS.runJS(jsCode);
+        const result = BrowserJS.runIntJS(jsCode);
         
         if (result === 1) {
             imageDownloaded = false;
