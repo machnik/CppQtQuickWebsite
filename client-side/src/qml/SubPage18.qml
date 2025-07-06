@@ -29,7 +29,7 @@ Rectangle {
     Component.onDestruction: {
         // Stop audio playback when the component is destroyed:
         if (BrowserJS.browserEnvironment) {
-            BrowserJS.runIntJS("stopAudio();");
+            BrowserJS.runVoidJS("stopAudio();");
         }
     }
 
@@ -61,7 +61,7 @@ Rectangle {
         onClicked: {
             enabled = false;
             stopMusic.enabled = true;
-            BrowserJS.runIntJS(`
+            BrowserJS.runVoidJS(`
                 var audioContext = new (window.AudioContext || window.webkitAudioContext)();
                 var audioBuffer;
                 var source;
@@ -111,7 +111,7 @@ Rectangle {
         onClicked: {
             enabled = false;
             playMusic.enabled = true;
-            BrowserJS.runIntJS("stopAudio();");
+            BrowserJS.runVoidJS("stopAudio();");
         }
     }
 

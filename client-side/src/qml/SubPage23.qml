@@ -211,7 +211,7 @@ Rectangle {
             0; // Return value for emscripten_run_script_int
         `;
 
-        BrowserJS.runIntJS(jsCode);
+        BrowserJS.runVoidJS(jsCode);
         
         // Check for completion
         checkDownloadComplete();
@@ -299,9 +299,9 @@ Rectangle {
         `;
 
         // Pass the image data to JavaScript
-        BrowserJS.runIntJS("window.qmlImageDataToStore = '" + imageDataUrl + "';");
+        BrowserJS.runVoidJS("window.qmlImageDataToStore = '" + imageDataUrl + "';");
         
-        BrowserJS.runIntJS(jsCode);
+        BrowserJS.runVoidJS(jsCode);
         
         // Check for completion
         checkStoreComplete();
@@ -363,7 +363,7 @@ Rectangle {
             0;
         `;
 
-        BrowserJS.runIntJS(jsCode);
+        BrowserJS.runVoidJS(jsCode);
         checkLoadComplete();
     }
 
@@ -418,7 +418,7 @@ Rectangle {
             0;
         `;
 
-        BrowserJS.runIntJS(jsCode);
+        BrowserJS.runVoidJS(jsCode);
         checkClearComplete();
     }
 
@@ -492,11 +492,11 @@ Rectangle {
             isStoring = false;
             
             // Clean up the temporary data
-            BrowserJS.runIntJS("if (typeof window.qmlImageDataToStore !== 'undefined') { delete window.qmlImageDataToStore; }");
+            BrowserJS.runVoidJS("if (typeof window.qmlImageDataToStore !== 'undefined') { delete window.qmlImageDataToStore; }");
         } else if (pollCount >= maxPollAttempts) {
             lastError = "Store timeout";
             isStoring = false;
-            BrowserJS.runIntJS("if (typeof window.qmlImageDataToStore !== 'undefined') { delete window.qmlImageDataToStore; }");
+            BrowserJS.runVoidJS("if (typeof window.qmlImageDataToStore !== 'undefined') { delete window.qmlImageDataToStore; }");
         } else {
             pollTimer.operation = "store";
             pollTimer.start();
@@ -528,7 +528,7 @@ Rectangle {
                     lastSuccessMessage = "Image loaded from IndexedDB!";
                     
                     // Clean up the JavaScript side
-                    BrowserJS.runIntJS("if (typeof window.qmlImageLoadedData !== 'undefined') { window.qmlImageLoadedData = undefined; }");
+                    BrowserJS.runVoidJS("if (typeof window.qmlImageLoadedData !== 'undefined') { window.qmlImageLoadedData = undefined; }");
                 } else {
                     // Use a safer approach - get length first, then decide how to get data
                     const getLengthCode = `
@@ -569,7 +569,7 @@ Rectangle {
                             }
                         } catch (e) {
                             // Clean up even if there was an error
-                            BrowserJS.runIntJS("if (typeof window.qmlImageLoadedData !== 'undefined') { window.qmlImageLoadedData = undefined; }");
+                            BrowserJS.runVoidJS("if (typeof window.qmlImageLoadedData !== 'undefined') { window.qmlImageLoadedData = undefined; }");
                         }
                     }
                 }

@@ -24,7 +24,7 @@ Rectangle {
     Component.onDestruction: {
         // Remove the browser's video player when the component is destroyed:
         if (BrowserJS.browserEnvironment) {
-            BrowserJS.runIntJS(`
+            BrowserJS.runVoidJS(`
                 var vid = document.getElementById('qml-video-player');
                 if (vid) vid.remove();
             `);
@@ -67,7 +67,7 @@ Rectangle {
             enabled: isVideoLoaded
             onClicked: {
                 // Remove any previous video element:
-                BrowserJS.runIntJS(`
+                BrowserJS.runVoidJS(`
                     var oldVid = document.getElementById('qml-video-player');
                     if (oldVid) oldVid.remove();
                 `);
@@ -76,7 +76,7 @@ Rectangle {
                 var pos = videoContainer.mapToItem(null, 0, 0);
 
                 // Inject the video element at the correct position:
-                BrowserJS.runIntJS(`
+                BrowserJS.runVoidJS(`
                     var video = document.createElement('video');
                     video.id = 'qml-video-player';
                     video.controls = true;
@@ -112,7 +112,7 @@ Rectangle {
         anchors.topMargin: 20
         text: Localization.string("Close Video")
         onClicked: {
-            BrowserJS.runIntJS(`
+            BrowserJS.runVoidJS(`
                 var vid = document.getElementById('qml-video-player');
                 if (vid) vid.remove();
             `);
