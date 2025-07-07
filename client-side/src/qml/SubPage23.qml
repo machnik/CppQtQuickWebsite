@@ -74,6 +74,7 @@ Rectangle {
             Image {
                 id: img
                 anchors.fill: parent
+                anchors.margins: 10
                 fillMode: Image.PreserveAspectFit
             }
             Label {
