@@ -2,31 +2,58 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
+import "qrc:/qml/singletons/"
+
 import CppQtQuickWebsite.CppObjects
 
-Page {
+Rectangle {
     id: root
-    title: qsTr("SubPage %1").arg(23)
+    color: "transparent"
+
+    readonly property string headerText: Localization.string("SubPage %1").arg(23)
+    readonly property string subHeaderText: Localization.string("Using IndexedDB to store files.")
 
     property bool browserEnv: BrowserJS.browserEnvironment
     property string statusText: ""
     property color statusColor: "black"
 
+    property int bigFontSize: ZoomSettings.bigFontSize
+    property int regularFontSize: ZoomSettings.regularFontSize
+
+    Label {
+        id: headerLabel
+        text: headerText
+        anchors.top: parent.top
+        anchors.horizontalCenter: parent.horizontalCenter
+        font.pointSize: ZoomSettings.hugeFontSize
+    }
+
+    Label {
+        id: subHeaderLabel
+        text: subHeaderText
+        anchors.top: headerLabel.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        font.pointSize: ZoomSettings.bigFontSize
+    }
+
     ColumnLayout {
-        anchors.fill: parent; anchors.margins: 20; spacing: 10
+        anchors.top: subHeaderLabel.bottom
+        anchors.topMargin: 20
+        anchors.horizontalCenter: parent.horizontalCenter
 
         Text {
             text: browserEnv
                 ? qsTr("Download & IndexedDB demo")
                 : qsTr("This only runs in a browser (WebAssembly).")
             wrapMode: Text.WordWrap
+            font.pointSize: regularFontSize
         }
 
         RowLayout { spacing: 10
-            Button { text: qsTr("Download"); enabled: browserEnv; onClicked: download() }
-            Button { text: qsTr("Store");    enabled: browserEnv && img.source; onClicked: store() }
-            Button { text: qsTr("Load");     enabled: browserEnv; onClicked: load() }
-            Button { text: qsTr("Clear");    enabled: browserEnv; onClicked: clearDB() }
+            Button { text: qsTr("Download Picture"); enabled: browserEnv; font.pointSize: regularFontSize; onClicked: download() }
+            Button { text: qsTr("Store as IndexedDB record");    enabled: browserEnv && img.source; font.pointSize: regularFontSize; onClicked: store() }
+            Button { text: qsTr("Load from IndexedDB record");     enabled: browserEnv; font.pointSize: regularFontSize; onClicked: load() }
+            Button { text: qsTr("Clear IndexedDB record");    enabled: browserEnv; font.pointSize: regularFontSize; onClicked: clearDB() }
         }
 
         Text {
@@ -37,7 +64,12 @@ Page {
 
         Rectangle {
             Layout.fillWidth: true; Layout.preferredHeight: 300
-            color: "#fff"; border.color: "#ccc"; border.width: 1
+            radius: 18
+            border.color: "#7a7a7a"; border.width: 1.5
+            gradient: Gradient {
+                GradientStop { position: 0.0; color: "#f0f0f0" }
+                GradientStop { position: 1.0; color: "#b0b0b0" }
+            }
 
             Image {
                 id: img
@@ -53,11 +85,13 @@ Page {
         }
     }
 
+    // Updates the status label text and color
     function setStatus(txt, clr) {
         statusText = txt
         statusColor = clr
     }
-
+    
+    // Initiates an HTTP fetch to download an image, converts it to data URL
     function download() {
         setStatus(qsTr("Downloading…"), "blue")
         BrowserJS.runVoidJS(`
@@ -84,6 +118,7 @@ Page {
         });
     }
 
+    // Stores the current image source into IndexedDB under a fixed record
     function store() {
         setStatus(qsTr("Storing…"), "blue")
         BrowserJS.runVoidJS(`
@@ -108,6 +143,7 @@ Page {
         });
     }
 
+    // Loads the stored image from IndexedDB into the Image element
     function load() {
         setStatus(qsTr("Loading…"), "blue")
         BrowserJS.runVoidJS(`
@@ -135,6 +171,7 @@ Page {
         });
     }
 
+    // Clears the IndexedDB database and resets the image source
     function clearDB() {
         setStatus(qsTr("Clearing…"), "blue")
         BrowserJS.runVoidJS(`indexedDB.deleteDatabase("DB"); window._ok = 1;`);
@@ -144,6 +181,7 @@ Page {
         });
     }
 
+    // Polls for JavaScript-side globals (_img, _err, _ok) and invokes callback when set
     function poll(okKey, errKey, cb) {
         var ok  = BrowserJS.runIntJS(`typeof window.${okKey} !== 'undefined' ? 1 : 0`);
         var err = errKey
@@ -159,5 +197,11 @@ Page {
         } else {
             Qt.callLater(function() { poll(okKey, errKey, cb) });
         }
+    }
+
+    ToMainPageButton {
+        anchors.bottom: parent.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottomMargin: 20
     }
 }
