@@ -49,13 +49,13 @@ Rectangle {
 
         Text {
             text: browserEnvironment
-                ? qsTr("On this page the Qt Settings module is used for local binary data storage on WebAssembly builds.")
+                ? qsTr("On this page the Qt Settings module is used for local binary data storage on WebAssembly builds.\nWARNING: This solution currently is not reliable!")
                 : qsTr("This example is only applicable when the application is running in a browser.")
             anchors.horizontalCenter: parent.horizontalCenter
             wrapMode: Text.WordWrap
             font.pointSize: regularFontSize
             font.bold: true
-            color: browserEnvironment ? "green" : "red"
+            color: "red"
         }
 
         RowLayout { spacing: 10
