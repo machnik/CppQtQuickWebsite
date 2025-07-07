@@ -43,11 +43,13 @@ Rectangle {
 
         Text {
             text: browserEnv
-                ? qsTr("Attempting to use IndexedDB to cache data to avoid re-downloading on repeated visits.\nUnfortunately, a quite unstable solution yet.")
+                ? qsTr("Attempting to use IndexedDB to cache data to avoid re-downloading on repeated visits.\nUnfortunately, an UNRELIABLE solution yet! Work in progress...")
                 : qsTr("This example is only applicable when the application is running in a browser.")
             anchors.horizontalCenter: parent.horizontalCenter
             wrapMode: Text.WordWrap
             font.pointSize: regularFontSize
+            font.bold: true
+            color: "red"
         }
 
         RowLayout { spacing: 10
@@ -259,12 +261,7 @@ Rectangle {
                 img.source = v;
                 setStatus(qsTr("Loaded"), "green");
             } else {
-                var noData = BrowserJS.runJS("window._noData");
-                if (noData) {
-                    setStatus(qsTr("No stored image"), "orange");
-                } else {
-                    setStatus(qsTr("Load failed"), "red");
-                }
+                setStatus(qsTr("No stored image"), "orange");
             }
         });
     }
@@ -285,11 +282,14 @@ Rectangle {
         var err = errKey
             ? BrowserJS.runIntJS(`typeof window.${errKey} !== 'undefined' ? 1 : 0`)
             : 0;
-        if (ok || err) {
+        var noData = BrowserJS.runIntJS(`typeof window._noData !== 'undefined' ? 1 : 0`);
+        
+        if (ok || err || noData) {
             var v = ok ? BrowserJS.runStringJS(`window.${okKey}`) : null;
             BrowserJS.runVoidJS(
                 `delete window.${okKey}` +
-                (errKey ? `; delete window.${errKey}` : ``)
+                (errKey ? `; delete window.${errKey}` : ``) +
+                `; delete window._noData`
             );
             cb(v, !!err);
         } else {
