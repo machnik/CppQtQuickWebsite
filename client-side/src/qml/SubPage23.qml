@@ -43,8 +43,8 @@ Rectangle {
 
         Text {
             text: browserEnv
-                ? qsTr("Download & IndexedDB demo")
-                : qsTr("This only runs in a browser (WebAssembly).")
+                ? qsTr("Attempting to use IndexedDB to cache data to avoid re-downloading on repeated visits.\nUnfortunately, a quite unstable solution yet.")
+                : qsTr("This example is only applicable when the application is running in a browser.")
             wrapMode: Text.WordWrap
             font.pointSize: regularFontSize
         }
@@ -74,7 +74,7 @@ Rectangle {
             Image {
                 id: img
                 anchors.fill: parent
-                anchors.margins: 10
+                anchors.margins: 15
                 fillMode: Image.PreserveAspectFit
             }
             Label {
@@ -122,6 +122,10 @@ Rectangle {
     // Stores the current image source into IndexedDB under a fixed record
     function store() {
         setStatus(qsTr("Storing…"), "blue")
+        
+        // Pass the image data to JavaScript safely
+        BrowserJS.runVoidJS("window._imageData = " + JSON.stringify(img.source) + ";");
+        
         BrowserJS.runVoidJS(`
             (async () => {
                 try {
@@ -132,8 +136,9 @@ Rectangle {
                         o.onerror = () => rej();
                     });
                     const tx = db.transaction("i", "readwrite");
-                    tx.objectStore("i").put({ id: 1, data: "${img.source}" });
+                    tx.objectStore("i").put({ id: 1, data: window._imageData });
                     await new Promise((r, j) => { tx.oncomplete = r; tx.onerror = j; });
+                    delete window._imageData;
                     window._ok = 1;
                 } catch (e) { window._err = e; }
             })();
