@@ -11,12 +11,12 @@ class BrowserJS : public QObject {
     QML_ELEMENT
     QML_SINGLETON
 
-    Q_PROPERTY(bool browserEnvironment READ isBrowserEnvionment CONSTANT)
+    Q_PROPERTY(bool browserEnvironment READ isBrowserEnvironment CONSTANT)
 
 public:
     explicit BrowserJS(QObject *parent = nullptr);
 
-    bool isBrowserEnvionment() const;
+    bool isBrowserEnvironment() const;
 
 public slots:
     int runIntJS(const QString & code);

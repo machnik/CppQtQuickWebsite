@@ -14,7 +14,7 @@ BrowserJS::BrowserJS(QObject *parent)
 #endif
 {}
 
-bool BrowserJS::isBrowserEnvionment() const {
+bool BrowserJS::isBrowserEnvironment() const {
     return b_browserEnvironment;
 }
 

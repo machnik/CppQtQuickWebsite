@@ -14,7 +14,7 @@ Rectangle {
     readonly property string headerText: Localization.string("SubPage %1").arg(23)
     readonly property string subHeaderText: Localization.string("Using Qt Settings to store files.")
 
-    property bool browserEnv: BrowserJS.browserEnvironment
+    property bool browserEnvironment: BrowserJS.browserEnvironment
     property string statusText: ""
     property color statusColor: "black"
 
@@ -48,19 +48,21 @@ Rectangle {
         anchors.horizontalCenter: parent.horizontalCenter
 
         Text {
-            text: qsTr("Using Qt Settings for reliable cross-platform data storage.\nAutomatically uses appropriate storage backend for each platform!")
+            text: browserEnvironment
+                ? qsTr("On this page the Qt Settings module is used for local binary data storage on WebAssembly builds.")
+                : qsTr("This example is only applicable when the application is running in a browser.")
             anchors.horizontalCenter: parent.horizontalCenter
             wrapMode: Text.WordWrap
             font.pointSize: regularFontSize
             font.bold: true
-            color: "green"
+            color: browserEnvironment ? "green" : "red"
         }
 
         RowLayout { spacing: 10
-            Button { text: qsTr("Download Picture"); font.pointSize: regularFontSize; onClicked: download() }
-            Button { text: qsTr("Store to Settings"); enabled: img.source !== ""; font.pointSize: regularFontSize; onClicked: store() }
-            Button { text: qsTr("Load from Settings"); font.pointSize: regularFontSize; onClicked: load() }
-            Button { text: qsTr("Clear Settings"); font.pointSize: regularFontSize; onClicked: clearStorage() }
+            Button { text: qsTr("Download Picture"); enabled: browserEnvironment; font.pointSize: regularFontSize; onClicked: download() }
+            Button { text: qsTr("Store to Settings"); enabled: browserEnvironment && img.source !== ""; font.pointSize: regularFontSize; onClicked: store() }
+            Button { text: qsTr("Load from Settings"); enabled: browserEnvironment; font.pointSize: regularFontSize; onClicked: load() }
+            Button { text: qsTr("Clear Settings"); enabled: browserEnvironment; font.pointSize: regularFontSize; onClicked: clearStorage() }
         }
 
         Text {
@@ -105,34 +107,32 @@ Rectangle {
     function download() {
         setStatus(qsTr("Downloading…"), "blue")
         
-        if (BrowserJS.browserEnvironment) {
-            BrowserJS.runVoidJS(`
-                (async () => {
-                    try {
-                        const r = await fetch("https://picsum.photos/400/300");
-                        if (!r.ok) throw r.status;
-                        const b = await r.blob();
-                        const u = await new Promise(r => {
-                            const fr = new FileReader();
-                            fr.onload = () => r(fr.result);
-                            fr.readAsDataURL(b);
-                        });
-                        window._downloadedImage = u;
-                        window._downloadComplete = true;
-                    } catch (e) { 
-                        window._downloadError = e.toString();
-                        window._downloadComplete = true;
-                    }
-                })();
-            `);
-            
-            // Simple polling for download completion
-            downloadTimer.start()
-        } else {
-            // For non-browser environments, use a placeholder
-            img.source = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDQwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjZjBmMGYwIi8+Cjx0ZXh0IHg9IjIwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjQiIGZpbGw9IiM2NjY2NjYiPlNhbXBsZSBJbWFnZTwvdGV4dD4KPC9zdmc+"
-            setStatus(qsTr("Sample image loaded"), "green")
-        }
+        // Stop any existing download timer and clean up previous state
+        downloadTimer.stop()
+        BrowserJS.runVoidJS("delete window._downloadedImage; delete window._downloadComplete; delete window._downloadError;")
+        
+        BrowserJS.runVoidJS(`
+            (async () => {
+                try {
+                    const r = await fetch("https://picsum.photos/400/300");
+                    if (!r.ok) throw r.status;
+                    const b = await r.blob();
+                    const u = await new Promise(r => {
+                        const fr = new FileReader();
+                        fr.onload = () => r(fr.result);
+                        fr.readAsDataURL(b);
+                    });
+                    window._downloadedImage = u;
+                    window._downloadComplete = true;
+                } catch (e) { 
+                    window._downloadError = e.toString();
+                    window._downloadComplete = true;
+                }
+            })();
+        `);
+        
+        // Start polling for download completion
+        downloadTimer.start()
     }
 
     Timer {
