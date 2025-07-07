@@ -31,6 +31,27 @@ Rectangle {
                 setStatus(qsTr("Previously stored image loaded"), "green")
             }
         }
+        
+        // Connect to ImageDownloader signals
+        ImageDownloader.downloadStarted.connect(function() {
+            setStatus(qsTr("Downloading…"), "blue")
+        })
+        
+        ImageDownloader.downloadProgress.connect(function(bytesReceived, bytesTotal) {
+            if (bytesTotal > 0) {
+                var percent = Math.round((bytesReceived / bytesTotal) * 100)
+                setStatus(qsTr("Downloading… %1%").arg(percent), "blue")
+            }
+        })
+        
+        ImageDownloader.downloadFinished.connect(function(dataUrl) {
+            img.source = dataUrl
+            setStatus(qsTr("Downloaded"), "green")
+        })
+        
+        ImageDownloader.downloadError.connect(function(errorString) {
+            setStatus(qsTr("Error downloading: %1").arg(errorString), "red")
+        })
     }
 
     Label {
@@ -107,64 +128,15 @@ Rectangle {
         statusColor = clr
     }
     
-    // Initiates an HTTP fetch to download an image, converts it to data URL
+    // Initiates image download using the reliable C++ ImageDownloader
     function download() {
-        setStatus(qsTr("Downloading…"), "blue")
-        
-        if (!browserEnvironment) {
+        if (browserEnvironment) {
+            // Use Qt networking for reliable download
+            ImageDownloader.downloadDemoImage()
+        } else {
             // For desktop, use a placeholder data URL
             img.source = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPjQwMHgzMDA8L3RleHQ+PC9zdmc+"
             setStatus(qsTr("Demo image loaded"), "green")
-            return
-        }
-        
-        // Stop any existing download timer and clean up previous state
-        downloadTimer.stop()
-        BrowserJS.runVoidJS("delete window._downloadedImage; delete window._downloadComplete; delete window._downloadError;")
-        
-        BrowserJS.runVoidJS(`
-            (async () => {
-                try {
-                    const r = await fetch("https://picsum.photos/400/300");
-                    if (!r.ok) throw r.status;
-                    const b = await r.blob();
-                    const u = await new Promise(r => {
-                        const fr = new FileReader();
-                        fr.onload = () => r(fr.result);
-                        fr.readAsDataURL(b);
-                    });
-                    window._downloadedImage = u;
-                    window._downloadComplete = true;
-                } catch (e) { 
-                    window._downloadError = e.toString();
-                    window._downloadComplete = true;
-                }
-            })();
-        `);
-        
-        // Start polling for download completion
-        downloadTimer.start()
-    }
-
-    Timer {
-        id: downloadTimer
-        interval: 100
-        repeat: true
-        onTriggered: {
-            var complete = BrowserJS.runIntJS("window._downloadComplete ? 1 : 0")
-            if (complete) {
-                stop()
-                var error = BrowserJS.runStringJS("window._downloadError || ''")
-                if (error) {
-                    setStatus(qsTr("Error downloading"), "red")
-                } else {
-                    var imageData = BrowserJS.runStringJS("window._downloadedImage")
-                    img.source = imageData
-                    setStatus(qsTr("Downloaded"), "green")
-                }
-                // Clean up
-                BrowserJS.runVoidJS("delete window._downloadedImage; delete window._downloadComplete; delete window._downloadError;")
-            }
         }
     }
 

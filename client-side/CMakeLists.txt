@@ -81,7 +81,7 @@ elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
 endif()
 
 # Find the required Qt modules
-find_package(Qt6 REQUIRED COMPONENTS Core Quick Quick3D Multimedia WebSockets Widgets)
+find_package(Qt6 REQUIRED COMPONENTS Core Quick Quick3D Multimedia WebSockets Widgets Network)
 
 # Include the project's C++ headers
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/cpp)
@@ -102,6 +102,7 @@ qt_add_executable(${PROJECT_NAME}
     "src/cpp/BrowserJS.cpp"
     "src/cpp/Counter.cpp"
     "src/cpp/FakeProcessor.cpp"
+    "src/cpp/ImageDownloader.cpp"
     "src/cpp/BinaryStorage.cpp"
     "src/cpp/ListModel.cpp"
     "src/cpp/Localization.cpp"
@@ -122,7 +123,7 @@ qt6_add_qml_module(${PROJECT_NAME}
 
 # Link the Qt modules to the executable
 target_link_libraries(${PROJECT_NAME}
-    PRIVATE Qt6::Core Qt6::Quick Qt6::Quick3D Qt6::Multimedia Qt6::WebSockets Qt6::Widgets
+    PRIVATE Qt6::Core Qt6::Quick Qt6::Quick3D Qt6::Multimedia Qt6::WebSockets Qt6::Widgets Qt6::Network
 )
 
 # Set the output name of the executable to "WebApplication"
