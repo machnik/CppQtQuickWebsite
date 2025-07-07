@@ -1,3 +1,4 @@
+import QtCore
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
@@ -11,7 +12,7 @@ Rectangle {
     color: "transparent"
 
     readonly property string headerText: Localization.string("SubPage %1").arg(23)
-    readonly property string subHeaderText: Localization.string("Using IndexedDB to store files.")
+    readonly property string subHeaderText: Localization.string("Using Qt Settings to store files.")
 
     property bool browserEnv: BrowserJS.browserEnvironment
     property string statusText: ""
@@ -19,6 +20,11 @@ Rectangle {
 
     property int bigFontSize: ZoomSettings.bigFontSize
     property int regularFontSize: ZoomSettings.regularFontSize
+
+    Settings {
+        id: imageCache
+        property string storedImage: ""
+    }
 
     Label {
         id: headerLabel
@@ -42,21 +48,19 @@ Rectangle {
         anchors.horizontalCenter: parent.horizontalCenter
 
         Text {
-            text: browserEnv
-                ? qsTr("Attempting to use IndexedDB to cache data to avoid re-downloading on repeated visits.\nUnfortunately, an UNRELIABLE solution yet! Work in progress...")
-                : qsTr("This example is only applicable when the application is running in a browser.")
+            text: qsTr("Using Qt Settings for reliable cross-platform data storage.\nAutomatically uses appropriate storage backend for each platform!")
             anchors.horizontalCenter: parent.horizontalCenter
             wrapMode: Text.WordWrap
             font.pointSize: regularFontSize
             font.bold: true
-            color: "red"
+            color: "green"
         }
 
         RowLayout { spacing: 10
-            Button { text: qsTr("Download Picture"); enabled: browserEnv; font.pointSize: regularFontSize; onClicked: download() }
-            Button { text: qsTr("Store as IndexedDB record");    enabled: browserEnv && img.source; font.pointSize: regularFontSize; onClicked: store() }
-            Button { text: qsTr("Load from IndexedDB record");     enabled: browserEnv; font.pointSize: regularFontSize; onClicked: load() }
-            Button { text: qsTr("Clear IndexedDB record");    enabled: browserEnv; font.pointSize: regularFontSize; onClicked: clearDB() }
+            Button { text: qsTr("Download Picture"); font.pointSize: regularFontSize; onClicked: download() }
+            Button { text: qsTr("Store to Settings"); enabled: img.source !== ""; font.pointSize: regularFontSize; onClicked: store() }
+            Button { text: qsTr("Load from Settings"); font.pointSize: regularFontSize; onClicked: load() }
+            Button { text: qsTr("Clear Settings"); font.pointSize: regularFontSize; onClicked: clearStorage() }
         }
 
         Text {
@@ -100,201 +104,85 @@ Rectangle {
     // Initiates an HTTP fetch to download an image, converts it to data URL
     function download() {
         setStatus(qsTr("Downloading…"), "blue")
-        BrowserJS.runVoidJS(`
-            (async () => {
-                try {
-                    const r = await fetch("https://picsum.photos/400/300");
-                    if (!r.ok) throw r.status;
-                    const b = await r.blob();
-                    const u = await new Promise(r => {
-                        const fr = new FileReader();
-                        fr.onload = () => r(fr.result);
-                        fr.readAsDataURL(b);
-                    });
-                    window._img = u;
-                } catch (e) { window._err = e; }
-            })();
-        `);
-        poll("_img", "_err", function(v, err) {
-            if (err) setStatus(qsTr("Error downloading"), "red");
-            else {
-                img.source = v;
-                setStatus(qsTr("Downloaded"), "green");
-            }
-        });
+        
+        if (BrowserJS.browserEnvironment) {
+            BrowserJS.runVoidJS(`
+                (async () => {
+                    try {
+                        const r = await fetch("https://picsum.photos/400/300");
+                        if (!r.ok) throw r.status;
+                        const b = await r.blob();
+                        const u = await new Promise(r => {
+                            const fr = new FileReader();
+                            fr.onload = () => r(fr.result);
+                            fr.readAsDataURL(b);
+                        });
+                        window._downloadedImage = u;
+                        window._downloadComplete = true;
+                    } catch (e) { 
+                        window._downloadError = e.toString();
+                        window._downloadComplete = true;
+                    }
+                })();
+            `);
+            
+            // Simple polling for download completion
+            downloadTimer.start()
+        } else {
+            // For non-browser environments, use a placeholder
+            img.source = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDQwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjZjBmMGYwIi8+Cjx0ZXh0IHg9IjIwMCIgeT0iMTUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjQiIGZpbGw9IiM2NjY2NjYiPlNhbXBsZSBJbWFnZTwvdGV4dD4KPC9zdmc+"
+            setStatus(qsTr("Sample image loaded"), "green")
+        }
     }
 
-    // Stores the current image source into IndexedDB under a fixed record
+    Timer {
+        id: downloadTimer
+        interval: 100
+        repeat: true
+        onTriggered: {
+            var complete = BrowserJS.runIntJS("window._downloadComplete ? 1 : 0")
+            if (complete) {
+                stop()
+                var error = BrowserJS.runStringJS("window._downloadError || ''")
+                if (error) {
+                    setStatus(qsTr("Error downloading"), "red")
+                } else {
+                    var imageData = BrowserJS.runStringJS("window._downloadedImage")
+                    img.source = imageData
+                    setStatus(qsTr("Downloaded"), "green")
+                }
+                // Clean up
+                BrowserJS.runVoidJS("delete window._downloadedImage; delete window._downloadComplete; delete window._downloadError;")
+            }
+        }
+    }
+
+    // Stores the current image source to Qt Settings
     function store() {
         if (!img.source) {
             setStatus(qsTr("No image to store"), "red")
             return
         }
         
-        setStatus(qsTr("Storing…"), "blue")
-        
-        // Pass the image data to JavaScript safely
-        BrowserJS.runVoidJS("window._imageData = " + JSON.stringify(img.source) + ";");
-        BrowserJS.runVoidJS(`
-            (async () => {
-                try {
-                    if (!indexedDB) {
-                        throw new Error("IndexedDB not available");
-                    }
-                    
-                    const db = await new Promise((res, rej) => {
-                        const request = indexedDB.open("DB", 1);
-                        
-                        request.onupgradeneeded = (event) => {
-                            const db = event.target.result;
-                            if (!db.objectStoreNames.contains("i")) {
-                                db.createObjectStore("i", { keyPath: "id" });
-                            }
-                        };
-                        
-                        request.onsuccess = () => {
-                            res(request.result);
-                        };
-                        
-                        request.onerror = (event) => {
-                            rej(event.target.error || "Database open failed");
-                        };
-                    });
-                    
-                    const tx = db.transaction("i", "readwrite");
-                    const store = tx.objectStore("i");
-                    store.put({ id: 1, data: window._imageData });
-                    
-                    await new Promise((r, j) => { 
-                        tx.oncomplete = () => {
-                            r();
-                        };
-                        tx.onerror = (e) => {
-                            j(e);
-                        };
-                    });
-                    delete window._imageData;
-                    window._ok = 1;
-                } catch (e) { 
-                    window._err = e.toString(); 
-                }
-            })();
-        `);
-        poll("_ok", "_err", function(_, err) {
-            if (err) setStatus(qsTr("Error storing"), "red");
-            else setStatus(qsTr("Stored"), "green");
-        });
+        imageCache.storedImage = img.source
+        setStatus(qsTr("Stored to Settings"), "green")
     }
 
-    // Loads the stored image from IndexedDB into the Image element
+    // Loads the stored image from Qt Settings
     function load() {
-        setStatus(qsTr("Loading…"), "blue")
-        
-        BrowserJS.runVoidJS(`
-            (async () => {
-                try {
-                    const db = await new Promise((res, rej) => {
-                        const request = indexedDB.open("DB", 1);
-                        
-                        request.onupgradeneeded = (event) => {
-                            const db = event.target.result;
-                            if (!db.objectStoreNames.contains("i")) {
-                                db.createObjectStore("i", { keyPath: "id" });
-                            }
-                        };
-                        
-                        request.onsuccess = () => {
-                            const db = request.result;
-                            if (!db.objectStoreNames.contains("i")) {
-                                window._noData = 1;
-                                res(null);
-                                return;
-                            }
-                            res(db);
-                        };
-                        
-                        request.onerror = (event) => {
-                            rej(event.target.error);
-                        };
-                    });
-                    
-                    if (!db) {
-                        window._err = "Database unavailable";
-                        return;
-                    }
-                    
-                    const tx = db.transaction("i", "readonly");
-                    
-                    tx.onerror = (event) => {
-                        // Transaction error handling
-                    };
-                    
-                    const store = tx.objectStore("i");
-                    
-                    const result = await new Promise((r, j) => {
-                        const req = store.get(1);
-                        req.onsuccess = () => {
-                            r(req.result);
-                        };
-                        req.onerror = (event) => {
-                            j(event.target.error);
-                        };
-                    });
-                    
-                    if (result && result.data) {
-                        window._img = result.data;
-                    } else if (result) {
-                        window._err = "Record exists but no data";
-                    } else {
-                        window._noData = 1;
-                    }
-                } catch (e) { 
-                    window._err = e.toString(); 
-                }
-            })();
-        `);
-        
-        poll("_img", "_err", function(v, err) {
-            if (err) {
-                setStatus(qsTr("Error loading: ") + err, "red");
-            } else if (v) {
-                img.source = v;
-                setStatus(qsTr("Loaded"), "green");
-            } else {
-                setStatus(qsTr("No stored image"), "orange");
-            }
-        });
-    }
-
-    // Clears the IndexedDB database and resets the image source
-    function clearDB() {
-        setStatus(qsTr("Clearing…"), "blue")
-        BrowserJS.runVoidJS(`indexedDB.deleteDatabase("DB"); window._ok = 1;`);
-        poll("_ok", "", function() {
-            img.source = "";
-            setStatus(qsTr("Cleared"), "green");
-        });
-    }
-
-    // Polls for JavaScript-side globals (_img, _err, _ok) and invokes callback when set
-    function poll(okKey, errKey, cb) {
-        var ok  = BrowserJS.runIntJS(`typeof window.${okKey} !== 'undefined' ? 1 : 0`);
-        var err = errKey
-            ? BrowserJS.runIntJS(`typeof window.${errKey} !== 'undefined' ? 1 : 0`)
-            : 0;
-        var noData = BrowserJS.runIntJS(`typeof window._noData !== 'undefined' ? 1 : 0`);
-        
-        if (ok || err || noData) {
-            var v = ok ? BrowserJS.runStringJS(`window.${okKey}`) : null;
-            BrowserJS.runVoidJS(
-                `delete window.${okKey}` +
-                (errKey ? `; delete window.${errKey}` : ``) +
-                `; delete window._noData`
-            );
-            cb(v, !!err);
+        if (imageCache.storedImage && imageCache.storedImage !== "") {
+            img.source = imageCache.storedImage
+            setStatus(qsTr("Loaded from Settings"), "green")
         } else {
-            Qt.callLater(function() { poll(okKey, errKey, cb) });
+            setStatus(qsTr("No stored image found"), "orange")
         }
+    }
+
+    // Clears the stored image from Qt Settings
+    function clearStorage() {
+        imageCache.storedImage = ""
+        img.source = ""
+        setStatus(qsTr("Settings cleared"), "green")
     }
 
     ToMainPageButton {
