@@ -102,6 +102,7 @@ qt_add_executable(${PROJECT_NAME}
     "src/cpp/BrowserJS.cpp"
     "src/cpp/Counter.cpp"
     "src/cpp/FakeProcessor.cpp"
+    "src/cpp/BinaryStorage.cpp"
     "src/cpp/ListModel.cpp"
     "src/cpp/Localization.cpp"
     "src/cpp/TextFileIO.cpp"

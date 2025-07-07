@@ -1,4 +1,3 @@
-import QtCore
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
@@ -12,7 +11,7 @@ Rectangle {
     color: "transparent"
 
     readonly property string headerText: Localization.string("SubPage %1").arg(23)
-    readonly property string subHeaderText: Localization.string("Using Qt Settings to store files.")
+    readonly property string subHeaderText: Localization.string("Using QSettings to store files.")
 
     property bool browserEnvironment: BrowserJS.browserEnvironment
     property string statusText: ""
@@ -21,9 +20,17 @@ Rectangle {
     property int bigFontSize: ZoomSettings.bigFontSize
     property int regularFontSize: ZoomSettings.regularFontSize
 
-    Settings {
-        id: imageCache
-        property string storedImage: ""
+    readonly property string imageFileName: "cached_image.dataurl"
+
+    Component.onCompleted: {
+        // Try to load any previously stored image
+        if (BinaryStorage.hasFile(imageFileName)) {
+            var storedImage = BinaryStorage.fileAsString(imageFileName)
+            if (storedImage && storedImage !== "") {
+                img.source = storedImage
+                setStatus(qsTr("Previously stored image loaded"), "green")
+            }
+        }
     }
 
     Label {
@@ -48,21 +55,18 @@ Rectangle {
         anchors.horizontalCenter: parent.horizontalCenter
 
         Text {
-            text: browserEnvironment
-                ? qsTr("On this page the Qt Settings module is used for local binary data storage on WebAssembly builds.\nWARNING: This solution currently is not reliable!")
-                : qsTr("This example is only applicable when the application is running in a browser.")
+            text: qsTr("On this page QSettings is used for local binary data storage.\nThis uses IndexedDB on WebAssembly builds and falls back to .ini files on desktop.")
             anchors.horizontalCenter: parent.horizontalCenter
             wrapMode: Text.WordWrap
             font.pointSize: regularFontSize
             font.bold: true
-            color: "red"
         }
 
         RowLayout { spacing: 10
-            Button { text: qsTr("Download Picture"); enabled: browserEnvironment; font.pointSize: regularFontSize; onClicked: download() }
-            Button { text: qsTr("Store to Settings"); enabled: browserEnvironment && img.source !== ""; font.pointSize: regularFontSize; onClicked: store() }
-            Button { text: qsTr("Load from Settings"); enabled: browserEnvironment; font.pointSize: regularFontSize; onClicked: load() }
-            Button { text: qsTr("Clear Settings"); enabled: browserEnvironment; font.pointSize: regularFontSize; onClicked: clearStorage() }
+            Button { text: qsTr("Download Picture"); font.pointSize: regularFontSize; onClicked: download() }
+            Button { text: qsTr("Store to QSettings"); enabled: img.source !== ""; font.pointSize: regularFontSize; onClicked: store() }
+            Button { text: qsTr("Load from QSettings"); font.pointSize: regularFontSize; onClicked: load() }
+            Button { text: qsTr("Clear QSettings"); font.pointSize: regularFontSize; onClicked: clearStorage() }
         }
 
         Text {
@@ -106,6 +110,13 @@ Rectangle {
     // Initiates an HTTP fetch to download an image, converts it to data URL
     function download() {
         setStatus(qsTr("Downloading…"), "blue")
+        
+        if (!browserEnvironment) {
+            // For desktop, use a placeholder data URL
+            img.source = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPjQwMHgzMDA8L3RleHQ+PC9zdmc+"
+            setStatus(qsTr("Demo image loaded"), "green")
+            return
+        }
         
         // Stop any existing download timer and clean up previous state
         downloadTimer.stop()
@@ -157,32 +168,37 @@ Rectangle {
         }
     }
 
-    // Stores the current image source to Qt Settings
+    // Stores the current image source to BinaryStorage
     function store() {
         if (!img.source) {
             setStatus(qsTr("No image to store"), "red")
             return
         }
         
-        imageCache.storedImage = img.source
-        setStatus(qsTr("Stored to Settings"), "green")
+        BinaryStorage.setFileAsString(imageFileName, img.source)
+        setStatus(qsTr("Stored to QSettings"), "green")
     }
 
-    // Loads the stored image from Qt Settings
+    // Loads the stored image from BinaryStorage
     function load() {
-        if (imageCache.storedImage && imageCache.storedImage !== "") {
-            img.source = imageCache.storedImage
-            setStatus(qsTr("Loaded from Settings"), "green")
+        if (BinaryStorage.hasFile(imageFileName)) {
+            var storedImage = BinaryStorage.fileAsString(imageFileName)
+            if (storedImage && storedImage !== "") {
+                img.source = storedImage
+                setStatus(qsTr("Loaded from QSettings"), "green")
+            } else {
+                setStatus(qsTr("No stored image found"), "orange")
+            }
         } else {
             setStatus(qsTr("No stored image found"), "orange")
         }
     }
 
-    // Clears the stored image from Qt Settings
+    // Clears the stored image from BinaryStorage
     function clearStorage() {
-        imageCache.storedImage = ""
+        BinaryStorage.removeFile(imageFileName)
         img.source = ""
-        setStatus(qsTr("Settings cleared"), "green")
+        setStatus(qsTr("QSettings cleared"), "green")
     }
 
     ToMainPageButton {

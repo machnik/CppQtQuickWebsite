@@ -5,6 +5,8 @@
     #include <emscripten/val.h>
 #endif
 
+BrowserJS* BrowserJS::s_instance = nullptr;
+
 BrowserJS::BrowserJS(QObject *parent)
     :   QObject{parent},
 #ifdef Q_OS_WASM
@@ -12,10 +14,16 @@ BrowserJS::BrowserJS(QObject *parent)
 #else
         b_browserEnvironment{false}
 #endif
-{}
+{
+    s_instance = this;
+}
 
 bool BrowserJS::isBrowserEnvironment() const {
     return b_browserEnvironment;
+}
+
+BrowserJS* BrowserJS::instance() {
+    return s_instance;
 }
 
 int BrowserJS::runIntJS(const QString & code) {

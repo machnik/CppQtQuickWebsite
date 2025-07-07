@@ -18,6 +18,8 @@ public:
 
     bool isBrowserEnvironment() const;
 
+    static BrowserJS* instance(); // Get the singleton instance
+
 public slots:
     int runIntJS(const QString & code);
     QString runStringJS(const QString & code);
@@ -25,6 +27,7 @@ public slots:
 
 private:
     const bool b_browserEnvironment;
+    static BrowserJS* s_instance;
 };
 
 #endif // JAVASCRIPT_H
