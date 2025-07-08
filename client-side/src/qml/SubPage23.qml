@@ -24,9 +24,6 @@ Rectangle {
 
     Component.onCompleted: {
 
-        // write img.source to console for debugging
-        console.log("Image source: ", img.source)
-
         // Try to load any previously stored image
         if (BinaryStorage.hasFile(imageFileName)) {
             var storedImage = BinaryStorage.fileAsString(imageFileName)
@@ -80,11 +77,48 @@ Rectangle {
         anchors.horizontalCenter: parent.horizontalCenter
 
         Text {
-            text: qsTr("On this page QSettings is used for local binary data storage.\nThis uses IndexedDB on WebAssembly builds and falls back to .ini files on desktop.")
+            text: qsTr("On this page QSettings is used for local binary data storage.\nThis uses LocalStorage or IndexedDB on WebAssembly builds and falls back to .ini files on desktop.")
             Layout.alignment: Qt.AlignHCenter
             wrapMode: Text.WordWrap
             font.pointSize: regularFontSize
             font.bold: true
+        }
+
+        RowLayout {
+            Layout.alignment: Qt.AlignHCenter
+            spacing: 10
+            
+            Text {
+                text: qsTr("Storage Mode:")
+                font.pointSize: regularFontSize
+                font.bold: true
+            }
+            
+            Text {
+                text: qsTr("WebLocalStorage")
+                font.pointSize: regularFontSize
+                color: storageSwitch.checked ? "gray" : "black"
+            }
+            
+            Switch {
+                id: storageSwitch
+                checked: false  // Default to WebLocalStorage (unchecked)
+                onToggled: {
+                    if (checked) {
+                        BinaryStorage.switchToWebIndexedDB()
+                        setStatus(qsTr("Switched to WebIndexedDB"), "blue")
+                    } else {
+                        BinaryStorage.switchToWebLocalStorage()
+                        setStatus(qsTr("Switched to WebLocalStorage"), "blue")
+                    }
+                }
+            }
+            
+            Text {
+                text: qsTr("WebIndexedDB")
+                font.pointSize: regularFontSize
+                color: storageSwitch.checked ? "black" : "gray"
+            }
         }
 
         RowLayout { spacing: 10
@@ -98,6 +132,7 @@ Rectangle {
             text: statusText
             Layout.alignment: Qt.AlignHCenter
             font.pointSize: bigFontSize
+            font.bold: true
             color: statusColor
             wrapMode: Text.WordWrap
         }

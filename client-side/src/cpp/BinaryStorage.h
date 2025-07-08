@@ -6,6 +6,7 @@
 #include <QtCore/QSettings>
 #include <QtCore/QString>
 #include <QtCore/QStringList>
+#include <memory>
 
 #include <QtQml/QtQml>
 
@@ -36,9 +37,16 @@ public:
     // Convenience methods for working with strings (like data URLs)
     Q_INVOKABLE QString fileAsString(const QString &fileName) const;
     Q_INVOKABLE void setFileAsString(const QString &fileName, const QString &data);
+    
+    // Storage format switching methods
+    Q_INVOKABLE void switchToWebLocalStorage();
+    Q_INVOKABLE void switchToWebIndexedDB();
 
 private:
-    mutable QSettings m_settings;
+    void recreateSettings();
+    
+    QSettings::Format m_currentFormat;
+    mutable std::unique_ptr<QSettings> m_settings;
 };
 
 #endif // BINARY_STORAGE_H

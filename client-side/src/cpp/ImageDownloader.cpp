@@ -35,7 +35,6 @@ void ImageDownloader::downloadImage(const QString &url)
     emit downloadStarted();
 
     QNetworkRequest request(downloadUrl);
-    request.setHeader(QNetworkRequest::UserAgentHeader, "CppQtQuickWebsite/1.0");
     request.setAttribute(QNetworkRequest::RedirectPolicyAttribute, QNetworkRequest::NoLessSafeRedirectPolicy);
 
     m_currentReply = m_networkManager->get(request);
