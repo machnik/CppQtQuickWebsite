@@ -24,7 +24,6 @@ public:
     explicit ImageDownloader(QObject *parent = nullptr);
 
     Q_INVOKABLE void downloadImage(const QString &url);
-    Q_INVOKABLE void downloadDemoImage();
 
 signals:
     void downloadStarted();

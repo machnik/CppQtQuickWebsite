@@ -23,6 +23,10 @@ Rectangle {
     readonly property string imageFileName: "cached_image.dataurl"
 
     Component.onCompleted: {
+
+        // write img.source to console for debugging
+        console.log("Image source: ", img.source)
+
         // Try to load any previously stored image
         if (BinaryStorage.hasFile(imageFileName)) {
             var storedImage = BinaryStorage.fileAsString(imageFileName)
@@ -77,7 +81,7 @@ Rectangle {
 
         Text {
             text: qsTr("On this page QSettings is used for local binary data storage.\nThis uses IndexedDB on WebAssembly builds and falls back to .ini files on desktop.")
-            anchors.horizontalCenter: parent.horizontalCenter
+            Layout.alignment: Qt.AlignHCenter
             wrapMode: Text.WordWrap
             font.pointSize: regularFontSize
             font.bold: true
@@ -85,14 +89,14 @@ Rectangle {
 
         RowLayout { spacing: 10
             Button { text: qsTr("Download Picture"); font.pointSize: regularFontSize; onClicked: download() }
-            Button { text: qsTr("Store to QSettings"); enabled: img.source !== ""; font.pointSize: regularFontSize; onClicked: store() }
+            Button { text: qsTr("Store to QSettings"); font.pointSize: regularFontSize; onClicked: store() }
             Button { text: qsTr("Load from QSettings"); font.pointSize: regularFontSize; onClicked: load() }
             Button { text: qsTr("Clear QSettings"); font.pointSize: regularFontSize; onClicked: clearStorage() }
         }
 
         Text {
             text: statusText
-            anchors.horizontalCenter: parent.horizontalCenter
+            Layout.alignment: Qt.AlignHCenter
             font.pointSize: bigFontSize
             color: statusColor
             wrapMode: Text.WordWrap
@@ -132,7 +136,7 @@ Rectangle {
     function download() {
         if (browserEnvironment) {
             // Use Qt networking for reliable download
-            ImageDownloader.downloadDemoImage()
+            ImageDownloader.downloadImage("https://picsum.photos/400/300")
         } else {
             // For desktop, use a placeholder data URL
             img.source = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPjQwMHgzMDA8L3RleHQ+PC9zdmc+"
@@ -142,12 +146,13 @@ Rectangle {
 
     // Stores the current image source to BinaryStorage
     function store() {
-        if (!img.source) {
+        var sourceStr = img.source ? img.source.toString() : ""
+        if (!sourceStr || sourceStr.trim() === "") {
             setStatus(qsTr("No image to store"), "red")
             return
         }
         
-        BinaryStorage.setFileAsString(imageFileName, img.source)
+        BinaryStorage.setFileAsString(imageFileName, sourceStr)
         setStatus(qsTr("Stored to QSettings"), "green")
     }
 

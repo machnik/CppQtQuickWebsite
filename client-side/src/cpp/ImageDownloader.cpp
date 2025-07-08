@@ -1,15 +1,14 @@
 #include "ImageDownloader.h"
 
-#include <QtCore/QDebug>
 #include <QtCore/QMimeDatabase>
 #include <QtCore/QUrl>
 
 ImageDownloader* ImageDownloader::s_instance = nullptr;
 
 ImageDownloader::ImageDownloader(QObject *parent)
-    : QObject(parent)
-    , m_networkManager(new QNetworkAccessManager(this))
-    , m_currentReply(nullptr)
+    : QObject {parent}
+    , m_networkManager {new QNetworkAccessManager(this)}
+    , m_currentReply {nullptr}
 {
     s_instance = this;
 }
@@ -17,42 +16,34 @@ ImageDownloader::ImageDownloader(QObject *parent)
 void ImageDownloader::downloadImage(const QString &url)
 {
     if (url.isEmpty()) {
-        emit downloadError("URL is empty");
+        emit downloadError("URL is empty!");
         return;
     }
-    
-    // Cancel any existing download
+
     if (m_currentReply) {
         m_currentReply->abort();
         m_currentReply->deleteLater();
         m_currentReply = nullptr;
     }
-    
-    QUrl downloadUrl(url);
+
+    QUrl downloadUrl { url };
     if (!downloadUrl.isValid()) {
         emit downloadError("Invalid URL: " + url);
         return;
     }
-    
-    qDebug() << "ImageDownloader: Starting download from" << url;
+
     emit downloadStarted();
-    
+
     QNetworkRequest request(downloadUrl);
     request.setHeader(QNetworkRequest::UserAgentHeader, "CppQtQuickWebsite/1.0");
     request.setAttribute(QNetworkRequest::RedirectPolicyAttribute, QNetworkRequest::NoLessSafeRedirectPolicy);
-    
+
     m_currentReply = m_networkManager->get(request);
-    
+
     connect(m_currentReply, &QNetworkReply::finished, this, &ImageDownloader::onDownloadFinished);
     connect(m_currentReply, &QNetworkReply::downloadProgress, this, &ImageDownloader::onDownloadProgress);
     connect(m_currentReply, QOverload<QNetworkReply::NetworkError>::of(&QNetworkReply::errorOccurred),
             this, &ImageDownloader::onDownloadError);
-}
-
-void ImageDownloader::downloadDemoImage()
-{
-    // Use a reliable demo image service
-    downloadImage("https://picsum.photos/400/300");
 }
 
 void ImageDownloader::onDownloadFinished()
@@ -71,14 +62,13 @@ void ImageDownloader::onDownloadFinished()
             // Guess MIME type from URL if Content-Type header is not reliable
             QString url = m_currentReply->url().toString();
             contentType = guessMimeType(url);
-            
+
             if (!contentType.startsWith("image/")) {
-                contentType = "image/jpeg"; // Default fallback
+                contentType = "image/jpeg";
             }
         }
-        
+
         QString dataUrl = convertToDataUrl(imageData, contentType);
-        qDebug() << "ImageDownloader: Download completed, data URL length:" << dataUrl.length();
         emit downloadFinished(dataUrl);
     }
     
@@ -100,7 +90,6 @@ void ImageDownloader::onDownloadError(QNetworkReply::NetworkError error)
     }
     
     QString errorString = m_currentReply->errorString();
-    qWarning() << "ImageDownloader: Network error:" << error << errorString;
     emit downloadError("Network error: " + errorString);
     
     m_currentReply->deleteLater();
@@ -132,5 +121,5 @@ QString ImageDownloader::guessMimeType(const QString &url)
         return "image/svg+xml";
     }
     
-    return "image/jpeg"; // Default fallback
+    return "image/jpeg";
 }

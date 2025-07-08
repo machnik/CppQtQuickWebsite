@@ -8,12 +8,12 @@ static const QString FILES_GROUP = QStringLiteral("files");
 
 BinaryStorage::BinaryStorage(QObject *parent)
     : QObject(parent)
-    , m_settings(
+    , m_settings {
         (BrowserJS::instance() && BrowserJS::instance()->isBrowserEnvironment()) ? 
             QSettings::WebIndexedDBFormat : QSettings::IniFormat,
         QSettings::UserScope, 
         QStringLiteral("CppQtQuickWebsite"), QStringLiteral("FileStorage")
-    )
+    }
 {
     // QSettings will use the IndexedDB format for WebAssembly or the Ini format for desktop.
 }
