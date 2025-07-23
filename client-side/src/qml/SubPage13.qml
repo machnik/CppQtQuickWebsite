@@ -58,7 +58,7 @@ Rectangle {
             width: parent.width
             height: parent.height
             border.color: "black"
-            color: "white"
+            color: "transparent"
 
             TextArea {
                 id: fileContentsTextArea
