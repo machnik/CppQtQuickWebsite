@@ -11,18 +11,23 @@ class BrowserJS : public QObject {
     QML_ELEMENT
     QML_SINGLETON
 
-    Q_PROPERTY(bool browserEnvironment READ isBrowserEnvionment CONSTANT)
+    Q_PROPERTY(bool browserEnvironment READ isBrowserEnvironment CONSTANT)
 
 public:
     explicit BrowserJS(QObject *parent = nullptr);
 
-    bool isBrowserEnvionment() const;
+    bool isBrowserEnvironment() const;
+
+    static BrowserJS* instance(); // Get the singleton instance
 
 public slots:
-    int runJS(const QString & code);
+    int runIntJS(const QString & code);
+    QString runStringJS(const QString & code);
+    void runVoidJS(const QString & code);
 
 private:
     const bool b_browserEnvironment;
+    static BrowserJS* s_instance;
 };
 
 #endif // JAVASCRIPT_H

@@ -30,3 +30,7 @@
 ## [1.0.8] - 2025-06-27
 - Color Palette dialog example merged with QSysInfo subpage.
 - Added IndexedDB subpage.
+
+## [1.1.0] - 2025-07-22
+- Implemented example of QSettings used for binary data cache (LocalStorage/IndexedDB)
+- Merged Color Dialog example into QSysInfo subpage.

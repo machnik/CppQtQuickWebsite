@@ -52,6 +52,7 @@ Rectangle {
                     height: 200
                     border.color: "black"
                     border.width: 1
+                    color: "transparent"
                     clip: true
 
                     ListView {
@@ -59,9 +60,27 @@ Rectangle {
                         anchors.fill: parent
                         anchors.margins: 4
                         model: ListModel {} // QML model
-                        delegate: Text {
-                            text: model.text
-                            font.pointSize: regularFontSize
+                        delegate: Rectangle {
+                            width: listViewQML.width
+                            height: 30
+                            color: ListView.isCurrentItem ? "#E91E63" : "transparent"
+                            border.color: ListView.isCurrentItem ? "#80E91E63" : "transparent"
+                            border.width: ListView.isCurrentItem ? 1 : 0
+                            radius: 6
+                            
+                            Text {
+                                text: model.text
+                                font.pointSize: regularFontSize
+                                color: ListView.isCurrentItem ? "white" : "black"
+                                anchors.verticalCenter: parent.verticalCenter
+                                anchors.left: parent.left
+                                anchors.leftMargin: 5
+                            }
+                            
+                            MouseArea {
+                                anchors.fill: parent
+                                onClicked: listViewQML.currentIndex = index
+                            }
                         }
                     }
                 }
@@ -96,6 +115,7 @@ Rectangle {
                     height: 200
                     border.color: "black"
                     border.width: 1
+                    color: "transparent"
                     clip: true
 
                     ListView {
@@ -103,9 +123,27 @@ Rectangle {
                         anchors.fill: parent
                         anchors.margins: 4
                         model: Backend.listModel // C++ model
-                        delegate: Text { 
-                            text: model.display 
-                            font.pointSize: regularFontSize
+                        delegate: Rectangle {
+                            width: listViewCpp.width
+                            height: 30
+                            color: ListView.isCurrentItem ? "#E91E63" : "transparent"
+                            border.color: ListView.isCurrentItem ? "#80E91E63" : "transparent"
+                            border.width: ListView.isCurrentItem ? 1 : 0
+                            radius: 6
+                            
+                            Text { 
+                                text: model.display 
+                                font.pointSize: regularFontSize
+                                color: ListView.isCurrentItem ? "white" : "black"
+                                anchors.verticalCenter: parent.verticalCenter
+                                anchors.left: parent.left
+                                anchors.leftMargin: 5
+                            }
+                            
+                            MouseArea {
+                                anchors.fill: parent
+                                onClicked: listViewCpp.currentIndex = index
+                            }
                         }
                     }
                 }
