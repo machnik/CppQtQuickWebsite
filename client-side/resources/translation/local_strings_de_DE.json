@@ -90,7 +90,7 @@
     "No image to store": "Kein Bild zum Speichern",
     "No stored image found": "Kein gespeichertes Bild gefunden",
     "OK": "OK",
-    "On this page QSettings is used for local binary data storage.\nThis uses LocalStorage or IndexedDB on WebAssembly builds and falls back to .ini files on desktop.": "Auf dieser Seite wird QSettings für die lokale Speicherung von Binärdaten verwendet.\nDies nutzt LocalStorage oder IndexedDB bei WebAssembly-Builds und fällt auf .ini-Dateien auf dem Desktop zurück.",
+    "On this page QSettings is used for local binary data storage.\nThis uses LocalStorage or IndexedDB on WebAssembly builds and falls back to .ini files on desktop.": "Auf dieser Seite wird QSettings für die lokale Speicherung von Binärdaten verwendet.\nDies nutzt LocalStorage oder IndexedDB bei WebAssembly-Builds und fällt auf dem Desktop auf .ini-Dateien zurück.",
     "Open a new non-modal window.": "Öffnen Sie ein neues nicht-modales Fenster.",
     "Open Text File": "Textdatei öffnen",
     "Page %1": "Seite %1",

@@ -29,29 +29,29 @@ Rectangle {
             var storedImage = BinaryStorage.fileAsString(imageFileName)
             if (storedImage && storedImage !== "") {
                 img.source = storedImage
-                setStatus(qsTr("Previously stored image loaded"), "green")
+                setStatus(Localization.string("Previously stored image loaded"), "green")
             }
         }
         
         // Connect to ImageDownloader signals
         ImageDownloader.downloadStarted.connect(function() {
-            setStatus(qsTr("Downloading…"), "blue")
+            setStatus(Localization.string("Downloading…"), "blue")
         })
         
         ImageDownloader.downloadProgress.connect(function(bytesReceived, bytesTotal) {
             if (bytesTotal > 0) {
                 var percent = Math.round((bytesReceived / bytesTotal) * 100)
-                setStatus(qsTr("Downloading… %1%").arg(percent), "blue")
+                setStatus(Localization.string("Downloading… %1%").arg(percent), "blue")
             }
         })
         
         ImageDownloader.downloadFinished.connect(function(dataUrl) {
             img.source = dataUrl
-            setStatus(qsTr("Downloaded"), "green")
+            setStatus(Localization.string("Downloaded"), "green")
         })
         
         ImageDownloader.downloadError.connect(function(errorString) {
-            setStatus(qsTr("Error downloading: %1").arg(errorString), "red")
+            setStatus(Localization.string("Error downloading: %1").arg(errorString), "red")
         })
     }
 
@@ -77,7 +77,7 @@ Rectangle {
         anchors.horizontalCenter: parent.horizontalCenter
 
         Text {
-            text: qsTr("On this page QSettings is used for local binary data storage.\nThis uses LocalStorage or IndexedDB on WebAssembly builds and falls back to .ini files on desktop.")
+            text: Localization.string("On this page QSettings is used for local binary data storage.\nThis uses LocalStorage or IndexedDB on WebAssembly builds and falls back to .ini files on desktop.")
             Layout.alignment: Qt.AlignHCenter
             wrapMode: Text.WordWrap
             font.pointSize: regularFontSize
@@ -89,13 +89,13 @@ Rectangle {
             spacing: 10
             
             Text {
-                text: qsTr("Storage Mode:")
+                text: Localization.string("Storage Mode:")
                 font.pointSize: regularFontSize
                 font.bold: true
             }
             
             Text {
-                text: qsTr("WebLocalStorage")
+                text: Localization.string("WebLocalStorage")
                 font.pointSize: regularFontSize
                 color: storageSwitch.checked ? "gray" : "black"
             }
@@ -106,26 +106,26 @@ Rectangle {
                 onToggled: {
                     if (checked) {
                         BinaryStorage.switchToWebIndexedDB()
-                        setStatus(qsTr("Switched to WebIndexedDB"), "blue")
+                        setStatus(Localization.string("Switched to WebIndexedDB"), "blue")
                     } else {
                         BinaryStorage.switchToWebLocalStorage()
-                        setStatus(qsTr("Switched to WebLocalStorage"), "blue")
+                        setStatus(Localization.string("Switched to WebLocalStorage"), "blue")
                     }
                 }
             }
             
             Text {
-                text: qsTr("WebIndexedDB")
+                text: Localization.string("WebIndexedDB")
                 font.pointSize: regularFontSize
                 color: storageSwitch.checked ? "black" : "gray"
             }
         }
 
         RowLayout { spacing: 10
-            Button { text: qsTr("Download Picture"); font.pointSize: regularFontSize; onClicked: download() }
-            Button { text: qsTr("Store to QSettings"); font.pointSize: regularFontSize; onClicked: store() }
-            Button { text: qsTr("Load from QSettings"); font.pointSize: regularFontSize; onClicked: load() }
-            Button { text: qsTr("Clear QSettings"); font.pointSize: regularFontSize; onClicked: clearStorage() }
+            Button { text: Localization.string("Download Picture"); font.pointSize: regularFontSize; onClicked: download() }
+            Button { text: Localization.string("Store to QSettings"); font.pointSize: regularFontSize; onClicked: store() }
+            Button { text: Localization.string("Load from QSettings"); font.pointSize: regularFontSize; onClicked: load() }
+            Button { text: Localization.string("Clear QSettings"); font.pointSize: regularFontSize; onClicked: clearStorage() }
         }
 
         Text {
@@ -155,7 +155,7 @@ Rectangle {
             Label {
                 anchors.centerIn: parent
                 visible: img.source === ""
-                text: qsTr("No Image")
+                text: Localization.string("No Image")
                 color: "gray"
             }
         }
@@ -175,7 +175,7 @@ Rectangle {
         } else {
             // For desktop, use a placeholder data URL
             img.source = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPjQwMHgzMDA8L3RleHQ+PC9zdmc+"
-            setStatus(qsTr("Demo image loaded"), "green")
+            setStatus(Localization.string("Demo image loaded"), "green")
         }
     }
 
@@ -183,12 +183,12 @@ Rectangle {
     function store() {
         var sourceStr = img.source ? img.source.toString() : ""
         if (!sourceStr || sourceStr.trim() === "") {
-            setStatus(qsTr("No image to store"), "red")
+            setStatus(Localization.string("No image to store"), "red")
             return
         }
         
         BinaryStorage.setFileAsString(imageFileName, sourceStr)
-        setStatus(qsTr("Stored to QSettings"), "green")
+        setStatus(Localization.string("Stored to QSettings"), "green")
     }
 
     // Loads the stored image from BinaryStorage
@@ -197,12 +197,12 @@ Rectangle {
             var storedImage = BinaryStorage.fileAsString(imageFileName)
             if (storedImage && storedImage !== "") {
                 img.source = storedImage
-                setStatus(qsTr("Loaded from QSettings"), "green")
+                setStatus(Localization.string("Loaded from QSettings"), "green")
             } else {
-                setStatus(qsTr("No stored image found"), "orange")
+                setStatus(Localization.string("No stored image found"), "orange")
             }
         } else {
-            setStatus(qsTr("No stored image found"), "orange")
+            setStatus(Localization.string("No stored image found"), "orange")
         }
     }
 
@@ -210,7 +210,7 @@ Rectangle {
     function clearStorage() {
         BinaryStorage.removeFile(imageFileName)
         img.source = ""
-        setStatus(qsTr("QSettings cleared"), "green")
+        setStatus(Localization.string("QSettings cleared"), "green")
     }
 
     ToMainPageButton {
