@@ -13,7 +13,7 @@ Rectangle {
 
     MediaPlayer {
         id: mediaPlayer
-        source: "qrc:/sound.ogg"
+        source: "qrc:/resources/audio/sound.ogg"
         audioOutput: AudioOutput {}
         loops: MediaPlayer.Infinite
     }
@@ -37,7 +37,7 @@ Rectangle {
     }
 
     Label {
-        text: Localization.string("Does not work in WebAssembly with Qt 6.9!")
+        text: Localization.string("Does not work in WebAssembly with Qt 6.10!")
         anchors.top: subHeaderLabel.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.margins: 20

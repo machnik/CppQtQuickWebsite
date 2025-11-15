@@ -30,7 +30,7 @@ Rectangle {
     }
 
     Label {
-        text: Localization.string("Does not work in WebAssembly with Qt 6.9!")
+        text: Localization.string("Does not work in WebAssembly with Qt 6.10!")
         anchors.top: subHeaderLabel.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.margins: 20
@@ -43,7 +43,7 @@ Rectangle {
         width: parent.width * 0.8
         height: parent.height * 0.6
         anchors.centerIn: parent
-        source: "qrc:/earth.mp4"
+        source: "qrc:/resources/videos/earth.mp4"
         autoPlay: false
         fillMode: VideoOutput.PreserveAspectFit
     }
