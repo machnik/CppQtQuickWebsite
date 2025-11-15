@@ -57,7 +57,7 @@ QString Backend::textResource(const QString &resourceName) const
 
 QString Backend::version() const
 {
-    return "1.1.0";
+    return "1.1.1";
 }
 
 void Backend::setMessage(const QString &message)

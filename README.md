@@ -15,7 +15,7 @@ You can use this codebase as a template for your own projects.
 - **C++ Compiler:**
   - for 🐧 Linux: **GCC**
   - for 🪟︎ Windows: **LLVM-MinGW**
-  - for 🌐 WebAssembly: **[emscripten](https://emscripten.org/docs/getting_started/downloads.html)** version `3.1.70`
+  - for 🌐 WebAssembly: **[emscripten](https://emscripten.org/docs/getting_started/downloads.html)** version `4.0.7`
 - **[CMake](https://cmake.org/download/)** version >= `3.30.2` (add to *PATH*)
 - Build system:
   - on 🐧 Linux: **Make**
@@ -49,8 +49,8 @@ export QT_BIN_WASM="$HOME/Qt/6.10.0/wasm_multithread"
 
 git clone https://github.com/emscripten-core/emsdk.git
 cd emsdk
-./emsdk install 3.1.70
-./emsdk activate 3.1.70
+./emsdk install 4.0.7
+./emsdk activate --permanent 4.0.7
 source emsdk_env.sh
 ```
 
@@ -86,13 +86,8 @@ setx QT_PLUGIN_PATH "%QT_BIN_WASM%\plugins"
 
 git clone https://github.com/emscripten-core/emsdk.git
 cd emsdk
-emsdk.bat install 3.1.70
-emsdk.bat activate --permanent 3.1.70
-```
-
-Instead of using the `--permanent` option you can run this script each time you open a new shell instance, to set up a temporary set of environment variables:
-```bat
-emsdk_env.bat
+emsdk.bat install 4.0.7
+emsdk.bat activate --permanent 4.0.7
 ```
 
 ## 🌐 Build for WebAssembly
