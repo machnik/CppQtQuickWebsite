@@ -34,3 +34,6 @@
 ## [1.1.0] - 2025-07-22
 - Implemented example of QSettings used for binary data cache (LocalStorage/IndexedDB)
 - Merged Color Dialog example into QSysInfo subpage.
+
+## [1.1.1] - 2025-11-15
+- Update: Qt 6.10.0.
