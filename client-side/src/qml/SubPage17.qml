@@ -11,11 +11,22 @@ Rectangle {
     readonly property string headerText: (Localization.string("SubPage %1")).arg(17)
     readonly property string subHeaderText: Localization.string("Music playback")
 
+    property bool isReady: false
+
     MediaPlayer {
         id: mediaPlayer
-        source: "qrc:/resources/audio/sound.ogg"
         audioOutput: AudioOutput {}
         loops: MediaPlayer.Infinite
+    }
+
+    Component.onCompleted: {
+        if (BrowserJS.browserEnvironment) {
+            var b64 = Base64Converter.convertFileToBase64(":/resources/audio/sound.ogg")
+            mediaPlayer.source = "data:audio/ogg;base64," + b64
+        } else {
+            mediaPlayer.source = "qrc:/resources/audio/sound.ogg"
+        }
+        isReady = true
     }
 
     color: "transparent"
@@ -36,15 +47,6 @@ Rectangle {
         font.pointSize: ZoomSettings.bigFontSize
     }
 
-    Label {
-        text: Localization.string("Does not work in WebAssembly with Qt 6.11!")
-        anchors.top: subHeaderLabel.bottom
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.margins: 20
-        font.pointSize: ZoomSettings.bigFontSize
-        color: "red"
-    }
-
     Button {
         id: playMusic
         text: Localization.string("Click to Play Music")
@@ -52,7 +54,7 @@ Rectangle {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: stopMusic.top
         anchors.bottomMargin: 20
-        enabled: mediaPlayer.playbackState !== MediaPlayer.PlayingState
+        enabled: isReady && mediaPlayer.playbackState !== MediaPlayer.PlayingState
         onClicked: {
             mediaPlayer.play()
         }
@@ -63,7 +65,7 @@ Rectangle {
         text: Localization.string("Click to Stop Music")
         font.pointSize: ZoomSettings.hugeFontSize
         anchors.centerIn: parent
-        enabled: mediaPlayer.playbackState === MediaPlayer.PlayingState
+        enabled: isReady && mediaPlayer.playbackState === MediaPlayer.PlayingState
         onClicked: {
             mediaPlayer.stop()
         }

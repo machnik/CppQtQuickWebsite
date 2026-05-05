@@ -11,6 +11,8 @@ Rectangle {
     readonly property string headerText: (Localization.string("SubPage %1")).arg(24)
     readonly property string subHeaderText: Localization.string("Video playback.")
 
+    property bool isReady: false
+
     color: "transparent"
 
     Label {
@@ -29,23 +31,25 @@ Rectangle {
         font.pointSize: ZoomSettings.bigFontSize
     }
 
-    Label {
-        text: Localization.string("Does not work in WebAssembly with Qt 6.11!")
-        anchors.top: subHeaderLabel.bottom
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.margins: 20
-        font.pointSize: ZoomSettings.bigFontSize
-        color: "red"
-    }
-
     Video {
         id: videoPlayer
         width: parent.width * 0.8
         height: parent.height * 0.6
-        anchors.centerIn: parent
-        source: "qrc:/resources/videos/earth.mp4"
+        anchors.top: subHeaderLabel.bottom
+        anchors.topMargin: 20
+        anchors.horizontalCenter: parent.horizontalCenter
         autoPlay: false
         fillMode: VideoOutput.PreserveAspectFit
+    }
+
+    Component.onCompleted: {
+        if (BrowserJS.browserEnvironment) {
+            var b64 = Base64Converter.convertFileToBase64(":/resources/videos/earth.mp4")
+            videoPlayer.source = "data:video/mp4;base64," + b64
+        } else {
+            videoPlayer.source = "qrc:/resources/videos/earth.mp4"
+        }
+        isReady = true
     }
 
     Row {
@@ -55,19 +59,19 @@ Rectangle {
 
         Button {
             icon.source: "qrc:/resources/icons/play.svg"
-            enabled: videoPlayer.playbackState !== MediaPlayer.PlayingState
+            enabled: isReady && videoPlayer.playbackState !== MediaPlayer.PlayingState
             onClicked: videoPlayer.play()
         }
 
         Button {
             icon.source: "qrc:/resources/icons/pause.svg"
-            enabled: videoPlayer.playbackState === MediaPlayer.PlayingState
+            enabled: isReady && videoPlayer.playbackState === MediaPlayer.PlayingState
             onClicked: videoPlayer.pause()
         }
 
         Button {
             icon.source: "qrc:/resources/icons/stop.svg"
-            enabled: videoPlayer.playbackState !== MediaPlayer.StoppedState
+            enabled: isReady && videoPlayer.playbackState !== MediaPlayer.StoppedState
             onClicked: videoPlayer.stop()
         }
     }
