@@ -37,6 +37,8 @@ private slots:
     void onDownloadError(QNetworkReply::NetworkError error);
 
 private:
+    void clearReply(QNetworkReply *reply);
+
     QNetworkAccessManager *m_networkManager;
     QNetworkReply *m_currentReply;
     

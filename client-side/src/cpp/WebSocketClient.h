@@ -1,6 +1,7 @@
 #ifndef WEBSOCKETCLIENT_H
 #define WEBSOCKETCLIENT_H
 
+#include <QtNetwork/QAbstractSocket>
 #include <QtWebSockets/QWebSocket>
 
 #include <QtQml>
@@ -29,8 +30,12 @@ signals:
     void clientRunningChanged();
 private slots:
     void onConnected();
+    void onDisconnected();
+    void onErrorOccurred(QAbstractSocket::SocketError error);
     void onTextMessageReceived(const QString & message);
 private:
+    void setClientRunning(bool isRunning);
+
     QWebSocket m_webSocket;
     bool m_isClientRunning;
 };

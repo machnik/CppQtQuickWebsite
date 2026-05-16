@@ -8,7 +8,7 @@ import "qrc:/qml/singletons/"
 import CppQtQuickWebsite.CppObjects
 
 Window {
-    visible: true
+    visible: false
     width: 600
     height: 300
     title: Localization.string("Example Window")
@@ -19,6 +19,14 @@ Window {
            Qt.WindowMinMaxButtonsHint |
            Qt.WindowCloseButtonHint |
            Qt.WindowResizeBorderHint
+
+    // This window is created on demand from a Component, so closing it should
+    // also release the QML object instead of leaving an unused instance alive.
+    onVisibleChanged: {
+        if (!visible) {
+            destroy();
+        }
+    }
 
     Rectangle {
         anchors.fill: parent

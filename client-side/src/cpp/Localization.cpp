@@ -1,18 +1,20 @@
 #include "Localization.h"
 
+#include <QtCore/QDebug>
 #include <QtCore/QFile>
 
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonDocument>
 #include <QtCore/QJsonObject>
+#include <QtCore/QJsonParseError>
 
 #include <QtCore/QSettings>
 
 Localization* Localization::s_instance = nullptr;
 
 Localization::Localization(QObject *parent)
-    : QObject(parent)
-    , m_currentLanguage(QLocale::English)
+    : QObject{parent}
+    , m_currentLanguage{QLocale::English}
 {
     s_instance = this;
 }
@@ -30,27 +32,38 @@ void Localization::setLanguage(QLocale::Language language)
 
         m_localStrings.clear();
 
-        QString languageCode = QLocale(language).name();
+        auto languageCode{QLocale{language}.name()};
 
-        QFile jsonFile{ QString(":/resources/translation/local_strings_%1.json").arg(languageCode) };
+        QFile jsonFile{QString(":/resources/translation/local_strings_%1.json").arg(languageCode)};
 
-        if (jsonFile.open(QIODevice::ReadOnly)) {
-            QJsonDocument jsonDocument = QJsonDocument::fromJson(jsonFile.readAll());
-            QJsonObject translations = jsonDocument.object();
-
-            for (auto it = translations.begin(); it != translations.end(); ++it) {
-                m_localStrings[it.key()] = it.value().toString();
-            }
-        
+        if (!jsonFile.open(QIODevice::ReadOnly)) {
+            qWarning() << "Could not open translation file:" << jsonFile.fileName();
             emit languageChanged();
+            return;
         }
+
+        QJsonParseError parseError;
+        const auto jsonDocument{QJsonDocument::fromJson(jsonFile.readAll(), &parseError)};
+        if (parseError.error != QJsonParseError::NoError || !jsonDocument.isObject()) {
+            qWarning() << "Could not parse translation file:" << jsonFile.fileName() << parseError.errorString();
+            emit languageChanged();
+            return;
+        }
+
+        const auto translations{jsonDocument.object()};
+
+        for (auto it{translations.begin()}; it != translations.end(); ++it) {
+            m_localStrings[it.key()] = it.value().toString();
+        }
+
+        emit languageChanged();
     }
 }
 
 QString Localization::string(const QString & key) const
 {
-    auto it = m_localStrings.find(key);
-    auto translation = (it != m_localStrings.end()) ? it->second : key;
+    auto it{m_localStrings.find(key)};
+    const auto translation{(it != m_localStrings.end()) ? it->second : key};
     return translation;
 }
 

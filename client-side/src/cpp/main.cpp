@@ -14,13 +14,13 @@
 int main(int argc, char *argv[])
 {
 //  If the Widgets module is not needed, you can use QGuiApplication instead of QApplication:
-    QApplication app(argc, argv);
+    QApplication app{argc, argv};
 
     // Set the Material UI theme to Light:
     qputenv("QT_QUICK_CONTROLS_MATERIAL_THEME", "Light");
     QQuickStyle::setStyle("Material");
 
-    QQmlApplicationEngine engine;
+    QQmlApplicationEngine engine{};
     engine.load(":/qml/main.qml");
 
     return app.exec();

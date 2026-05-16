@@ -43,3 +43,6 @@
 
 ## [1.1.3] - 2026-05-05
 - Update: Qt 6.11.0.
+
+## [1.1.4] - 2026-05-16
+- Improved project quality and consistency.

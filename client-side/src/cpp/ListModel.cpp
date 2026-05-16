@@ -1,6 +1,7 @@
 #include "ListModel.h"
 
-ListModel::ListModel(QObject *parent) : QAbstractListModel(parent)
+ListModel::ListModel(QObject *parent)
+    : QAbstractListModel{parent}
 {
 }
 
@@ -13,20 +14,20 @@ int ListModel::rowCount(const QModelIndex &parent) const
 QVariant ListModel::data(const QModelIndex &index, int role) const
 {
     if (index.row() < 0 || index.row() >= m_items.count()) {
-        return QVariant();
+        return QVariant{};
     }
 
-    const QString &item = m_items[index.row()];
+    const QString &item{m_items[index.row()]};
     if (role == Qt::DisplayRole) {
         return item;
     }
 
-    return QVariant();
+    return QVariant{};
 }
 
 void ListModel::addItem(const QString &item)
 {
-    beginInsertRows(QModelIndex(), rowCount(), rowCount());
+    beginInsertRows(QModelIndex{}, rowCount(), rowCount());
     m_items << item;
     endInsertRows();
 }
@@ -37,7 +38,7 @@ void ListModel::removeItem(int index)
         return;
     }
 
-    beginRemoveRows(QModelIndex(), index, index);
+    beginRemoveRows(QModelIndex{}, index, index);
     m_items.removeAt(index);
     endRemoveRows();
 }
@@ -48,7 +49,7 @@ void ListModel::clear()
         return;
     }
 
-    beginRemoveRows(QModelIndex(), 0, m_items.count() - 1);
+    beginRemoveRows(QModelIndex{}, 0, m_items.count() - 1);
     m_items.clear();
     endRemoveRows();
 }

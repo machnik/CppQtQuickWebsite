@@ -1,20 +1,27 @@
 #include "Backend.h"
 
 #include <QtCore/QFile>
+#include <QtCore/QDebug>
 #include <QtCore/QTextStream>
 #include <QtQml/QQmlApplicationEngine>
 #include <QtQml/QQmlContext>
 
 #include "Localization.h"
 
-Backend::Backend(QObject *parent) : QObject(parent), m_listModel(new ListModel(this))
+#ifndef CPP_QT_QUICK_WEBSITE_VERSION
+#define CPP_QT_QUICK_WEBSITE_VERSION "1.1.4"
+#endif
+
+Backend::Backend(QObject *parent)
+    : QObject{parent}
+    , m_listModel{new ListModel{this}}
 {
     resetBackend();
 }
 
 void Backend::reloadQML()
 {
-    auto appEngine = qobject_cast<QQmlApplicationEngine*>(QQmlEngine::contextForObject(this)->engine());
+    auto appEngine{qobject_cast<QQmlApplicationEngine *>(QQmlEngine::contextForObject(this)->engine())};
     if (appEngine) {
         appEngine->clearComponentCache();
         appEngine->load(":/qml/main.qml");
@@ -46,9 +53,9 @@ QString Backend::textResource(const QString &resourceName) const
 {
     QString text;
 
-    QFile file(":/resources/text/" + resourceName);
+    QFile file{":/resources/text/" + resourceName};
     if (file.open(QIODevice::ReadOnly)) {
-        QTextStream in(&file);
+        QTextStream in{&file};
         text = in.readAll();
     }
 
@@ -57,7 +64,7 @@ QString Backend::textResource(const QString &resourceName) const
 
 QString Backend::version() const
 {
-    return "1.1.3";
+    return QString::fromLatin1(CPP_QT_QUICK_WEBSITE_VERSION);
 }
 
 void Backend::setMessage(const QString &message)
@@ -70,7 +77,17 @@ void Backend::setMessage(const QString &message)
     emit messageChanged();
 }
 
-void Backend::resetInputField(QObject* textField)
+void Backend::resetInputField(QObject *textField)
 {
-    QQmlProperty::write(textField, "text", Localization::strCpp("Text set using C++."));
+    if (!textField) {
+        return;
+    }
+
+    QQmlProperty textProperty{textField, QStringLiteral("text")};
+    if (!textProperty.isValid() || !textProperty.isWritable()) {
+        qWarning() << "Backend::resetInputField expected a writable 'text' property on" << textField;
+        return;
+    }
+
+    textProperty.write(Localization::strCpp("Text set using C++."));
 }

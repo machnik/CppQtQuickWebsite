@@ -4,10 +4,10 @@
 #include <QtCore/QDebug>
 
 // Use a specific group to organize all file data
-static const QString FILES_GROUP = QStringLiteral("files");
+static const auto FILES_GROUP{QStringLiteral("files")};
 
 BinaryStorage::BinaryStorage(QObject *parent)
-    : QObject(parent)
+    : QObject{parent}
     , m_currentFormat{QSettings::WebLocalStorageFormat}  // Default to WebLocalStorageFormat
     , m_settings {
         std::make_unique<QSettings>(
@@ -24,11 +24,11 @@ BinaryStorage::BinaryStorage(QObject *parent)
 QByteArray BinaryStorage::file(const QString &fileName) const
 {
     if (fileName.isEmpty()) {
-        return QByteArray();
+        return QByteArray{};
     }
 
     m_settings->beginGroup(FILES_GROUP);
-    QByteArray data = m_settings->value(fileName).toByteArray();
+    auto data{m_settings->value(fileName).toByteArray()};
     m_settings->endGroup();
 
     return data;
@@ -67,7 +67,7 @@ bool BinaryStorage::hasFile(const QString &fileName) const
     }
 
     m_settings->beginGroup(FILES_GROUP);
-    bool exists = m_settings->contains(fileName);
+    auto exists{m_settings->contains(fileName)};
     m_settings->endGroup();
 
     return exists;
@@ -85,7 +85,7 @@ void BinaryStorage::clearFiles()
 QStringList BinaryStorage::fileNames() const
 {
     m_settings->beginGroup(FILES_GROUP);
-    QStringList names = m_settings->childKeys();
+    auto names{m_settings->childKeys()};
     m_settings->endGroup();
 
     return names;
@@ -97,7 +97,7 @@ qint64 BinaryStorage::fileSize(const QString &fileName) const
         return -1;
     }
 
-    QByteArray data = file(fileName);
+    auto data{file(fileName)};
     return data.size();
 }
 
@@ -108,7 +108,7 @@ bool BinaryStorage::isEmpty() const
 
 QString BinaryStorage::fileAsString(const QString &fileName) const
 {
-    QByteArray data = file(fileName);
+    auto data{file(fileName)};
     return QString::fromUtf8(data);
 }
 

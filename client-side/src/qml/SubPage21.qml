@@ -13,8 +13,25 @@ Rectangle {
     readonly property string avatarPlaceholder: "qrc:/resources/images/avatar_placeholder.png"
 
     property int bigFontSize: ZoomSettings.bigFontSize
+    property int regularFontSize: ZoomSettings.regularFontSize
+    property var currentRequest: null
+    property bool requestInProgress: false
+    property string statusText: ""
+    property color statusColor: "black"
 
     color: "transparent"
+
+    function setStatus(text, color) {
+        statusText = text
+        statusColor = color
+    }
+
+    Component.onDestruction: {
+        if (currentRequest) {
+            currentRequest.abort()
+            currentRequest = null
+        }
+    }
 
     Label {
         id: headerLabel
@@ -56,33 +73,83 @@ Rectangle {
             id: avatarImage
             anchors.fill: parent
             source: avatarPlaceholder
+            fillMode: Image.PreserveAspectFit
         }
     }
 
     Button {
-        text: Localization.string("New Avatar")
+        text: requestInProgress ? Localization.string("Loading avatar...") : Localization.string("New Avatar")
         font.pointSize: bigFontSize
+        enabled: !requestInProgress
         anchors.top: avatarArea.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.margins: 10
         onClicked: {
+            requestInProgress = true
+            setStatus(Localization.string("Loading avatar..."), "blue")
+
+            // This page intentionally uses the browser networking API directly
+            // so learners can compare a JS-side fetch with the Qt networking
+            // approach demonstrated on other pages.
             var xhr = new XMLHttpRequest();
             var url =
                 "https://api.dicebear.com/8.x/" + styleComboBox.currentText +
                 "/svg?seed=" + Math.random();
+            currentRequest = xhr
+            xhr.timeout = 10000;
             xhr.open('GET', url, true);
             xhr.onreadystatechange = function() {
+                if (currentRequest !== xhr) {
+                    return
+                }
+
                 if (xhr.readyState === XMLHttpRequest.DONE) {
+                    currentRequest = null
+                    requestInProgress = false
+
                     if (xhr.status === 200) {
-                        avatarImage.source = url;
+                        avatarImage.source = url
+                        setStatus(Localization.string("Avatar loaded"), "green")
                     } else {
-                        console.log("Error: " + xhr.status);
-                        avatarImage.source = avatarPlaceholder;
+                        avatarImage.source = avatarPlaceholder
+                        setStatus(Localization.string("Avatar request failed: HTTP %1").arg(xhr.status), "red")
                     }
                 }
             }
+            xhr.onerror = function() {
+                if (currentRequest !== xhr) {
+                    return
+                }
+
+                currentRequest = null
+                requestInProgress = false
+                avatarImage.source = avatarPlaceholder
+                setStatus(Localization.string("Avatar request failed."), "red")
+            }
+            xhr.ontimeout = function() {
+                if (currentRequest !== xhr) {
+                    return
+                }
+
+                currentRequest = null
+                requestInProgress = false
+                avatarImage.source = avatarPlaceholder
+                setStatus(Localization.string("Avatar request failed."), "red")
+            }
             xhr.send();
         }
+    }
+
+    Label {
+        width: parent.width * 0.7
+        anchors.top: avatarArea.bottom
+        anchors.topMargin: 70
+        anchors.horizontalCenter: parent.horizontalCenter
+        horizontalAlignment: Text.AlignHCenter
+        wrapMode: Text.WordWrap
+        text: statusText
+        color: statusColor
+        font.pointSize: regularFontSize
     }
 
     ToMainPageButton {

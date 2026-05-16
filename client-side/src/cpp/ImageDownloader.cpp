@@ -1,6 +1,5 @@
 #include "ImageDownloader.h"
 
-#include <QtCore/QMimeDatabase>
 #include <QtCore/QUrl>
 
 ImageDownloader* ImageDownloader::s_instance = nullptr;
@@ -21,12 +20,13 @@ void ImageDownloader::downloadImage(const QString &url)
     }
 
     if (m_currentReply) {
-        m_currentReply->abort();
-        m_currentReply->deleteLater();
+        auto previousReply{m_currentReply};
         m_currentReply = nullptr;
+        previousReply->abort();
+        previousReply->deleteLater();
     }
 
-    QUrl downloadUrl { url };
+    QUrl downloadUrl{url};
     if (!downloadUrl.isValid()) {
         emit downloadError("Invalid URL: " + url);
         return;
@@ -34,7 +34,7 @@ void ImageDownloader::downloadImage(const QString &url)
 
     emit downloadStarted();
 
-    QNetworkRequest request(downloadUrl);
+    QNetworkRequest request{downloadUrl};
     request.setAttribute(QNetworkRequest::RedirectPolicyAttribute, QNetworkRequest::NoLessSafeRedirectPolicy);
 
     m_currentReply = m_networkManager->get(request);
@@ -47,36 +47,39 @@ void ImageDownloader::downloadImage(const QString &url)
 
 void ImageDownloader::onDownloadFinished()
 {
-    if (!m_currentReply) {
+    auto reply{qobject_cast<QNetworkReply *>(sender())};
+    if (!reply || reply != m_currentReply) {
         return;
     }
-    
-    if (m_currentReply->error() == QNetworkReply::NoError) {
-        QByteArray imageData = m_currentReply->readAll();
-        QString contentType = m_currentReply->header(QNetworkRequest::ContentTypeHeader).toString();
-        
-        if (imageData.isEmpty()) {
-            emit downloadError("Downloaded data is empty");
-        } else if (!contentType.startsWith("image/")) {
-            // Guess MIME type from URL if Content-Type header is not reliable
-            QString url = m_currentReply->url().toString();
-            contentType = guessMimeType(url);
 
-            if (!contentType.startsWith("image/")) {
-                contentType = "image/jpeg";
-            }
-        }
-
-        QString dataUrl = convertToDataUrl(imageData, contentType);
-        emit downloadFinished(dataUrl);
+    if (reply->error() != QNetworkReply::NoError) {
+        clearReply(reply);
+        return;
     }
-    
-    m_currentReply->deleteLater();
-    m_currentReply = nullptr;
+
+    auto imageData{reply->readAll()};
+    if (imageData.isEmpty()) {
+        emit downloadError("Downloaded data is empty");
+        clearReply(reply);
+        return;
+    }
+
+    auto contentType{reply->header(QNetworkRequest::ContentTypeHeader).toString()};
+    if (!contentType.startsWith("image/")) {
+        contentType = guessMimeType(reply->url().toString());
+    }
+
+    emit downloadFinished(convertToDataUrl(imageData, contentType));
+    clearReply(reply);
 }
 
 void ImageDownloader::onDownloadProgress(qint64 bytesReceived, qint64 bytesTotal)
 {
+    auto reply{qobject_cast<QNetworkReply *>(sender())};
+    if (!reply || reply != m_currentReply) {
+        return;
+    }
+
     if (bytesTotal > 0) {
         emit downloadProgress(static_cast<int>(bytesReceived), static_cast<int>(bytesTotal));
     }
@@ -84,27 +87,28 @@ void ImageDownloader::onDownloadProgress(qint64 bytesReceived, qint64 bytesTotal
 
 void ImageDownloader::onDownloadError(QNetworkReply::NetworkError error)
 {
-    if (!m_currentReply) {
+    auto reply{qobject_cast<QNetworkReply *>(sender())};
+    if (!reply || reply != m_currentReply) {
         return;
     }
-    
-    QString errorString = m_currentReply->errorString();
+
+    Q_UNUSED(error)
+
+    auto errorString{reply->errorString()};
     emit downloadError("Network error: " + errorString);
-    
-    m_currentReply->deleteLater();
-    m_currentReply = nullptr;
+    clearReply(reply);
 }
 
 QString ImageDownloader::convertToDataUrl(const QByteArray &imageData, const QString &mimeType)
 {
-    QString base64Data = imageData.toBase64();
+    auto base64Data{imageData.toBase64()};
     return QString("data:%1;base64,%2").arg(mimeType, base64Data);
 }
 
 QString ImageDownloader::guessMimeType(const QString &url)
 {
     QUrl qurl(url);
-    QString path = qurl.path().toLower();
+    auto path{qurl.path().toLower()};
     
     if (path.endsWith(".jpg") || path.endsWith(".jpeg")) {
         return "image/jpeg";
@@ -122,3 +126,16 @@ QString ImageDownloader::guessMimeType(const QString &url)
     
     return "image/jpeg";
 }
+
+void ImageDownloader::clearReply(QNetworkReply *reply)
+{
+    if (!reply) {
+        return;
+    }
+
+    if (reply == m_currentReply) {
+        m_currentReply = nullptr;
+    }
+
+    reply->deleteLater();
+    }

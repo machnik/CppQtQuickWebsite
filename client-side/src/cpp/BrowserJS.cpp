@@ -36,12 +36,12 @@ int BrowserJS::runIntJS(const QString & code) {
 
 QString BrowserJS::runStringJS(const QString & code) {
 #ifdef Q_OS_WASM
-    char* result = emscripten_run_script_string(code.toLatin1().data());
-    QString qstr = QString::fromUtf8(result);
+    auto *result{emscripten_run_script_string(code.toLatin1().data())};
+    auto qstr{QString::fromUtf8(result)};
     free(result);
     return qstr;
 #else
-    return QString();
+    return QString{};
 #endif
 }
 

@@ -1,13 +1,13 @@
 #include "SystemInformation.h"
 
 SystemInformation::SystemInformation(QObject *parent)
-    : QObject(parent)
+    : QObject{parent}
 {
 }
 
 QString SystemInformation::bootUniqueId() const
 {
-    return QString(QSysInfo::bootUniqueId());
+    return QString{QSysInfo::bootUniqueId()};
 }
 
 QString SystemInformation::buildAbi() const
@@ -42,7 +42,7 @@ QString SystemInformation::machineHostName() const
 
 QString SystemInformation::machineUniqueId() const
 {
-    return QString(QSysInfo::machineUniqueId());
+    return QString{QSysInfo::machineUniqueId()};
 }
 
 QString SystemInformation::prettyProductName() const

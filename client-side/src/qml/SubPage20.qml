@@ -12,6 +12,15 @@ Rectangle {
 
     property int smallFontSize: ZoomSettings.smallFontSize
 
+    function parsedPort() {
+        return parseInt(portField.text, 10)
+    }
+
+    function hasValidPort() {
+        var port = parsedPort()
+        return !isNaN(port) && port >= 1 && port <= 65535
+    }
+
     function resetTextFields() {
         messageToSendField.text = ""
         receivedMessageField.text = ""
@@ -50,6 +59,9 @@ Rectangle {
         placeholderText: Localization.string("(enter port number here)")
         font.pointSize: smallFontSize
         readOnly: WebSocketClient.isClientRunning
+        inputMethodHints: Qt.ImhDigitsOnly
+        maximumLength: 5
+        validator: IntValidator { bottom: 1; top: 65535 }
         width: 250
         anchors.bottom: startButton.top
         anchors.horizontalCenter: parent.horizontalCenter
@@ -58,7 +70,7 @@ Rectangle {
 
     Button {
         id: startButton
-        text: WebSocketClient.isClientRunning ? "STOP" : "START"
+        text: WebSocketClient.isClientRunning ? Localization.string("STOP") : Localization.string("START")
         font.pointSize: smallFontSize
         checkable: true
         anchors.bottom: messageToSendField.top
@@ -69,7 +81,15 @@ Rectangle {
                 WebSocketClient.stopClient();
                 resetTextFields();
             } else {
-                WebSocketClient.startClient("ws://localhost:" + portField.text);
+                errorField.text = ""
+                receivedMessageField.text = ""
+
+                if (!hasValidPort()) {
+                    errorField.text = Localization.string("Please enter a valid port number between 1 and 65535.")
+                    return
+                }
+
+                WebSocketClient.startClient("ws://localhost:" + parsedPort());
             }
         }
     }
@@ -87,7 +107,7 @@ Rectangle {
         id: sendButton
         text: Localization.string("SEND")
         font.pointSize: smallFontSize
-        enabled: messageToSendField.text.length > 0
+        enabled: WebSocketClient.isClientRunning && messageToSendField.text.length > 0
         anchors.top: messageToSendField.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.margins: 10

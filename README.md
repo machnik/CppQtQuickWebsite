@@ -4,7 +4,7 @@
 
 This project demonstrates how to use **Qt** and **Emscripten** to create a web application using **C++** and **QML**, compile it to **WebAssembly**, and make it accessible on any device capable of running modern web browsers. The application features a graphical interface resembling typical interactive websites.
 
-The subpages (described in [SubPagesDescriptions.qml](client-side/src/qml/singletons/SubPagesDescriptions.qml)) showcase many functionalities offered by **Qt** that are available for **WebAssembly**.
+The 25 subpages (described in [SubPagesDescriptions.qml](client-side/src/qml/singletons/SubPagesDescriptions.qml)) showcase many functionalities offered by **Qt** that are available for **WebAssembly**.
 
 You can use this codebase as a template for your own projects.
 
@@ -16,10 +16,10 @@ You can use this codebase as a template for your own projects.
   - for 🐧 Linux: **GCC**
   - for 🪟︎ Windows: **LLVM-MinGW**
   - for 🌐 WebAssembly: **[emscripten](https://emscripten.org/docs/getting_started/downloads.html)** version `4.0.7`
-- **[CMake](https://cmake.org/download/)** version >= `3.30.2` (add to *PATH*)
+- **[CMake](https://cmake.org/download/)** version >= `3.29` (add to *PATH*)
 - Build system:
   - on 🐧 Linux: **Make**
-  - on 🪟︎ Windows: **[Ninja](https://github.com/ninja-build/ninja/releases)** version >= 1.12.1 (add to *PATH*)
+  - on 🪟︎ Windows: a CMake-supported generator such as **[Ninja](https://github.com/ninja-build/ninja/releases)** version >= 1.12.1 or **MinGW Makefiles**
 - **[Qt](https://www.qt.io/download-open-source)** version `6.11.0` with pre-built binaries for:
   - for 🐧 Linux: **GCC**
   - for 🪟︎ Windows: **LLVM-MinGW**

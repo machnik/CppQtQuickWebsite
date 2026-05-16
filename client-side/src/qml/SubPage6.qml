@@ -16,7 +16,8 @@ Rectangle {
     property int regularFontSize: ZoomSettings.regularFontSize
     property int smallFontSize: ZoomSettings.smallFontSize
 
-    readonly property string exampleJSCode: "1 + 1";
+    readonly property string exampleJSCode: "1 + 1"
+    readonly property string browserInterpreterUnavailableText: Localization.string("Browser JS interpreter is not available.")
 
     color: "transparent"
 
@@ -98,8 +99,12 @@ Rectangle {
                             text: Localization.string("QT JS ENGINE")
                             font.pointSize: bigFontSize
                             onClicked: {
-                                var result = eval(jsExpressionEditor.text);
-                                resultValueLabel.text = result;
+                                try {
+                                    var result = eval(jsExpressionEditor.text)
+                                    resultValueLabel.text = String(result)
+                                } catch (error) {
+                                    resultValueLabel.text = Localization.string("Error: %1").arg(String(error))
+                                }
                             }
                         }
                         Button {
@@ -108,10 +113,14 @@ Rectangle {
                             font.pointSize: bigFontSize
                             onClicked: {
                                 if (BrowserJS.browserEnvironment) {
-                                    var result = BrowserJS.runIntJS(jsExpressionEditor.text);
-                                    resultValueLabel.text = result;
+                                    try {
+                                        var result = BrowserJS.runIntJS(jsExpressionEditor.text)
+                                        resultValueLabel.text = String(result)
+                                    } catch (error) {
+                                        resultValueLabel.text = Localization.string("Error: %1").arg(String(error))
+                                    }
                                 } else {
-                                    resultValueLabel.text = "Browser JS interpreter is not available.";
+                                    resultValueLabel.text = browserInterpreterUnavailableText
                                 }
                             }
                         }

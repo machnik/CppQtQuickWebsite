@@ -12,6 +12,15 @@ Rectangle {
 
     property int smallFontSize: ZoomSettings.smallFontSize
 
+    function parsedPort() {
+        return parseInt(portField.text, 10)
+    }
+
+    function hasValidPort() {
+        var port = parsedPort()
+        return !isNaN(port) && port >= 1 && port <= 65535
+    }
+
     function resetTextFields() {
         bouncedMessageField.text = "";
         errorField.text = "";
@@ -58,6 +67,9 @@ Rectangle {
         placeholderText: Localization.string("(enter port number here)")
         font.pointSize: smallFontSize
         readOnly: WebSocketServer.isServerRunning
+        inputMethodHints: Qt.ImhDigitsOnly
+        maximumLength: 5
+        validator: IntValidator { bottom: 1; top: 65535 }
         width: 250
         anchors.bottom: startButton.top
         anchors.horizontalCenter: parent.horizontalCenter
@@ -66,7 +78,7 @@ Rectangle {
 
     Button {
         id: startButton
-        text: WebSocketServer.isServerRunning ? "STOP" : "START"
+        text: WebSocketServer.isServerRunning ? Localization.string("STOP") : Localization.string("START")
         font.pointSize: smallFontSize
         checkable: true
         anchors.bottom: bouncedMessageField.top
@@ -77,7 +89,15 @@ Rectangle {
                 WebSocketServer.stopServer();
                 resetTextFields();
             } else {
-                WebSocketServer.startServer(parseInt(portField.text));
+                errorField.text = "";
+                bouncedMessageField.text = "";
+
+                if (!hasValidPort()) {
+                    errorField.text = Localization.string("Please enter a valid port number between 1 and 65535.");
+                    return;
+                }
+
+                WebSocketServer.startServer(parsedPort());
             }
         }
     }

@@ -1,20 +1,24 @@
 #include "Base64Converter.h"
 
+#include <QtCore/QDebug>
 #include <QtCore/QFile>
-#include <QtCore/QTextStream>
 
-Base64Converter::Base64Converter(QObject *parent) : QObject(parent)
+Base64Converter::Base64Converter(QObject *parent)
+    : QObject{parent}
 {
 }
 
 QString Base64Converter::convertFileToBase64(const QString &filePath)
 {
-    QFile file {filePath};
+    QFile file{filePath};
     QString base64String;
 
-    if (file.open(QIODevice::ReadOnly)) {
-        base64String = QString(file.readAll().toBase64());
+    if (!file.open(QIODevice::ReadOnly)) {
+        qWarning() << "Base64Converter could not open file:" << filePath;
+        return base64String;
     }
+
+    base64String = QString{file.readAll().toBase64()};
 
     return base64String;
 }

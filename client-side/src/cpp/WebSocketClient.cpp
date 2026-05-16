@@ -4,30 +4,39 @@
 
 #include "Localization.h"
 
-WebSocketClient::WebSocketClient(QObject *parent) :
-    QObject(parent),
-    m_isClientRunning(false)
+WebSocketClient::WebSocketClient(QObject *parent)
+    : QObject{parent}
+    , m_isClientRunning{false}
 {
     connect(&m_webSocket, &QWebSocket::connected, this, &WebSocketClient::onConnected);
+    connect(&m_webSocket, &QWebSocket::disconnected, this, &WebSocketClient::onDisconnected);
+    connect(&m_webSocket, &QWebSocket::errorOccurred, this, &WebSocketClient::onErrorOccurred);
     connect(&m_webSocket, &QWebSocket::textMessageReceived, this, &WebSocketClient::onTextMessageReceived);
 }
 
 void WebSocketClient::startClient(const QString & url)
 {
-    m_webSocket.open(QUrl(url));
-    if (m_webSocket.error() != QAbstractSocket::SocketError::UnknownSocketError) {
-        emit errorOccurred(m_webSocket.errorString());
-    } else {
-        m_isClientRunning = true;
-        emit clientRunningChanged();
+    const QUrl webSocketUrl{url};
+    if (!webSocketUrl.isValid() || webSocketUrl.scheme().isEmpty() || webSocketUrl.host().isEmpty()
+            || webSocketUrl.port() < 1 || webSocketUrl.port() > 65535) {
+        emit errorOccurred(Localization::strCpp("Please enter a valid port number between 1 and 65535."));
+        return;
     }
+
+    if (m_webSocket.state() != QAbstractSocket::UnconnectedState) {
+        m_webSocket.close();
+    }
+
+    m_webSocket.open(webSocketUrl);
 }
 
 void WebSocketClient::stopClient()
 {
-    m_webSocket.close();
-    m_isClientRunning = false;
-    emit clientRunningChanged();
+    if (m_webSocket.state() != QAbstractSocket::UnconnectedState) {
+        m_webSocket.close();
+    }
+
+    setClientRunning(false);
 }
 
 bool WebSocketClient::isClientRunning() const
@@ -37,15 +46,47 @@ bool WebSocketClient::isClientRunning() const
 
 void WebSocketClient::sendMessage(const QString & message)
 {
+    if (!m_isClientRunning) {
+        emit errorOccurred(Localization::strCpp("Connect to a server before sending a message."));
+        return;
+    }
+
     m_webSocket.sendTextMessage(message);
 }
 
 void WebSocketClient::onConnected()
 {
+    setClientRunning(true);
     m_webSocket.sendTextMessage(Localization::strCpp("[server is running]"));
+}
+
+void WebSocketClient::onDisconnected()
+{
+    setClientRunning(false);
+}
+
+void WebSocketClient::onErrorOccurred(QAbstractSocket::SocketError error)
+{
+    Q_UNUSED(error)
+
+    if (m_webSocket.state() == QAbstractSocket::UnconnectedState) {
+        setClientRunning(false);
+    }
+
+    emit errorOccurred(m_webSocket.errorString());
 }
 
 void WebSocketClient::onTextMessageReceived(const QString & message)
 {
     emit messageReceived(message);
+}
+
+void WebSocketClient::setClientRunning(bool isRunning)
+{
+    if (m_isClientRunning == isRunning) {
+        return;
+    }
+
+    m_isClientRunning = isRunning;
+    emit clientRunningChanged();
 }

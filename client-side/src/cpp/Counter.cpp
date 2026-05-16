@@ -1,6 +1,8 @@
 #include "Counter.h"
 
-Counter::Counter(QObject *parent) : QObject(parent), m_count(0)
+Counter::Counter(QObject *parent)
+    : QObject{parent}
+    , m_count{0}
 {
 }
 

@@ -38,8 +38,11 @@ Rectangle {
         anchors.centerIn: parent
         onClicked: {
             var dialogMessage = dialogMessageComponent.createObject(parent.parent);
+            if (!dialogMessage) {
+                return;
+            }
             dialogMessage.anchors.centerIn = parent.parent;
-            dialogMessage.visible = true;
+            dialogMessage.open();
         }
     }
 

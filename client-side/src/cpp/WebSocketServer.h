@@ -1,9 +1,12 @@
 #ifndef WEBSOCKETSERVER_H
 #define WEBSOCKETSERVER_H
 
+#include <QtCore/QList>
 #include <QtWebSockets/QWebSocketServer>
 
 #include <QtQml>
+
+class QWebSocket;
 
 /*
     A simple WebSocket server that can be used in QML.
@@ -33,7 +36,10 @@ private slots:
     void processTextMessage(const QString & message);
     void socketDisconnected();
 private:
+    void setServerRunning(bool isRunning);
+
     QWebSocketServer * m_webSocketServer;
+    QList<QWebSocket *> m_clients;
     bool m_isServerRunning;
 };
 

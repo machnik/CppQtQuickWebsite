@@ -11,7 +11,41 @@ Rectangle {
     readonly property string subHeaderText: Localization.string("Music playback using the browser's Web Audio API.")
 
     property string base64Audio: ""
+    property bool audioPlaybackSupported: false
+    property bool audioLoadFailed: false
     property bool isAudioLoaded: false
+    property bool audioSessionActive: false
+    readonly property string audioStateKey: "qmlAudioState_" + Math.round(Math.random() * 1000000)
+
+    function stopBrowserAudio() {
+        if (!BrowserJS.browserEnvironment) {
+            return
+        }
+
+        BrowserJS.runVoidJS(`
+            (function() {
+                var stateKey = '${audioStateKey}';
+                var state = window[stateKey];
+                if (!state) {
+                    return;
+                }
+
+                if (state.source) {
+                    try {
+                        state.source.stop(0);
+                    } catch (error) {
+                        console.debug('Audio source already stopped.', error);
+                    }
+                }
+
+                if (state.audioContext && state.audioContext.state !== 'closed') {
+                    state.audioContext.close();
+                }
+
+                delete window[stateKey];
+            })();
+        `)
+    }
 
     Component.onCompleted: {
         // Data embedded within the application with the Qt resource system
@@ -21,16 +55,20 @@ Rectangle {
         // Another idea worth considering would be to use the virtual file system
         // provided by Emscripten.
         if (BrowserJS.browserEnvironment) {
+            audioPlaybackSupported = BrowserJS.runIntJS("(window.AudioContext || window.webkitAudioContext) ? 1 : 0") === 1
             base64Audio = Base64Converter.convertFileToBase64(":/resources/audio/sound.ogg")
-            isAudioLoaded = true
+            audioLoadFailed = base64Audio.length === 0
+            isAudioLoaded = base64Audio.length > 0
         }
     }
 
     Component.onDestruction: {
         // Stop audio playback when the component is destroyed:
         if (BrowserJS.browserEnvironment) {
-            BrowserJS.runVoidJS("stopAudio();");
+            stopBrowserAudio()
         }
+
+        audioSessionActive = false
     }
 
     color: "transparent"
@@ -52,52 +90,63 @@ Rectangle {
 
     Button {
         id: playMusic
-        text: isAudioLoaded ? Localization.string("Click to Play Music") : (BrowserJS.browserEnvironment ? Localization.string("Loading audio...") : Localization.string("Playback not available in this environment!"))
+        text: !BrowserJS.browserEnvironment || !audioPlaybackSupported
+                            ? Localization.string("Playback not available in this environment!")
+                            : audioLoadFailed
+                                ? Localization.string("Embedded audio failed to load.")
+                                : isAudioLoaded
+                                    ? Localization.string("Click to Play Music")
+                                    : Localization.string("Loading audio...")
         font.pointSize: ZoomSettings.hugeFontSize
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: stopMusic.top
         anchors.bottomMargin: 20
-        enabled: isAudioLoaded
+        enabled: isAudioLoaded && audioPlaybackSupported && !audioSessionActive
         onClicked: {
-            enabled = false;
-            stopMusic.enabled = true;
-            BrowserJS.runVoidJS(`
-                var audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                var audioBuffer;
-                var source;
+            if (!audioPlaybackSupported) {
+                return
+            }
 
-                function loadAudio(base64) {
-                    var binaryString = window.atob(base64);
+            stopBrowserAudio()
+            audioSessionActive = true
+
+            BrowserJS.runVoidJS(`
+                (function() {
+                    var AudioContextCtor = window.AudioContext || window.webkitAudioContext;
+                    if (!AudioContextCtor) {
+                        return;
+                    }
+
+                    var stateKey = '${audioStateKey}';
+                    var audioContext = new AudioContextCtor();
+                    var state = {
+                        audioContext: audioContext,
+                        source: null
+                    };
+                    window[stateKey] = state;
+
+                    var binaryString = window.atob('${base64Audio}');
                     var length = binaryString.length;
                     var bytes = new Uint8Array(length);
                     for (var i = 0; i < length; i++) {
                         bytes[i] = binaryString.charCodeAt(i);
                     }
-                    audioContext.decodeAudioData(bytes.buffer, function(buffer) {
-                        audioBuffer = buffer;
-                        playAudio();
-                    }, function(e) {
-                        console.error('Error decoding audio data:', e);
-                    });
-                }
 
-                function playAudio() {
-                    if (audioBuffer) {
-                        source = audioContext.createBufferSource();
-                        source.buffer = audioBuffer;
+                    audioContext.decodeAudioData(bytes.buffer.slice(0), function(buffer) {
+                        if (!window[stateKey]) {
+                            return;
+                        }
+
+                        var source = audioContext.createBufferSource();
+                        source.buffer = buffer;
                         source.loop = true;
                         source.connect(audioContext.destination);
                         source.start(0);
-                    }
-                }
-
-                window.stopAudio = function() {
-                    if (source) {
-                        source.stop(0);
-                    }
-                }
-
-                loadAudio('${base64Audio}');
+                        state.source = source;
+                    }, function(error) {
+                        console.error('Error decoding audio data:', error);
+                    });
+                })();
             `);
         }
     }
@@ -107,11 +156,10 @@ Rectangle {
         text: Localization.string("Click to Stop Music")
         font.pointSize: ZoomSettings.hugeFontSize
         anchors.centerIn: parent
-        enabled: false
+        enabled: audioSessionActive
         onClicked: {
-            enabled = false;
-            playMusic.enabled = true;
-            BrowserJS.runVoidJS("stopAudio();");
+            stopBrowserAudio()
+            audioSessionActive = false
         }
     }
 

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.29)
-project(CppQtQuickWebsite LANGUAGES CXX)
+project(CppQtQuickWebsite VERSION 1.1.4 LANGUAGES CXX)
 
 # Set the project's C++ standard to C++20
 set(CMAKE_CXX_STANDARD 20)
@@ -81,7 +81,7 @@ elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
 endif()
 
 # Find the required Qt modules
-find_package(Qt6 REQUIRED COMPONENTS Core Quick Quick3D Multimedia WebSockets Widgets Network)
+find_package(Qt6 QUIET REQUIRED COMPONENTS Core Quick Quick3D Multimedia WebSockets Widgets Network)
 
 # Include the project's C++ headers
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/cpp)
@@ -124,6 +124,10 @@ qt6_add_qml_module(${PROJECT_NAME}
 # Link the Qt modules to the executable
 target_link_libraries(${PROJECT_NAME}
     PRIVATE Qt6::Core Qt6::Quick Qt6::Quick3D Qt6::Multimedia Qt6::WebSockets Qt6::Widgets Qt6::Network
+)
+
+target_compile_definitions(${PROJECT_NAME}
+    PRIVATE CPP_QT_QUICK_WEBSITE_VERSION="${PROJECT_VERSION}"
 )
 
 # Set the output name of the executable to "WebApplication"

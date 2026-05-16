@@ -11,24 +11,41 @@ Rectangle {
     readonly property string subHeaderText: (Localization.string("Video playback using the browser's built-in player."))
 
     property string base64Video: ""
+    property bool videoLoadFailed: false
     property bool isVideoLoaded: false // Video loaded from base64 string of embedded file earth.mp4?
     property bool isVideoPlaying: false // Is the browser's video player active?
+    readonly property string videoElementId: "qml-video-player-" + Math.round(Math.random() * 1000000)
+
+    function removeBrowserVideo() {
+        if (!BrowserJS.browserEnvironment) {
+            return
+        }
+
+        BrowserJS.runVoidJS(`
+            (function() {
+                var vid = document.getElementById('${videoElementId}');
+                if (vid) {
+                    vid.remove();
+                }
+            })();
+        `)
+    }
 
     Component.onCompleted: {
         if (BrowserJS.browserEnvironment) {
             base64Video = Base64Converter.convertFileToBase64(":/resources/videos/earth.mp4")
-            isVideoLoaded = true
+            videoLoadFailed = base64Video.length === 0
+            isVideoLoaded = base64Video.length > 0
         }
     }
 
     Component.onDestruction: {
         // Remove the browser's video player when the component is destroyed:
         if (BrowserJS.browserEnvironment) {
-            BrowserJS.runVoidJS(`
-                var vid = document.getElementById('qml-video-player');
-                if (vid) vid.remove();
-            `);
+            removeBrowserVideo()
         }
+
+        isVideoPlaying = false
     }
 
     color: "transparent"
@@ -63,14 +80,14 @@ Rectangle {
         Button {
             visible: BrowserJS.browserEnvironment
             anchors.centerIn: parent
-            text: isVideoLoaded ? Localization.string("Load Video") : Localization.string("Loading video...")
+                        text: videoLoadFailed
+                                    ? Localization.string("Embedded video failed to load.")
+                                    : isVideoLoaded
+                                        ? Localization.string("Load Video")
+                                        : Localization.string("Loading video...")
             enabled: isVideoLoaded
             onClicked: {
-                // Remove any previous video element:
-                BrowserJS.runVoidJS(`
-                    var oldVid = document.getElementById('qml-video-player');
-                    if (oldVid) oldVid.remove();
-                `);
+                removeBrowserVideo()
 
                 // Calculate absolute position of videoContainer:
                 var pos = videoContainer.mapToItem(null, 0, 0);
@@ -78,7 +95,7 @@ Rectangle {
                 // Inject the video element at the correct position:
                 BrowserJS.runVoidJS(`
                     var video = document.createElement('video');
-                    video.id = 'qml-video-player';
+                    video.id = '${videoElementId}';
                     video.controls = true;
                     video.style.position = 'absolute';
                     video.style.left = '${pos.x}px';
@@ -112,10 +129,7 @@ Rectangle {
         anchors.topMargin: 20
         text: Localization.string("Close Video")
         onClicked: {
-            BrowserJS.runVoidJS(`
-                var vid = document.getElementById('qml-video-player');
-                if (vid) vid.remove();
-            `);
+            removeBrowserVideo()
             isVideoPlaying = false;
         }
     }

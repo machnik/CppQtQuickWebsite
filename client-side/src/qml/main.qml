@@ -7,6 +7,7 @@ import "qrc:/qml/singletons/"
 import CppQtQuickWebsite.CppObjects
 
 ApplicationWindow {
+    id: applicationWindow
 
     visible: true
     width: Screen.width; height: Screen.height
@@ -190,12 +191,16 @@ ApplicationWindow {
                 icon.source: "qrc:/resources/icons/addWindowIcon.svg"
                 onClicked: {
                     var exampleWindow = exampleWindowComponent.createObject(
-                        Overlay.overlay, { // Slight randomization of the window's position:
+                        applicationWindow, {
+                            transientParent: applicationWindow,
+                            // Slight randomization of the window's position:
                             x: Screen.width / 2 - (1 + Math.random()) * 100,
                             y: Screen.height / 2 - (1+ Math.random()) * 100
                         }
                     );
-                    exampleWindow.visible = true;
+                    if (exampleWindow) {
+                        exampleWindow.visible = true;
+                    }
                 }
                 ToolTip {
                     text: Localization.string("Open a new non-modal window.")

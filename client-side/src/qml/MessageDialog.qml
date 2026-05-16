@@ -14,6 +14,10 @@ Dialog {
     title: Localization.string("Message")
     spacing: 10
 
+    // This dialog is created dynamically from SubPage4, so close should also
+    // clean up the temporary QML object.
+    onClosed: destroy()
+
     Text {
         text: Localization.string("This is a message dialog.")
         font.pixelSize: ZoomSettings.bigFontSize

@@ -1,18 +1,14 @@
 #include "FakeProcessor.h"
 
-#include <random>
+#include <QtCore/QRandomGenerator>
 
 FakeProcessor::FakeProcessor(QObject *parent)
-    : QObject(parent)
+    : QObject{parent}
 {
     m_timer.setInterval(100); // 1 decisecond
 
     connect(&m_timer, &QTimer::timeout, this, [this](){
-        std::random_device rd;
-        std::mt19937 gen(rd());
-        std::uniform_int_distribution<> distribution(1, 1000);
-
-        if (distribution(gen) <= 7) {
+        if (QRandomGenerator::global()->bounded(1000) < 7) {
             m_status = Status::Error;
             emit statusChanged();
             m_timer.stop();
@@ -31,6 +27,10 @@ FakeProcessor::FakeProcessor(QObject *parent)
 
 void FakeProcessor::start()
 {
+    if (m_status == Status::Running) {
+        return;
+    }
+
     m_progress = 0;
     emit progressChanged();
     m_status = Status::Running;
@@ -54,8 +54,10 @@ int FakeProcessor::deciseconds() const
 
 void FakeProcessor::setDeciseconds(int deciseconds)
 {
-    if (m_deciseconds != deciseconds) {
-        m_deciseconds = deciseconds;
+    const auto clampedDeciseconds{qMax(1, deciseconds)};
+
+    if (m_deciseconds != clampedDeciseconds) {
+        m_deciseconds = clampedDeciseconds;
         emit decisecondsChanged();
     }
 }

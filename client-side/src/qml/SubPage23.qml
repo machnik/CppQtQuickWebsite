@@ -14,6 +14,7 @@ Rectangle {
     readonly property string subHeaderText: Localization.string("Using QSettings to store files.")
 
     property bool browserEnvironment: BrowserJS.browserEnvironment
+    property bool downloadInProgress: false
     property string statusText: ""
     property color statusColor: "black"
 
@@ -32,27 +33,33 @@ Rectangle {
                 setStatus(Localization.string("Previously stored image loaded"), "green")
             }
         }
-        
-        // Connect to ImageDownloader signals
-        ImageDownloader.downloadStarted.connect(function() {
+    }
+
+    Connections {
+        target: ImageDownloader
+
+        function onDownloadStarted() {
+            downloadInProgress = true
             setStatus(Localization.string("Downloading…"), "blue")
-        })
-        
-        ImageDownloader.downloadProgress.connect(function(bytesReceived, bytesTotal) {
+        }
+
+        function onDownloadProgress(bytesReceived, bytesTotal) {
             if (bytesTotal > 0) {
                 var percent = Math.round((bytesReceived / bytesTotal) * 100)
                 setStatus(Localization.string("Downloading… %1%").arg(percent), "blue")
             }
-        })
-        
-        ImageDownloader.downloadFinished.connect(function(dataUrl) {
+        }
+
+        function onDownloadFinished(dataUrl) {
+            downloadInProgress = false
             img.source = dataUrl
             setStatus(Localization.string("Downloaded"), "green")
-        })
-        
-        ImageDownloader.downloadError.connect(function(errorString) {
+        }
+
+        function onDownloadError(errorString) {
+            downloadInProgress = false
             setStatus(Localization.string("Error downloading: %1").arg(errorString), "red")
-        })
+        }
     }
 
     Label {
@@ -122,7 +129,12 @@ Rectangle {
         }
 
         RowLayout { spacing: 10
-            Button { text: Localization.string("Download Picture"); font.pointSize: regularFontSize; onClicked: download() }
+            Button {
+                text: Localization.string("Download Picture")
+                font.pointSize: regularFontSize
+                enabled: !downloadInProgress
+                onClicked: download()
+            }
             Button { text: Localization.string("Store to QSettings"); font.pointSize: regularFontSize; onClicked: store() }
             Button { text: Localization.string("Load from QSettings"); font.pointSize: regularFontSize; onClicked: load() }
             Button { text: Localization.string("Clear QSettings"); font.pointSize: regularFontSize; onClicked: clearStorage() }
