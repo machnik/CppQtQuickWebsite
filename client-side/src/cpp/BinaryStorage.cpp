@@ -6,9 +6,20 @@
 // Use a specific group to organize all file data
 static const auto FILES_GROUP{QStringLiteral("files")};
 
+namespace {
+QSettings::Format defaultStorageFormat()
+{
+#ifdef Q_OS_WASM
+    return QSettings::WebLocalStorageFormat;
+#else
+    return QSettings::IniFormat;
+#endif
+}
+}
+
 BinaryStorage::BinaryStorage(QObject *parent)
     : QObject{parent}
-    , m_currentFormat{QSettings::WebLocalStorageFormat}  // Default to WebLocalStorageFormat
+    , m_currentFormat{defaultStorageFormat()}
     , m_settings {
         std::make_unique<QSettings>(
             m_currentFormat,
@@ -18,7 +29,6 @@ BinaryStorage::BinaryStorage(QObject *parent)
         )
     }
 {
-    // QSettings will use WebLocalStorageFormat by default, can be switched to WebIndexedDBFormat
 }
 
 QByteArray BinaryStorage::file(const QString &fileName) const
@@ -119,18 +129,22 @@ void BinaryStorage::setFileAsString(const QString &fileName, const QString &data
 
 void BinaryStorage::switchToWebLocalStorage()
 {
+#ifdef Q_OS_WASM
     if (m_currentFormat != QSettings::WebLocalStorageFormat) {
         m_currentFormat = QSettings::WebLocalStorageFormat;
         recreateSettings();
     }
+#endif
 }
 
 void BinaryStorage::switchToWebIndexedDB()
 {
+#ifdef Q_OS_WASM
     if (m_currentFormat != QSettings::WebIndexedDBFormat) {
         m_currentFormat = QSettings::WebIndexedDBFormat;
         recreateSettings();
     }
+#endif
 }
 
 void BinaryStorage::recreateSettings()

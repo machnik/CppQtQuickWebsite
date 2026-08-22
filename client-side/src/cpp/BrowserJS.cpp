@@ -18,6 +18,13 @@ BrowserJS::BrowserJS(QObject *parent)
     s_instance = this;
 }
 
+BrowserJS::~BrowserJS()
+{
+    if (s_instance == this) {
+        s_instance = nullptr;
+    }
+}
+
 bool BrowserJS::isBrowserEnvironment() const {
     return b_browserEnvironment;
 }

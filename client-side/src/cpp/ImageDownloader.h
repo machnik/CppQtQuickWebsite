@@ -27,7 +27,7 @@ public:
 
 signals:
     void downloadStarted();
-    void downloadProgress(int bytesReceived, int bytesTotal);
+    void downloadProgress(qint64 bytesReceived, qint64 bytesTotal);
     void downloadFinished(const QString &dataUrl);
     void downloadError(const QString &errorString);
 
@@ -38,14 +38,14 @@ private slots:
 
 private:
     void clearReply(QNetworkReply *reply);
+    static bool isSupportedImageMimeType(const QString &mimeType);
+    static QString normalizedMimeType(const QString &mimeType);
 
     QNetworkAccessManager *m_networkManager;
     QNetworkReply *m_currentReply;
     
     QString convertToDataUrl(const QByteArray &imageData, const QString &mimeType);
     QString guessMimeType(const QString &url);
-    
-    static ImageDownloader *s_instance;
 };
 
 #endif // IMAGE_DOWNLOADER_H

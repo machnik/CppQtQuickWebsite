@@ -8,6 +8,7 @@
 
 #include <QtWidgets/QApplication>
 
+#include <QtCore/QDebug>
 #include <QtQml/QQmlApplicationEngine>
 #include <QtQuickControls2/QQuickStyle>
 
@@ -22,6 +23,11 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine{};
     engine.load(":/qml/main.qml");
+
+    if (engine.rootObjects().isEmpty()) {
+        qCritical() << "Could not load the root QML document.";
+        return -1;
+    }
 
     return app.exec();
 }

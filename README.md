@@ -168,7 +168,6 @@ cmake --build .
 WebApplication.exe
 ```
 
-
 ## 🐛 Debugging the WebAssembly build in the web browser
 
 1. Build the project for debugging (`DCMAKE_BUILD_TYPE=Debug`).  
@@ -193,6 +192,8 @@ The build process generates many files in the output directory, of which only a 
 - _WebApplication.html_
 - _WebApplication.wasm_
 - _WebApplication.worker.js_
+
+For a multithreaded build, the generated directory also contains _shared_array_buffer_fix.js_.
 
 Rename _WebApplication.html_ to _index.html_ for a simpler website URL.
 
@@ -230,7 +231,7 @@ If you are using _wasm_multithread_ binaries, sharing memory via `SharedArrayBuf
 
 ## ❗ Known issues
 
-- WebSocket server is currently not functional in the WASM build.
+- WebSocket server controls are disabled in the WASM build because a server is not currently supported there.
 - Qt Multimedia doesn't seem to work with WASM, even though it did in earlier Qt 6 versions.
 - 3D views do not always automatically get keyboard focus.
 

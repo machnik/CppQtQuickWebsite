@@ -48,6 +48,7 @@ class Backend : public QObject
     private:
         QString m_message;
         ListModel * const m_listModel;
+        bool m_reloadPending{false};
 };
 
 #endif // BACKEND_H

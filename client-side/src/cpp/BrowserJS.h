@@ -15,6 +15,7 @@ class BrowserJS : public QObject {
 
 public:
     explicit BrowserJS(QObject *parent = nullptr);
+    ~BrowserJS() override;
 
     bool isBrowserEnvironment() const;
 

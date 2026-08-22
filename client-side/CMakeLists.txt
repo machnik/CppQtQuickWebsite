@@ -12,8 +12,11 @@ set(CMAKE_AUTORCC ON)
 # Toggleable option to enable WebAssembly exceptions
 option(ENABLE_WASM_EXCEPTIONS "Enable C++ exceptions in WebAssembly builds" OFF)
 
-# Set default build type if not specified: Release
-if(NOT CMAKE_BUILD_TYPE)
+set(WASM_COMPILE_OPTIONS)
+set(WASM_COMPILE_DEFINITIONS)
+
+# Set default build type for single-configuration generators if not specified: Release
+if(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Build type: Debug or Release" FORCE)
 endif()
 
@@ -21,15 +24,10 @@ endif()
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     message(STATUS "Configuring Debug build")
 
-    add_compile_options(
-        "-O0" # No optimization
-        "-g" # Debugging information
-    )
-    
     # WebAssembly-specific debug settings
     if(EMSCRIPTEN)
         if(ENABLE_WASM_EXCEPTIONS)
-            add_compile_options("-fexceptions") # Enable C++ exceptions
+            list(APPEND WASM_COMPILE_OPTIONS "-fexceptions")
         endif()
         
         add_link_options(
@@ -46,7 +44,7 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
             add_link_options("-fexceptions") # Enable C++ exceptions
         endif()
 
-        add_compile_definitions(
+        list(APPEND WASM_COMPILE_DEFINITIONS
             QT_QML_DEBUG # Enable QML debugging
             EMSCRIPTEN_TRACING # Makes C++-to-JavaScript and JavaScript-to-C++ calls traceable
         )
@@ -55,15 +53,10 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
 elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
     message(STATUS "Configuring Release build")
 
-    add_compile_options(
-        "-O3" # Full optimization
-        "-DNDEBUG" # Disable assertions
-    )
-
     # WebAssembly-specific release optimizations
     if(EMSCRIPTEN)
         if(ENABLE_WASM_EXCEPTIONS)
-            add_compile_options("-fexceptions") # Enable C++ exceptions
+            list(APPEND WASM_COMPILE_OPTIONS "-fexceptions")
         endif()
         
         add_link_options(
@@ -81,7 +74,7 @@ elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
 endif()
 
 # Find the required Qt modules
-find_package(Qt6 QUIET REQUIRED COMPONENTS Core Quick Quick3D Multimedia WebSockets Widgets Network)
+find_package(Qt6 QUIET REQUIRED COMPONENTS Core Quick Quick3D QuickControls2 Multimedia WebSockets Widgets Network)
 
 # Include the project's C++ headers
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/cpp)
@@ -123,11 +116,17 @@ qt6_add_qml_module(${PROJECT_NAME}
 
 # Link the Qt modules to the executable
 target_link_libraries(${PROJECT_NAME}
-    PRIVATE Qt6::Core Qt6::Quick Qt6::Quick3D Qt6::Multimedia Qt6::WebSockets Qt6::Widgets Qt6::Network
+    PRIVATE Qt6::Core Qt6::Quick Qt6::Quick3D Qt6::QuickControls2 Qt6::Multimedia Qt6::WebSockets Qt6::Widgets Qt6::Network
 )
 
 target_compile_definitions(${PROJECT_NAME}
-    PRIVATE CPP_QT_QUICK_WEBSITE_VERSION="${PROJECT_VERSION}"
+    PRIVATE
+        CPP_QT_QUICK_WEBSITE_VERSION="${PROJECT_VERSION}"
+        ${WASM_COMPILE_DEFINITIONS}
+)
+
+target_compile_options(${PROJECT_NAME}
+    PRIVATE ${WASM_COMPILE_OPTIONS}
 )
 
 # Set the output name of the executable to "WebApplication"
@@ -141,5 +140,18 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy
         ${CMAKE_CURRENT_SOURCE_DIR}/resources/images/splash.svg
         ${CMAKE_CURRENT_BINARY_DIR}/qtlogo.svg
+    COMMAND ${CMAKE_COMMAND} -E copy
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/js/shared_array_buffer_fix.js
+        ${CMAKE_CURRENT_BINARY_DIR}/shared_array_buffer_fix.js
     COMMENT "Copying website icon and splash image to build directory..."
 )
+
+if(EMSCRIPTEN)
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND}
+            -DHTML_FILE=${CMAKE_CURRENT_BINARY_DIR}/WebApplication.html
+            -P ${CMAKE_CURRENT_SOURCE_DIR}/cmake/InjectWasmThreadingHelper.cmake
+        COMMENT "Enabling the WebAssembly threading helper..."
+    )
+endif()
+

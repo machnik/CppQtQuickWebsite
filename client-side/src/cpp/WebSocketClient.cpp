@@ -17,9 +17,10 @@ WebSocketClient::WebSocketClient(QObject *parent)
 void WebSocketClient::startClient(const QString & url)
 {
     const QUrl webSocketUrl{url};
-    if (!webSocketUrl.isValid() || webSocketUrl.scheme().isEmpty() || webSocketUrl.host().isEmpty()
-            || webSocketUrl.port() < 1 || webSocketUrl.port() > 65535) {
-        emit errorOccurred(Localization::strCpp("Please enter a valid port number between 1 and 65535."));
+    const auto port{webSocketUrl.port()};
+    if (!webSocketUrl.isValid() || (webSocketUrl.scheme() != "ws" && webSocketUrl.scheme() != "wss")
+            || webSocketUrl.host().isEmpty() || (port != -1 && (port < 1 || port > 65535))) {
+        emit errorOccurred(Localization::strCpp("Please enter a valid WebSocket URL."));
         return;
     }
 

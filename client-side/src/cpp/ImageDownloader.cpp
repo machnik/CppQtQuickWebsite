@@ -2,14 +2,16 @@
 
 #include <QtCore/QUrl>
 
-ImageDownloader* ImageDownloader::s_instance = nullptr;
+namespace {
+constexpr qint64 MaxImageBytes{10 * 1024 * 1024};
+constexpr int DownloadTimeoutMilliseconds{30'000};
+}
 
 ImageDownloader::ImageDownloader(QObject *parent)
     : QObject {parent}
     , m_networkManager {new QNetworkAccessManager(this)}
     , m_currentReply {nullptr}
 {
-    s_instance = this;
 }
 
 void ImageDownloader::downloadImage(const QString &url)
@@ -26,8 +28,8 @@ void ImageDownloader::downloadImage(const QString &url)
         previousReply->deleteLater();
     }
 
-    QUrl downloadUrl{url};
-    if (!downloadUrl.isValid()) {
+    QUrl downloadUrl{url.trimmed()};
+    if (!downloadUrl.isValid() || (downloadUrl.scheme() != "http" && downloadUrl.scheme() != "https")) {
         emit downloadError("Invalid URL: " + url);
         return;
     }
@@ -36,6 +38,7 @@ void ImageDownloader::downloadImage(const QString &url)
 
     QNetworkRequest request{downloadUrl};
     request.setAttribute(QNetworkRequest::RedirectPolicyAttribute, QNetworkRequest::NoLessSafeRedirectPolicy);
+    request.setTransferTimeout(DownloadTimeoutMilliseconds);
 
     m_currentReply = m_networkManager->get(request);
 
@@ -57,6 +60,13 @@ void ImageDownloader::onDownloadFinished()
         return;
     }
 
+    const auto contentLength{reply->header(QNetworkRequest::ContentLengthHeader).toLongLong()};
+    if (contentLength > MaxImageBytes) {
+        emit downloadError("Downloaded image exceeds the size limit.");
+        clearReply(reply);
+        return;
+    }
+
     auto imageData{reply->readAll()};
     if (imageData.isEmpty()) {
         emit downloadError("Downloaded data is empty");
@@ -64,9 +74,21 @@ void ImageDownloader::onDownloadFinished()
         return;
     }
 
-    auto contentType{reply->header(QNetworkRequest::ContentTypeHeader).toString()};
-    if (!contentType.startsWith("image/")) {
+    if (imageData.size() > MaxImageBytes) {
+        emit downloadError("Downloaded image exceeds the size limit.");
+        clearReply(reply);
+        return;
+    }
+
+    auto contentType{normalizedMimeType(reply->header(QNetworkRequest::ContentTypeHeader).toString())};
+    if (!isSupportedImageMimeType(contentType)) {
         contentType = guessMimeType(reply->url().toString());
+    }
+
+    if (!isSupportedImageMimeType(contentType)) {
+        emit downloadError("Downloaded content is not a supported image.");
+        clearReply(reply);
+        return;
     }
 
     emit downloadFinished(convertToDataUrl(imageData, contentType));
@@ -80,8 +102,15 @@ void ImageDownloader::onDownloadProgress(qint64 bytesReceived, qint64 bytesTotal
         return;
     }
 
+    if (bytesReceived > MaxImageBytes || bytesTotal > MaxImageBytes) {
+        emit downloadError("Downloaded image exceeds the size limit.");
+        reply->abort();
+        clearReply(reply);
+        return;
+    }
+
     if (bytesTotal > 0) {
-        emit downloadProgress(static_cast<int>(bytesReceived), static_cast<int>(bytesTotal));
+        emit downloadProgress(bytesReceived, bytesTotal);
     }
 }
 
@@ -120,11 +149,27 @@ QString ImageDownloader::guessMimeType(const QString &url)
         return "image/webp";
     } else if (path.endsWith(".bmp")) {
         return "image/bmp";
-    } else if (path.endsWith(".svg")) {
-        return "image/svg+xml";
     }
     
-    return "image/jpeg";
+    return QString{};
+}
+
+bool ImageDownloader::isSupportedImageMimeType(const QString &mimeType)
+{
+    static const QStringList supportedMimeTypes{
+        "image/bmp",
+        "image/gif",
+        "image/jpeg",
+        "image/png",
+        "image/webp"
+    };
+
+    return supportedMimeTypes.contains(normalizedMimeType(mimeType));
+}
+
+QString ImageDownloader::normalizedMimeType(const QString &mimeType)
+{
+    return mimeType.section(';', 0, 0).trimmed().toLower();
 }
 
 void ImageDownloader::clearReply(QNetworkReply *reply)

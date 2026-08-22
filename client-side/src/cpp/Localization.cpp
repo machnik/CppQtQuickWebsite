@@ -19,6 +19,13 @@ Localization::Localization(QObject *parent)
     s_instance = this;
 }
 
+Localization::~Localization()
+{
+    if (s_instance == this) {
+        s_instance = nullptr;
+    }
+}
+
 QLocale::Language Localization::currentLanguage() const
 {
     return m_currentLanguage;

@@ -23,6 +23,7 @@ class Localization : public QObject
 
 public:
     explicit Localization(QObject *parent = nullptr);
+    ~Localization() override;
 
     Q_INVOKABLE QLocale::Language currentLanguage() const;
     Q_INVOKABLE void setLanguage(QLocale::Language language);

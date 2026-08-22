@@ -40,7 +40,13 @@ if (typeof window !== 'undefined') {
             });
         }
 
-        let response = await fetch(req).catch(error => console.error(error));
+        let response;
+        try {
+            response = await fetch(req);
+        } catch (error) {
+            console.error(error);
+            return Response.error();
+        }
 
         if (response.status === 0) {
             return response;

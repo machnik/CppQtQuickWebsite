@@ -94,6 +94,7 @@ Rectangle {
         RowLayout {
             Layout.alignment: Qt.AlignHCenter
             spacing: 10
+            visible: browserEnvironment
             
             Text {
                 text: Localization.string("Storage Mode:")

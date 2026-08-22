@@ -2,7 +2,9 @@
 
 #include <QtCore/QFile>
 #include <QtCore/QDebug>
+#include <QtCore/QPointer>
 #include <QtCore/QTextStream>
+#include <QtCore/QTimer>
 #include <QtQml/QQmlApplicationEngine>
 #include <QtQml/QQmlContext>
 
@@ -21,11 +23,31 @@ Backend::Backend(QObject *parent)
 
 void Backend::reloadQML()
 {
-    auto appEngine{qobject_cast<QQmlApplicationEngine *>(QQmlEngine::contextForObject(this)->engine())};
-    if (appEngine) {
-        appEngine->clearComponentCache();
-        appEngine->load(":/qml/main.qml");
+    if (m_reloadPending) {
+        return;
     }
+
+    auto context{QQmlEngine::contextForObject(this)};
+    auto appEngine{context ? qobject_cast<QQmlApplicationEngine *>(context->engine()) : nullptr};
+    if (!appEngine) {
+        qWarning() << "Backend::reloadQML could not find the application QML engine.";
+        return;
+    }
+
+    m_reloadPending = true;
+    QPointer<QQmlApplicationEngine> guardedEngine{appEngine};
+
+    QTimer::singleShot(0, this, [this, guardedEngine] {
+        m_reloadPending = false;
+
+        if (!guardedEngine) {
+            return;
+        }
+
+        qDeleteAll(guardedEngine->rootObjects());
+        guardedEngine->clearComponentCache();
+        guardedEngine->load(":/qml/main.qml");
+    });
 }
 
 void Backend::resetBackend()

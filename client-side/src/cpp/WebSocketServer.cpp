@@ -25,7 +25,12 @@ void WebSocketServer::startServer(int port)
         return;
     }
 
+    if (m_isServerRunning) {
+        return;
+    }
+
     if (!m_webSocketServer->listen(QHostAddress::Any, port)) {
+        setServerRunning(false);
         emit errorOccurred(m_webSocketServer->errorString());
     } else {
         setServerRunning(true);
