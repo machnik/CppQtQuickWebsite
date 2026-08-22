@@ -11,7 +11,7 @@ Rectangle {
     readonly property string subHeaderText: Localization.string("WebSocket Server.")
 
     property int smallFontSize: ZoomSettings.smallFontSize
-    readonly property bool serverSupported: !BrowserJS.browserEnvironment
+    readonly property bool showWasmWarning: BrowserJS.browserEnvironment
 
     function parsedPort() {
         return parseInt(portField.text, 10)
@@ -55,8 +55,8 @@ Rectangle {
     }
 
     Label {
-        text: Localization.string("Temporarily unsupported in WebAssembly with Qt 6.11!")
-        visible: !serverSupported
+        text: Localization.string("WebAssembly warning: server behavior may differ in browser environment.")
+        visible: showWasmWarning
         anchors.bottom: portField.top
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.margins: 20
@@ -83,15 +83,11 @@ Rectangle {
         text: WebSocketServer.isServerRunning ? Localization.string("STOP") : Localization.string("START")
         font.pointSize: smallFontSize
         checkable: true
-        enabled: serverSupported
+        enabled: true
         anchors.bottom: bouncedMessageField.top
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.margins: 10
         onClicked: {
-            if (!serverSupported) {
-                return
-            }
-
             if (WebSocketServer.isServerRunning) {
                 WebSocketServer.stopServer();
                 resetTextFields();

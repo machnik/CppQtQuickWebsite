@@ -15,17 +15,18 @@ You can use this codebase as a template for your own projects.
 - **C++ Compiler:**
   - for 🐧 Linux: **GCC**
   - for 🪟︎ Windows: **LLVM-MinGW**
-  - for 🌐 WebAssembly: **[emscripten](https://emscripten.org/docs/getting_started/downloads.html)** version `4.0.7`
+  - for 🌐 WebAssembly: **[emscripten](https://emscripten.org/docs/getting_started/downloads.html)** version `5.0.5`
 - **[CMake](https://cmake.org/download/)** version >= `3.29` (add to *PATH*)
 - Build system:
   - on 🐧 Linux: **Make**
   - on 🪟︎ Windows: a CMake-supported generator such as **[Ninja](https://github.com/ninja-build/ninja/releases)** version >= 1.12.1 or **MinGW Makefiles**
-- **[Qt](https://www.qt.io/download-open-source)** version `6.11.0` with pre-built binaries for:
+- **[Qt](https://www.qt.io/download-open-source)** version `6.12.0` with pre-built binaries for:
   - for 🐧 Linux: **GCC**
   - for 🪟︎ Windows: **LLVM-MinGW**
   - for 🌐 WebAssembly - choose one:
     - single-threaded (better compatibility and stability)
     - multi-threaded (allows using C++ threads)
+  - keep the **[emscripten](https://emscripten.org/docs/getting_started/downloads.html)** toolchain at `5.0.5` for the Qt 6.12.0 WebAssembly build
 
 _TIP: **CMake**, **Ninja** and **LLVM-MinGW** can be installed on Windows using the official **Qt Maintenance Tool** (installer)._
 
@@ -36,21 +37,21 @@ _TIP: **CMake**, **Ninja** and **LLVM-MinGW** can be installed on Windows using 
 #### Native
 
 ```bash
-export QT_BIN_GCC="$HOME/Qt/6.11.0/gcc_64"
+export QT_BIN_GCC="$HOME/Qt/6.12.0/gcc_64"
 ```
 
 #### For WebAssembly
 
 ```bash
 # Either single-thread:
-export QT_BIN_WASM="$HOME/Qt/6.11.0/wasm_singlethread"
+export QT_BIN_WASM="$HOME/Qt/6.12.0/wasm_singlethread"
 # ... or multi-thread:
-export QT_BIN_WASM="$HOME/Qt/6.11.0/wasm_multithread"
+export QT_BIN_WASM="$HOME/Qt/6.12.0/wasm_multithread"
 
 git clone https://github.com/emscripten-core/emsdk.git
 cd emsdk
-./emsdk install 4.0.7
-./emsdk activate --permanent 4.0.7
+./emsdk install 5.0.5
+./emsdk activate --permanent 5.0.5
 source emsdk_env.sh
 ```
 
@@ -65,7 +66,7 @@ Select **LLVM-MinGW** in the **Qt Maintenance Tool** (under Qt -> Developer and 
 ```bat
 setx PATH "%PATH%;"%USERPROFILE%\Qt\Tools\llvm-mingw1706_64\bin"
 
-setx QT_BIN_LLVM_MINGW "%USERPROFILE%\Qt\6.11.0\llvm-mingw_64"
+setx QT_BIN_LLVM_MINGW "%USERPROFILE%\Qt\6.12.0\llvm-mingw_64"
 
 setx PATH "%QT_BIN_LLVM_MINGW%\bin;%PATH%"
 setx QML2_IMPORT_PATH "%QT_BIN_LLVM_MINGW%\qml"
@@ -76,9 +77,9 @@ setx QT_PLUGIN_PATH "%QT_BIN_LLVM_MINGW%\plugins"
 
 ```bat
 :: Either single-thread:
-setx QT_BIN_WASM "%USERPROFILE%\Qt\6.11.0\wasm_singlethread"
+setx QT_BIN_WASM "%USERPROFILE%\Qt\6.12.0\wasm_singlethread"
 :: ... or multi-thread:
-setx QT_BIN_WASM "%USERPROFILE%\Qt\6.11.0\wasm_multithread"
+setx QT_BIN_WASM "%USERPROFILE%\Qt\6.12.0\wasm_multithread"
 
 setx PATH "%QT_BIN_WASM%\bin;%PATH%"
 setx QML2_IMPORT_PATH "%QT_BIN_WASM%\qml"
@@ -86,8 +87,8 @@ setx QT_PLUGIN_PATH "%QT_BIN_WASM%\plugins"
 
 git clone https://github.com/emscripten-core/emsdk.git
 cd emsdk
-emsdk.bat install 4.0.7
-emsdk.bat activate --permanent 4.0.7
+emsdk.bat install 5.0.5
+emsdk.bat activate --permanent 5.0.5
 ```
 
 ## 🌐 Build for WebAssembly
