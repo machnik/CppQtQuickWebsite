@@ -1,5 +1,4 @@
 #include "BinaryStorage.h"
-#include "BrowserJS.h"
 
 #include <QtCore/QDebug>
 

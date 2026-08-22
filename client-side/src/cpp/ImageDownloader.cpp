@@ -183,4 +183,4 @@ void ImageDownloader::clearReply(QNetworkReply *reply)
     }
 
     reply->deleteLater();
-    }
+}

@@ -80,11 +80,11 @@ Rectangle {
         Button {
             visible: BrowserJS.browserEnvironment
             anchors.centerIn: parent
-                        text: videoLoadFailed
-                                    ? Localization.string("Embedded video failed to load.")
-                                    : isVideoLoaded
-                                        ? Localization.string("Load Video")
-                                        : Localization.string("Loading video...")
+            text: videoLoadFailed
+                ? Localization.string("Embedded video failed to load.")
+                : isVideoLoaded
+                    ? Localization.string("Load Video")
+                    : Localization.string("Loading video...")
             enabled: isVideoLoaded
             onClicked: {
                 removeBrowserVideo()

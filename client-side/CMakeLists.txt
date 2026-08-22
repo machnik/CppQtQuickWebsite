@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.29)
-project(CppQtQuickWebsite VERSION 1.1.4 LANGUAGES CXX)
+project(CppQtQuickWebsite VERSION 1.1.5 LANGUAGES CXX)
 
 # Set the project's C++ standard to C++20
 set(CMAKE_CXX_STANDARD 20)
@@ -140,14 +140,14 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy
         ${CMAKE_CURRENT_SOURCE_DIR}/resources/images/splash.svg
         ${CMAKE_CURRENT_BINARY_DIR}/qtlogo.svg
-    COMMAND ${CMAKE_COMMAND} -E copy
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/js/shared_array_buffer_fix.js
-        ${CMAKE_CURRENT_BINARY_DIR}/shared_array_buffer_fix.js
     COMMENT "Copying website icon and splash image to build directory..."
 )
 
 if(EMSCRIPTEN)
     add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy
+            ${CMAKE_CURRENT_SOURCE_DIR}/src/js/shared_array_buffer_fix.js
+            ${CMAKE_CURRENT_BINARY_DIR}/shared_array_buffer_fix.js
         COMMAND ${CMAKE_COMMAND}
             -DHTML_FILE=${CMAKE_CURRENT_BINARY_DIR}/WebApplication.html
             -P ${CMAKE_CURRENT_SOURCE_DIR}/cmake/InjectWasmThreadingHelper.cmake
