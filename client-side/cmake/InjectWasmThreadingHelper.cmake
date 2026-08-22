@@ -1,3 +1,9 @@
+# This script patches the generated Qt WebAssembly HTML shell so the
+# shared-array-buffer compatibility helper is loaded before the app startup script.
+# That helper is required for multi-threaded WASM builds because browsers enforce
+# COOP/COEP policies for SharedArrayBuffer, and the generated HTML may omit the
+# script or include an incorrect tag.
+
 if(NOT DEFINED HTML_FILE)
     message(FATAL_ERROR "HTML_FILE must be set.")
 endif()
@@ -8,6 +14,7 @@ endif()
 
 file(READ "${HTML_FILE}" html_content)
 
+# Make sure the page loads the same helper script expected by the app.
 set(helper_file "shared_array_buffer_fix.js")
 set(malformed_helper_script "<script src=\"shared_array_buffer_fix\"></script>\n")
 string(REPLACE "${malformed_helper_script}" "" html_content "${html_content}")
