@@ -1,0 +1,367 @@
+================================================================================
+CppQtQuickWebsite - Suggested Fixes and Improvements
+Generated: 2026-08-23 (static code review only - no builds performed)
+================================================================================
+
+Project goal (per README.md): a Qt 6 + QML + Emscripten/WebAssembly template that
+demonstrates 25 Qt features usable in a browser, deployable to GitHub Pages, also
+buildable for Linux and Windows. Review below is organized by severity.
+
+--------------------------------------------------------------------------------
+1. BUGS (functional problems that likely break or misbehave)
+--------------------------------------------------------------------------------
+
+1.1 main.qml - Home (toolbar) button is broken
+    File: client-side/src/qml/main.qml (homePageIcon ToolButton)
+        onClicked: { stackView.pop(StackView, StackView.Immediate) }
+    The first argument is the StackView *type* (QQmlType), not an item on the
+    stack. StackView.pop(item, transition) will not find that "item" and does
+    nothing, so the home button has no effect.
+    Fix: use stackView.popToInitialItem(StackView.Immediate) - this also handles
+    the case where several pages were stacked (menu pop() only removes one page).
+
+1.2 main.qml - StackView overflows the rounded border frame
+    File: client-side/src/qml/main.qml
+        Rectangle stackViewBorder { anchors.margins: 60; ... }
+        StackView { width: parent.width - 60; height: parent.height - 60; ... }
+    The border rectangle's inner area is parent.width-120, but the StackView is
+    parent.width-60, so every page extends 30 px beyond the visible rounded
+    frame on each side (the border is not clipped).
+    Fix: use width: parent.width - 120 (or anchor the StackView with the same
+    margins as the border and add clip: true to the border rectangle).
+
+1.3 TextFileIO.cpp - file filter passed as dialog caption
+    File: client-side/src/cpp/TextFileIO.cpp, loadFileContent()
+        QFileDialog::getOpenFileContent(
+            Localization::strCpp("Text Files (*.txt)"), [..](...){...});
+    The first parameter of getOpenFileContent() is the *caption*; the filter is
+    the second parameter. As written, the filter string becomes the window title
+    and the dialog shows ALL files instead of *.txt only.
+    Fix: QFileDialog::getOpenFileContent(Localization::strCpp("Open Text File"),
+            Localization::strCpp("Text Files (*.txt)"), callback);
+    Also: saveFileContent() discards the QString return value of
+    QFileDialog::saveFileContent(), so the "File name:" label on SubPage13 is
+    never updated after saving. Consider emitting the returned file name.
+
+1.4 WebSocketServer.cpp - server name localized before singleton exists
+    File: client-side/src/cpp/WebSocketServer.cpp (constructor initializer list)
+        m_webSocketServer{new QWebSocketServer{Localization::strCpp("Echo Server"), ...}}
+    Localization is a QML lazy singleton. If WebSocketServer is constructed
+    before any QML code touches Localization, s_instance is null and the server
+    name silently falls back to the raw key. The instantiation order of the two
+    singletons is undefined.
+    Fix: use a plain literal ("Echo Server") in the constructor, or resolve the
+    localized name lazily (e.g. on startServer()).
+
+1.5 SubPage15.qml / SubPage16.qml - WasdController placed outside View3D
+    Files: client-side/src/qml/SubPage15.qml, SubPage16.qml
+    WasdController is declared as a child of the container Rectangle (sibling of
+    View3D). Qt Quick 3D helpers resolve their target View3D by walking up the
+    object tree, so from outside View3D they may not find it and the WASD keys
+    may do nothing (this also explains the README "known issue" about 3D views
+    not getting keyboard focus).
+    Fix: move WasdController inside the View3D item (as in the Qt docs examples).
+
+1.6 SubPage15/16 - forceActiveFocus() in Component.onCompleted is unreliable
+    view3d.forceActiveFocus() runs before the View3D is part of a visible
+    window's focus chain, so keyboard focus is often not actually set.
+    Fix: request focus with a small delay (QTimer::singleShot(0, ...)) or after
+    the window is shown; or set initialFocus/activeFocusOnTab appropriately.
+
+1.7 SubPage25.qml - injected <video> position is computed in window coordinates
+    File: client-side/src/qml/SubPage25.qml
+        var pos = videoContainer.mapToItem(null, 0, 0);
+    mapToItem(null, ...) returns coordinates relative to the QML window origin,
+    but the injected element is positioned absolutely relative to document.body.
+    On the WebAssembly build the canvas is centered by the HTML shell and may
+    not start at (0,0), and DPI/scaling can differ, so the browser video element
+    can be offset from the black container rectangle.
+    Fix: compute the offset from the canvas element itself (e.g. read
+    document.querySelector('canvas').getBoundingClientRect() in JS and add the
+    QML item's window-relative position, accounting for the canvas scale).
+
+1.8 Translation files contain stale/typo keys
+    Files: client-side/resources/translation/local_strings_*.json
+    Keys present in pl/de but never used in the code (dead weight / typos):
+        "Tex Area"                (typo of "Text Area")
+        "SubPage"                 (code uses "SubPage %1")
+        "Select Color"            (code uses "Select Font Color")
+        "Using ColorDialog in QML."
+        "Error downloading"       (code uses "Error downloading: %1")
+        "MAIN PAGE"  (de only)
+        "SAVE"       (de only)
+        "Count 1", "Count 2" (de only; code uses "Count %1")
+    Fix: remove dead keys; keep en_US/pl_PL/de_DE in sync (pl has 163 keys,
+    de has 166). Consider a small script/CI check that diffs used keys (from
+    Localization.string()/strCpp() call sites) against the JSON files.
+    Note: local_strings_en_US.json is intentionally empty (English text equals
+    the keys). That works, but any non-English key or placeholder-only key
+    would show up untranslated in English - document this convention or fill
+    the file for symmetry.
+
+--------------------------------------------------------------------------------
+2. LIKELY PROBLEMS / DESIGN CONCERNS (worth verifying or reconsidering)
+--------------------------------------------------------------------------------
+
+2.1 main.cpp - unused emscripten include
+    #include <emscripten.h> is guarded by Q_OS_WASM but no emscripten API is
+    used anywhere in main.cpp. Remove it (or it invites the question of what it
+    is for).
+
+2.2 main.cpp - include style
+    #include <QtWidgets/QApplication> works but is non-idiomatic; prefer
+    #include <QApplication>. Also note QApplication (Widgets) is required only
+    because TextFileIO uses QFileDialog; a comment already covers this - good.
+
+2.3 CMakeLists.txt - Debug WASM build may not produce C++ DWARF
+    -g is only passed as a *link* option. Emscripten emits DWARF based on the
+    -g flag at *compile* time; the README promises C++ debugging in Chrome via
+    the DWARF extension. Add -g (or -g3) to WASM_COMPILE_OPTIONS for Debug
+    builds as well.
+    Minor: add_link_options("-O0") in Debug is redundant (default) but harmless.
+
+2.4 CMakeLists.txt - shared_array_buffer_fix.js handled for single-thread builds
+    The EMSCRIPTEN post-build step copies shared_array_buffer_fix.js and injects
+    the script tag into WebApplication.html unconditionally. For single-thread
+    builds this file is useless (and the README lists it as multithread-only).
+    Consider gating the copy/injection on the multithread toolchain, or keep it
+    as-is and document that it is a no-op for single-thread builds.
+
+2.5 CMakeLists.txt - find_package(Qt6 QUIET REQUIRED ...)
+    QUIET + REQUIRED together is contradictory (QUIET suppresses the REQUIRED
+    error message). Use find_package(Qt6 REQUIRED COMPONENTS ...).
+
+2.6 CMakeLists.txt - target list maintenance
+    The qt_add_executable() list enumerates every .cpp file manually. It is
+    easy to forget new files (the project currently compiles all of them, but
+    e.g. a file added later won't be built). Consider a file(GLOB_RECURSE ...
+    CONFIGURE_DEPENDS) or at least a comment; also the list mixes sources and
+    .qrc files without a visual separator.
+
+2.7 WebSocketClient/Server - deprecated/legacy APIs
+    - QWebSocketServer::NonSecureMode constructor is deprecated since Qt 6.5;
+      prefer the newer QWebSocketServer(serverName, SecureMode, parent)
+      overloads with an explicit protocol (Qt 6.12 is the target here).
+    - QNetworkReply::errorOccurred (used in ImageDownloader.cpp) is deprecated;
+      use the error(QNetworkReply::NetworkError) signal instead.
+
+2.8 BrowserJS.cpp - toLatin1() can corrupt non-ASCII scripts
+    runIntJS/runStringJS/runVoidJS convert code with toLatin1(); any
+    non-Latin1 script (e.g. Polish/Chinese user input on the SubPage6
+    interpreter) is mangled before reaching the browser. Use toUtf8().
+    Also: runIntJS truncates non-integer JS results (e.g. "1.5" -> 1); fine for
+    the demo but worth a comment or a runDoubleJS.
+
+2.9 Localization - language switch reloads the entire QML tree
+    switchLanguage() calls Backend.reloadQML(), which destroys all root
+    objects and re-loads main.qml. Any open ExampleWindow, dialog, or page
+    state (counters, typed text, zoom level) is lost. Since every string is a
+    dynamic Localization.string() call, a full reload is not required - the
+    languageChanged signal could be used to re-evaluate instead. If the reload
+    is kept intentionally (simplest correct approach), document it and consider
+    persisting ZoomSettings.zoomLevel (it currently resets on every switch).
+
+2.10 Localization - Q_PROPERTY without WRITE
+    currentLanguage is declared Q_PROPERTY(... READ currentLanguage NOTIFY
+    languageChanged) but has no WRITE, while setLanguage() is a separate
+    Q_INVOKABLE. QML can only call the function. Adding
+    WRITE setLanguage would let QML bind/assign the property naturally.
+
+2.11 Backend.h - duplicated exposure and unused signal
+    - message() is both the Q_PROPERTY reader and a Q_INVOKABLE (redundant;
+      the property READ already exposes it to QML).
+    - listModel is a CONSTANT property, yet a listModelChanged() signal is
+      declared and never emitted. Remove the signal (or drop CONSTANT).
+
+2.12 Backend::resetInputField(QObject*) - fragile API
+    It takes an arbitrary QObject and pokes its "text" property via QQmlProperty
+    from C++. This couples the backend to a specific QML property name. A
+    friendlier API would be a signal (e.g. textResetRequested(QString)) or
+    exposing the string itself; SubPage10 could set the field in QML.
+    (Functional note: it works today because TextField exposes "text".)
+
+2.13 SubPage6 - eval() of arbitrary user input
+    The "QT JS ENGINE" button runs eval() on free-text input inside the QML JS
+    context, which has access to all QML objects in scope. Fine for a local
+    demo, but as a *template project* this is a bad habit to copy; consider
+    using QtQml's QJSEngine on a restricted object, or at least a comment.
+    Also try/catch around BrowserJS.runIntJS() cannot catch errors raised
+    inside emscripten_run_script* (they are not JS exceptions); handle via
+    return value / a wrapper function in JS.
+
+2.14 SubPage18 - audio session state survives page switches
+    Audio playback state lives on window["qmlAudioState_..."] and is only
+    cleaned up in Component.onDestruction. If the user navigates away from
+    SubPage18 with music playing, the page is popped and destroyed, so cleanup
+    runs - OK. But the audioContext is created without a user-gesture guard:
+    browsers may keep it in "suspended" state after a reload of the page;
+    calling audioContext.resume() in the decode callback would make playback
+    more reliable.
+
+2.15 SubPage24 - base64 of the whole MP4 embedded in a data URL
+    Base64Converter reads the entire earth.mp4 into a QString and sets it as a
+    data: URL. This doubles memory (base64 expansion) and makes the JS string
+    huge; with a larger video this can exhaust browser memory. Same pattern in
+    SubPage25 (video.src data URL) and SubPage17 (audio). Acceptable for demo
+    assets, but document the limitation; for the SubPage25 case consider
+    mounting the file in Emscripten's virtual FS and using a blob URL instead.
+
+2.16 Cross-origin resources vs COEP in multithreaded deployments
+    With shared_array_buffer_fix.js the site runs under
+    Cross-Origin-Embedder-Policy: require-corp. SubPage21 (DiceBear API) and
+    SubPage23 (picsum.photos) load cross-origin images/APIs. They work only if
+    those servers send CORS/CORP-permissive headers. If a third party changes
+    headers, those pages break silently in multithreaded builds while
+    single-threaded builds keep working. Consider a note in the README "Known
+    issues" section, or a status message on failure (SubPage21 already shows
+    one; SubPage23 shows the error label - good).
+
+2.17 SubPage19 - WebSocket server is only warned about, not disabled
+    The README "Known issues" says "WebSocket server controls are disabled in
+    the WASM build", but SubPage19 only shows a red warning label; START is
+    still enabled and QWebSocketServer::listen() will fail in the browser.
+    Either disable the controls in browser builds (as documented) or update the
+    README to match the actual behavior.
+
+2.18 SubPage12 - title says "parallel computations" but FakeProcessor is timer-based
+    In single-threaded WASM there are no threads at all; even in
+    multithreaded builds FakeProcessor uses a QTimer, not threads. The page
+    title/description ("Long-running parallel computations in C++") is
+    misleading for the most common (single-thread) build. Consider rewording
+    (e.g. "Long-running background tasks") or actually using QThreadPool in the
+    multithreaded build.
+
+--------------------------------------------------------------------------------
+3. CODE QUALITY / CONSISTENCY (non-urgent cleanups)
+--------------------------------------------------------------------------------
+
+3.1 main.qml - Qt.quit() is legacy; use Qt.application.quit().
+3.2 main.qml - magic numbers (anchors.margins: 60, toolbar height 48, spacer
+    items of width 25, stackView width - 60). Extract to named properties for
+    maintainability.
+3.3 main.qml - ToolBar's Row is top-aligned inside a 48 px bar; children have
+    no vertical centering (anchors.verticalCenter) - toolbar icons can appear
+    off-center depending on button implicit heights.
+3.4 SubPage4 - anchors are set at runtime (dialogMessage.anchors.centerIn =
+    parent.parent). Cleaner: create the dialog with a parent binding or use
+    parent: + overlay; runtime anchor assignment is a common QML smell.
+3.5 SubPage14 - orangeBall property names maxHeight/minHeight are inverted
+    relative to their values (maxHeight=0.15*h is the *top* position in
+    screen coordinates). Rename to topPosition/bottomPosition to avoid
+    confusion.
+3.6 SubPage5 - drag constraints are applied only on onReleased; the item can
+    visually leave the area while dragging. Also consider
+    drag.maximumX/maximumY/minimumX/minimumY which exist exactly for this.
+3.7 SubPage11 - duplicated delegate code for the two ListViews; could be a
+    shared inline component. Minor.
+3.8 SubPage17 - isReady flag is set unconditionally in onCompleted even when
+    Base64Converter returns an empty string (file missing); the play button
+    would be enabled with an empty source. Check b64 length like SubPage18 does.
+3.9 FakeProcessor - enum Status declared as an unscoped C++ enum; scoped enum
+    class Status { ... } + Q_ENUM is the modern style.
+3.10 FakeProcessor - timer interval fixed at 100 ms; progress granularity ties
+    directly to real time (a "5 deciseconds" task really takes 0.5 s). Fine for
+    the demo; a comment would help.
+3.11 WebSocketClient.cpp - startClient() calls m_webSocket.close() when a
+    previous state is not Unconnected, then immediately open()s. close() is
+    asynchronous; opening while the socket is Closing can fail. Prefer waiting
+    for disconnected or recreating the socket.
+3.12 ImageDownloader - size limit is enforced after readAll() (up to
+    MaxImageBytes can still be buffered); the downloadProgress guard helps but
+    the final readAll is unbounded in theory. Acceptable at 10 MB; consider
+    setTransferTimeout + streaming read with a hard abort (already partially
+    done in onDownloadProgress - good).
+3.13 BrowserJS.h - file is named BrowserJS.cpp/.h but the include guard is
+    JAVASCRIPT_H; rename the guard to BROWSERJS_H.
+3.14 Backend.cpp - textResource() opens ":/resources/text/" + resourceName with
+    no validation of resourceName; a path traversal in the argument (e.g.
+    "../") could be attempted. Harmless today (called with a literal) but
+    sanitize or whitelist file names.
+3.15 Consistent style: some classes use "m_" prefix (most), BrowserJS uses
+    "b_" prefix for a bool and "s_instance" for statics while Localization
+    uses the same. Unify on one convention.
+3.16 SubPagesDescriptions.qml hard-codes the 25 descriptions in 3 languages
+    inline, while all other strings live in the JSON translation files. Moving
+    them into the JSON (or at least into the same mechanism) would keep one
+    localization pipeline.
+
+--------------------------------------------------------------------------------
+4. BUILD SYSTEM / PROJECT HYGIENE
+--------------------------------------------------------------------------------
+
+4.1 Empty .github/workflows/ directory
+    The directory exists but contains no files (git does not even track empty
+    directories - it will disappear on a fresh clone). Either add a CI workflow
+    (e.g. configure+build for Linux native and/or WASM on push) or delete the
+    empty directory.
+
+4.2 *.backup files in the working tree
+    CHANGELOG.md.backup and README.md.backup exist (correctly gitignored via
+    *.backup). Delete them or automate the backup; they invite divergence from
+    the real README/CHANGELOG.
+
+4.3 README - emsdk version
+    README pins emscripten "5.0.5". Double-check this is the intended emsdk
+    release string (emsdk versions are of the form 4.x.x today); if it is a
+    project-specific convention, consider a comment so users don't get
+    "unknown version" from emsdk.
+
+4.4 README - "Files to deploy"
+    Consider also mentioning that shared_array_buffer_fix.js must be referenced
+    in <head> BEFORE qtloader.js (the CMake inject puts it right before
+    WebApplication.js, which is after qtloader.js; verify the ordering still
+    satisfies the service-worker registration timing, and document the
+    manually-deployed variant accordingly).
+
+4.5 CMakeLists - project() name vs output name
+    project(CppQtQuickWebsite) with OUTPUT_NAME "WebApplication": the QML module
+    URI is "CppQtQuickWebsite.CppObjects" while the binary is "WebApplication".
+    This is fine but the three different names (project, module URI, output
+    binary) are a source of confusion for template users; a comment mapping
+    them would help.
+
+4.6 No warning flags
+    No -Wall/-Wextra (or /W4) is added for native builds; as a template project
+    enabling warnings (and treating them as errors in CI) would catch the
+    deprecated-API items from section 2.7 automatically.
+
+4.7 LICENSE is present (MIT-style) but README does not link to it.
+    A one-line "Licensed under MIT - see LICENSE." in the README is standard
+    for a template repository.
+
+--------------------------------------------------------------------------------
+5. ROADMAP / FEATURE IDEAS (beyond the README's own list)
+--------------------------------------------------------------------------------
+
+5.1 Add a CI workflow (see 4.1) that builds Debug+Release for at least one
+    native target and the WASM single-thread target; this would have caught the
+    deprecation warnings (2.7) and the translation drift (1.8).
+5.2 Persist ZoomSettings.zoomLevel and the chosen language (e.g. via the same
+    BinaryStorage mechanism) so they survive reloads/restarts - the language
+    currently resets to English on every launch.
+5.3 Add an i18n consistency check (used keys vs JSON files) as a script or CI
+    step (see 1.8).
+5.4 SubPage23 stores data under a fixed file name ("cached_image.dataurl");
+    supporting multiple images / a file list would better demonstrate
+    BinaryStorage's fileNames()/fileSize() API (currently unused in QML).
+5.5 Accessibility (already on the roadmap): ToolTips with delay: 0 and
+    visible: parent.hovered everywhere are fine for mouse, but consider
+    accessibleName/accessibleDescription properties for screen readers, and
+    keyboard shortcuts for the toolbar buttons (currently mouse-only).
+5.6 The mobile UI idea from the README: the fixed anchors.margins: 60 in
+    main.qml and fixed-width rows (e.g. 550x350 drag area, 250 px fields) will
+    not fit phone screens - a Screen.width-based breakpoint would be the first
+    step.
+
+================================================================================
+Summary of the most important items:
+  - Fix the non-working home button (1.1) - visible functional bug.
+  - Fix StackView overflow over the frame (1.2) - visible layout bug.
+  - Fix the file dialog filter/caption mix-up (1.3).
+  - Fix lazy-singleton ordering for the WebSocket server name (1.4).
+  - Move WasdController inside View3D and fix 3D focus (1.5, 1.6).
+  - Add -g to compile options for WASM Debug so the advertised C++ debugging
+    actually works (2.3).
+  - Clean stale translation keys and add an i18n check (1.8, 5.3).
+  - Add CI or remove the empty .github/workflows directory (4.1).
+================================================================================
