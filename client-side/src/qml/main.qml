@@ -173,7 +173,7 @@ ApplicationWindow {
             ToolButton {
                 icon.source: "qrc:/resources/icons/homePageIcon.svg"
                 onClicked: {
-                    stackView.pop(StackView, StackView.Immediate)
+                    stackView.pop(StackView.Immediate)
                 }
                 ToolTip {
                     text: Localization.string("Navigate to the main page.")

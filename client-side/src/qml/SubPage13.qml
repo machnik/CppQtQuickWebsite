@@ -55,8 +55,8 @@ Rectangle {
         anchors.centerIn: parent
 
         Rectangle {
-            width: parent.width
-            height: parent.height
+            width: fileContentsScrollView.availableWidth
+            height: Math.max(fileContentsScrollView.availableHeight, fileContentsTextArea.contentHeight)
             border.color: "black"
             color: "transparent"
 
@@ -64,7 +64,7 @@ Rectangle {
                 id: fileContentsTextArea
                 text: Backend.textResource("long_text.txt")
                 width: parent.width
-                height: parent.height
+                height: Math.max(fileContentsScrollView.availableHeight, contentHeight)
                 wrapMode: Text.WordWrap
                 font.pixelSize: ZoomSettings.regularFontSize
             }

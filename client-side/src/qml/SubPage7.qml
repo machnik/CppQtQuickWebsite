@@ -99,11 +99,11 @@ Rectangle {
                 placeholderText: Localization.string("Enter key and press ENTER to load entry")
                 font.pointSize: bigFontSize
                 onAccepted: {
-                    if (keyField.text === "") {
+                    var key = keyField.text.trim();
+                    if (key === "") {
                         resultLabel.text = msgKeyEmpty;
                         return;
                     }
-                    var key = keyField.text;
                     var value = loadSetting(key);
                     resultLabel.text = msgLoaded.arg(key).arg(value ? value : msgEmpty);
                 }
@@ -119,10 +119,14 @@ Rectangle {
                 placeholderText: Localization.string("Enter value and press ENTER to save entry")
                 font.pointSize: bigFontSize
                 onAccepted: {
-                    var key = keyField.text;
+                    var key = keyField.text.trim();
+                    if (key === "") {
+                        resultLabel.text = msgKeyEmpty;
+                        return;
+                    }
                     var value = valueField.text;
                     saveSetting(key, value);
-                    resultLabel.text = msgSaved.arg(value ? value : msgEmpty).arg(key ? key : msgEmpty);
+                    resultLabel.text = msgSaved.arg(value ? value : msgEmpty).arg(key);
                 }
             }
         }

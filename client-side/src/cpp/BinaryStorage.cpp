@@ -43,30 +43,30 @@ QByteArray BinaryStorage::file(const QString &fileName) const
     return data;
 }
 
-void BinaryStorage::setFile(const QString &fileName, const QByteArray &data)
+bool BinaryStorage::setFile(const QString &fileName, const QByteArray &data)
 {
     if (fileName.isEmpty()) {
-        return;
+        return false;
     }
 
     m_settings->beginGroup(FILES_GROUP);
     m_settings->setValue(fileName, data);
     m_settings->endGroup();
 
-    m_settings->sync();
+    return syncSettings();
 }
 
-void BinaryStorage::removeFile(const QString &fileName)
+bool BinaryStorage::removeFile(const QString &fileName)
 {
     if (fileName.isEmpty()) {
-        return;
+        return false;
     }
 
     m_settings->beginGroup(FILES_GROUP);
     m_settings->remove(fileName);
     m_settings->endGroup();
 
-    m_settings->sync();
+    return syncSettings();
 }
 
 bool BinaryStorage::hasFile(const QString &fileName) const
@@ -82,19 +82,19 @@ bool BinaryStorage::hasFile(const QString &fileName) const
     return exists;
 }
 
-void BinaryStorage::clearFiles()
+bool BinaryStorage::clearFiles()
 {
     m_settings->beginGroup(FILES_GROUP);
     m_settings->clear();
     m_settings->endGroup();
 
-    m_settings->sync();
+    return syncSettings();
 }
 
 QStringList BinaryStorage::fileNames() const
 {
     m_settings->beginGroup(FILES_GROUP);
-    auto names{m_settings->childKeys()};
+    auto names{m_settings->allKeys()};
     m_settings->endGroup();
 
     return names;
@@ -121,9 +121,21 @@ QString BinaryStorage::fileAsString(const QString &fileName) const
     return QString::fromUtf8(data);
 }
 
-void BinaryStorage::setFileAsString(const QString &fileName, const QString &data)
+bool BinaryStorage::setFileAsString(const QString &fileName, const QString &data)
 {
-    setFile(fileName, data.toUtf8());
+    return setFile(fileName, data.toUtf8());
+}
+
+bool BinaryStorage::syncSettings()
+{
+    m_settings->sync();
+    const auto status{m_settings->status()};
+    if (status != QSettings::NoError) {
+        qWarning() << "BinaryStorage could not sync QSettings data; status:" << status;
+        return false;
+    }
+
+    return true;
 }
 
 void BinaryStorage::switchToWebLocalStorage()

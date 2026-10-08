@@ -12,6 +12,8 @@ Rectangle {
     readonly property string subHeaderText: Localization.string("QML ListViews with QML and C++ models.")
 
     property int regularFontSize: ZoomSettings.regularFontSize
+    property int nextQmlItemNumber: 6
+    property int nextCppItemNumber: 6
 
     color: "transparent"
 
@@ -44,7 +46,11 @@ Rectangle {
                     text: Localization.string("Add Item to QML ListView")
                     font.pointSize: regularFontSize
                     Layout.fillWidth: true
-                    onClicked: listViewQML.model.append({"text": (Localization.string("QML Item %1")).arg(listViewQML.model.count + 1)})
+                    onClicked: {
+                        listViewQML.model.append({
+                            "text": (Localization.string("QML Item %1")).arg(nextQmlItemNumber++)
+                        });
+                    }
                 }
 
                 Rectangle {
@@ -90,9 +96,10 @@ Rectangle {
                     text: Localization.string("Remove Item from QML ListView")
                     font.pointSize: regularFontSize
                     Layout.fillWidth: true
+                    enabled: listViewQML.currentIndex >= 0
                     onClicked: {
-                        if (listViewQML.model.count > 0) {
-                            listViewQML.model.remove(0)
+                        if (listViewQML.currentIndex >= 0) {
+                            listViewQML.model.remove(listViewQML.currentIndex);
                         }
                     }
                 }
@@ -107,7 +114,11 @@ Rectangle {
                     text: Localization.string("Add Item to C++ ListView")
                     font.pointSize: regularFontSize
                     Layout.fillWidth: true
-                    onClicked: Backend.listModel.addItem((Localization.string("C++ Item %1")).arg(listViewCpp.count + 1))
+                    onClicked: {
+                        Backend.listModel.addItem(
+                            (Localization.string("C++ Item %1")).arg(nextCppItemNumber++)
+                        );
+                    }
                 }
 
                 Rectangle {
@@ -153,9 +164,10 @@ Rectangle {
                     text: Localization.string("Remove Item from C++ ListView")
                     font.pointSize: regularFontSize
                     Layout.fillWidth: true
+                    enabled: listViewCpp.currentIndex >= 0
                     onClicked: {
-                        if (listViewCpp.count > 0) {
-                            Backend.listModel.removeItem(0)
+                        if (listViewCpp.currentIndex >= 0) {
+                            Backend.listModel.removeItem(listViewCpp.currentIndex);
                         }
                     }
                 }
@@ -177,8 +189,10 @@ Rectangle {
                 "text": (Localization.string("QML Item %1")).arg(5)
             })
 
-            Backend.listModel.addItem((Localization.string("C++ Item %1")).arg(4))
-            Backend.listModel.addItem((Localization.string("C++ Item %1")).arg(5))
+            Backend.listModel.clear()
+            for (let i = 1; i <= 5; i++) {
+                Backend.listModel.addItem((Localization.string("C++ Item %1")).arg(i))
+            }
         }
     }
 

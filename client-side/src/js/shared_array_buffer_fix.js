@@ -45,20 +45,7 @@ if (typeof window !== 'undefined') {
         }
 
         if (req.mode === "no-cors") {
-            req = new Request(req.url, {
-                cache: req.cache,
-                credentials: "omit",
-                destination: req.destination,
-                headers: req.headers,
-                integrity: req.integrity,
-                keepalive: req.keepalive,
-                method: req.method,
-                mode: req.mode,
-                redirect: req.redirect,
-                referrer: req.referrer,
-                referrerPolicy: req.referrerPolicy,
-                signal: req.signal,
-            });
+            req = new Request(req, { credentials: "omit" });
         }
 
         let response;

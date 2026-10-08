@@ -200,7 +200,10 @@ Rectangle {
             return
         }
         
-        BinaryStorage.setFileAsString(imageFileName, sourceStr)
+        if (!BinaryStorage.setFileAsString(imageFileName, sourceStr)) {
+            setStatus(Localization.string("Storage operation failed. Check available storage and permissions."), "red")
+            return
+        }
         setStatus(Localization.string("Stored to QSettings"), "green")
     }
 
@@ -221,7 +224,10 @@ Rectangle {
 
     // Clears the stored image from BinaryStorage
     function clearStorage() {
-        BinaryStorage.removeFile(imageFileName)
+        if (!BinaryStorage.removeFile(imageFileName)) {
+            setStatus(Localization.string("Storage operation failed. Check available storage and permissions."), "red")
+            return
+        }
         img.source = ""
         setStatus(Localization.string("QSettings cleared"), "green")
     }

@@ -1,9 +1,5 @@
 cmake_minimum_required(VERSION 3.29)
-project(CppQtQuickWebsite VERSION 1.1.5 LANGUAGES CXX)
-
-# Set the project's C++ standard to C++20
-set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+project(CppQtQuickWebsite VERSION 1.1.6 LANGUAGES CXX)
 
 # Enable the Qt Meta-Object Compiler and Qt Resource Compiler
 set(CMAKE_AUTOMOC ON)
@@ -11,9 +7,14 @@ set(CMAKE_AUTORCC ON)
 
 # Toggleable option to enable WebAssembly exceptions
 option(ENABLE_WASM_EXCEPTIONS "Enable C++ exceptions in WebAssembly builds" OFF)
+option(ENABLE_WASM_THREADING_HELPER "Inject the cross-origin isolation helper for multithreaded WebAssembly builds" OFF)
 
 set(WASM_COMPILE_OPTIONS)
 set(WASM_COMPILE_DEFINITIONS)
+
+if(ENABLE_WASM_THREADING_HELPER AND NOT EMSCRIPTEN)
+    message(FATAL_ERROR "ENABLE_WASM_THREADING_HELPER is only available for WebAssembly builds.")
+endif()
 
 # Set default build type for single-configuration generators if not specified: Release
 if(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
@@ -74,10 +75,7 @@ elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
 endif()
 
 # Find the required Qt modules
-find_package(Qt6 QUIET REQUIRED COMPONENTS Core Quick Quick3D QuickControls2 Multimedia WebSockets Widgets Network)
-
-# Include the project's C++ headers
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/cpp)
+find_package(Qt6 6.12 REQUIRED COMPONENTS Core Quick Quick3D QuickControls2 Multimedia WebSockets Widgets Network)
 
 # Sets Qt-specific settings for the project
 qt_standard_project_setup()
@@ -107,6 +105,9 @@ qt_add_executable(${PROJECT_NAME}
     "src/qml/qml.qrc"
     "resources/resources.qrc"
 )
+
+target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_20)
+target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/cpp)
 
 # Exposing C++ items to QML
 qt6_add_qml_module(${PROJECT_NAME}
@@ -143,7 +144,7 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
     COMMENT "Copying website icon and splash image to build directory..."
 )
 
-if(EMSCRIPTEN)
+if(EMSCRIPTEN AND ENABLE_WASM_THREADING_HELPER)
     add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy
             ${CMAKE_CURRENT_SOURCE_DIR}/src/js/shared_array_buffer_fix.js
@@ -154,4 +155,3 @@ if(EMSCRIPTEN)
         COMMENT "Enabling the WebAssembly threading helper..."
     )
 endif()
-

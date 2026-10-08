@@ -55,13 +55,16 @@ Rectangle {
     }
 
     Label {
-        text: Localization.string("WebAssembly warning: server behavior may differ in browser environment.")
+        text: Localization.string("WebAssembly does not support hosting WebSocket servers with this Qt build. You can still try starting one to see the platform error; use a native build to host the server.")
         visible: showWasmWarning
         anchors.bottom: portField.top
         anchors.horizontalCenter: parent.horizontalCenter
+        width: parent.width * 0.75
         anchors.margins: 20
         font.pointSize: ZoomSettings.bigFontSize
         color: "red"
+        wrapMode: Text.WordWrap
+        horizontalAlignment: Text.AlignHCenter
     }
 
     TextField {
@@ -82,8 +85,6 @@ Rectangle {
         id: startButton
         text: WebSocketServer.isServerRunning ? Localization.string("STOP") : Localization.string("START")
         font.pointSize: smallFontSize
-        checkable: true
-        enabled: true
         anchors.bottom: bouncedMessageField.top
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.margins: 10

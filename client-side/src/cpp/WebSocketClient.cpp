@@ -11,6 +11,9 @@ WebSocketClient::WebSocketClient(QObject *parent)
     connect(&m_webSocket, &QWebSocket::connected, this, &WebSocketClient::onConnected);
     connect(&m_webSocket, &QWebSocket::disconnected, this, &WebSocketClient::onDisconnected);
     connect(&m_webSocket, &QWebSocket::errorOccurred, this, &WebSocketClient::onErrorOccurred);
+    connect(&m_webSocket, &QWebSocket::stateChanged, this, [this](QAbstractSocket::SocketState) {
+        emit clientStateChanged();
+    });
     connect(&m_webSocket, &QWebSocket::textMessageReceived, this, &WebSocketClient::onTextMessageReceived);
 }
 
@@ -25,7 +28,7 @@ void WebSocketClient::startClient(const QString & url)
     }
 
     if (m_webSocket.state() != QAbstractSocket::UnconnectedState) {
-        m_webSocket.close();
+        m_webSocket.abort();
     }
 
     m_webSocket.open(webSocketUrl);
@@ -33,8 +36,10 @@ void WebSocketClient::startClient(const QString & url)
 
 void WebSocketClient::stopClient()
 {
-    if (m_webSocket.state() != QAbstractSocket::UnconnectedState) {
+    if (m_webSocket.state() == QAbstractSocket::ConnectedState) {
         m_webSocket.close();
+    } else if (m_webSocket.state() != QAbstractSocket::UnconnectedState) {
+        m_webSocket.abort();
     }
 
     setClientRunning(false);
@@ -45,9 +50,20 @@ bool WebSocketClient::isClientRunning() const
     return m_isClientRunning;
 }
 
+bool WebSocketClient::isClientConnecting() const
+{
+    const auto state{m_webSocket.state()};
+    return state == QAbstractSocket::HostLookupState || state == QAbstractSocket::ConnectingState;
+}
+
+bool WebSocketClient::isClientActive() const
+{
+    return m_webSocket.state() != QAbstractSocket::UnconnectedState;
+}
+
 void WebSocketClient::sendMessage(const QString & message)
 {
-    if (!m_isClientRunning) {
+    if (m_webSocket.state() != QAbstractSocket::ConnectedState) {
         emit errorOccurred(Localization::strCpp("Connect to a server before sending a message."));
         return;
     }

@@ -8,7 +8,7 @@ import CppQtQuickWebsite.CppObjects
 Rectangle {
 
     readonly property string headerText: (Localization.string("SubPage %1")).arg(12)
-    readonly property string subHeaderText: Localization.string("Long-running parallel computations in C++.")
+    readonly property string subHeaderText: Localization.string("Asynchronous timer-driven progress updates in C++.")
 
     property int regularFontSize: ZoomSettings.regularFontSize
 

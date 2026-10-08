@@ -12,15 +12,6 @@ Rectangle {
 
     property int smallFontSize: ZoomSettings.smallFontSize
 
-    function parsedPort() {
-        return parseInt(portField.text, 10)
-    }
-
-    function hasValidPort() {
-        var port = parsedPort()
-        return !isNaN(port) && port >= 1 && port <= 65535
-    }
-
     function resetTextFields() {
         messageToSendField.text = ""
         receivedMessageField.text = ""
@@ -55,14 +46,13 @@ Rectangle {
     }
 
     TextField {
-        id: portField
-        placeholderText: Localization.string("(enter port number here)")
+        id: urlField
+        text: "ws://localhost:1234"
+        placeholderText: Localization.string("WebSocket URL (e.g. ws://localhost:1234)")
         font.pointSize: smallFontSize
-        readOnly: WebSocketClient.isClientRunning
-        inputMethodHints: Qt.ImhDigitsOnly
-        maximumLength: 5
-        validator: IntValidator { bottom: 1; top: 65535 }
-        width: 250
+        readOnly: WebSocketClient.isClientActive
+        maximumLength: 2048
+        width: 400
         anchors.bottom: startButton.top
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.margins: 10
@@ -70,26 +60,21 @@ Rectangle {
 
     Button {
         id: startButton
-        text: WebSocketClient.isClientRunning ? Localization.string("STOP") : Localization.string("START")
+        text: WebSocketClient.isClientActive
+              ? (WebSocketClient.isClientConnecting ? Localization.string("CANCEL") : Localization.string("STOP"))
+              : Localization.string("START")
         font.pointSize: smallFontSize
-        checkable: true
         anchors.bottom: messageToSendField.top
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.margins: 10
         onClicked: {
-            if (WebSocketClient.isClientRunning) {
+            if (WebSocketClient.isClientActive) {
                 WebSocketClient.stopClient();
                 resetTextFields();
             } else {
                 errorField.text = ""
                 receivedMessageField.text = ""
-
-                if (!hasValidPort()) {
-                    errorField.text = Localization.string("Please enter a valid port number between 1 and 65535.")
-                    return
-                }
-
-                WebSocketClient.startClient("ws://localhost:" + parsedPort());
+                WebSocketClient.startClient(urlField.text.trim());
             }
         }
     }

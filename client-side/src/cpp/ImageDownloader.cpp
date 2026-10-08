@@ -81,7 +81,7 @@ void ImageDownloader::onDownloadFinished()
     }
 
     auto contentType{normalizedMimeType(reply->header(QNetworkRequest::ContentTypeHeader).toString())};
-    if (!isSupportedImageMimeType(contentType)) {
+    if (contentType.isEmpty() || contentType == "application/octet-stream") {
         contentType = guessMimeType(reply->url().toString());
     }
 

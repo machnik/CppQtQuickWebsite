@@ -31,7 +31,7 @@ public:
     Q_ENUM(Status)
 
     int deciseconds() const;
-    void setDeciseconds(int seconds);
+    void setDeciseconds(int deciseconds);
     int progress() const;
     Status status() const;
 

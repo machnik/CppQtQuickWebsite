@@ -1,5 +1,8 @@
 # Changelog
 
+## [1.1.6] - 2026-10-08
+- Improved WebAssembly, networking, storage, and QML examples and documentation.
+
 ## [1.0.0] - 2025-02-20
 - Initial MVP release.
 

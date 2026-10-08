@@ -57,38 +57,39 @@ source emsdk_env.sh
 
 ### 🪟︎ Windows
 
-_TIP: `setx` sets permanent system environment variables. They are available in all NEW terminal instances. To set temporary variables that are available only in the current terminal instance, use `set` instead._
+_The commands below use `set`, so the variables apply to the current Command Prompt. Run them again in each new terminal. To persist variables, configure them through Windows Settings; avoid rewriting `PATH` with `setx`, which can truncate long values._
 
 #### Native
 
 Select **LLVM-MinGW** in the **Qt Maintenance Tool** (under Qt -> Developer and Designer Tools).
 
 ```bat
-setx PATH "%PATH%;"%USERPROFILE%\Qt\Tools\llvm-mingw1706_64\bin"
+set "PATH=%USERPROFILE%\Qt\Tools\llvm-mingw1706_64\bin;%PATH%"
 
-setx QT_BIN_LLVM_MINGW "%USERPROFILE%\Qt\6.12.0\llvm-mingw_64"
+set "QT_BIN_LLVM_MINGW=%USERPROFILE%\Qt\6.12.0\llvm-mingw_64"
 
-setx PATH "%QT_BIN_LLVM_MINGW%\bin;%PATH%"
-setx QML2_IMPORT_PATH "%QT_BIN_LLVM_MINGW%\qml"
-setx QT_PLUGIN_PATH "%QT_BIN_LLVM_MINGW%\plugins"
+set "PATH=%QT_BIN_LLVM_MINGW%\bin;%PATH%"
+set "QML2_IMPORT_PATH=%QT_BIN_LLVM_MINGW%\qml"
+set "QT_PLUGIN_PATH=%QT_BIN_LLVM_MINGW%\plugins"
 ```
 
 #### For WebAssembly
 
 ```bat
 :: Either single-thread:
-setx QT_BIN_WASM "%USERPROFILE%\Qt\6.12.0\wasm_singlethread"
+set "QT_BIN_WASM=%USERPROFILE%\Qt\6.12.0\wasm_singlethread"
 :: ... or multi-thread:
-setx QT_BIN_WASM "%USERPROFILE%\Qt\6.12.0\wasm_multithread"
+set "QT_BIN_WASM=%USERPROFILE%\Qt\6.12.0\wasm_multithread"
 
-setx PATH "%QT_BIN_WASM%\bin;%PATH%"
-setx QML2_IMPORT_PATH "%QT_BIN_WASM%\qml"
-setx QT_PLUGIN_PATH "%QT_BIN_WASM%\plugins"
+set "PATH=%QT_BIN_WASM%\bin;%PATH%"
+set "QML2_IMPORT_PATH=%QT_BIN_WASM%\qml"
+set "QT_PLUGIN_PATH=%QT_BIN_WASM%\plugins"
 
 git clone https://github.com/emscripten-core/emsdk.git
 cd emsdk
 emsdk.bat install 5.0.5
 emsdk.bat activate --permanent 5.0.5
+call emsdk_env.bat
 ```
 
 ## 🌐 Build for WebAssembly
@@ -99,6 +100,8 @@ To enable C++ exceptions (disabled by default), in _CMakeLists.txt_ switch this 
 ```cmake
 option(ENABLE_WASM_EXCEPTIONS "Enable C++ exceptions in WebAssembly builds" OFF)
 ```
+
+For a `wasm_multithread` build, enable the cross-origin isolation service-worker helper with `-DENABLE_WASM_THREADING_HELPER=ON`. Leave it off for single-threaded builds.
 
 
 ### On Linux
@@ -192,9 +195,8 @@ The build process generates many files in the output directory, of which only a 
 - _WebApplication.js_
 - _WebApplication.html_
 - _WebApplication.wasm_
-- _WebApplication.worker.js_
 
-For a multithreaded build, the generated directory also contains _shared_array_buffer_fix.js_.
+For a multithreaded build, also deploy _WebApplication.worker.js_ and, when `ENABLE_WASM_THREADING_HELPER=ON`, _shared_array_buffer_fix.js_.
 
 Rename _WebApplication.html_ to _index.html_ for a simpler website URL.
 
@@ -212,7 +214,7 @@ The content of _qtlogo.svg_ can be modified to contain a custom splash image.
 
 ### Multithreading
 
-If you are using _wasm_multithread_ binaries, sharing memory via `SharedArrayBuffer` must be allowed by setting proper COEP and COOP policies in HTTP headers. This is currently not directly possible in **GitHub**, but there is a workaround:
+If you are using _wasm_multithread_ binaries, sharing memory via `SharedArrayBuffer` must be allowed by setting proper COEP and COOP policies in HTTP headers. This is currently not directly possible in **GitHub**, but there is a workaround. Enable `ENABLE_WASM_THREADING_HELPER` when configuring the build, then:
 1. Add _[shared_array_buffer_fix.js](client-side/src/js/shared_array_buffer_fix.js)_ to the deployed files.
 2. Reference it in _WebApplication.html_ (renamed to _index.html_):
    ```html
@@ -232,7 +234,7 @@ If you are using _wasm_multithread_ binaries, sharing memory via `SharedArrayBuf
 
 ## ❗ Known issues
 
-- WebSocket server controls are disabled in the WASM build because a server is not currently supported there.
+- The WebSocket server example binds to localhost only. Qt WebAssembly does not support hosting WebSocket servers in this Qt build, so the example remains enabled to demonstrate the platform error; use a native build to host it.
 - Qt Multimedia doesn't seem to work with WASM, even though it did in earlier Qt 6 versions.
 - 3D views do not always automatically get keyboard focus.
 

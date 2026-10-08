@@ -26,23 +26,24 @@ public:
     explicit BinaryStorage(QObject *parent = nullptr);
 
     Q_INVOKABLE QByteArray file(const QString &fileName) const;
-    Q_INVOKABLE void setFile(const QString &fileName, const QByteArray &data);
-    Q_INVOKABLE void removeFile(const QString &fileName);
+    Q_INVOKABLE bool setFile(const QString &fileName, const QByteArray &data);
+    Q_INVOKABLE bool removeFile(const QString &fileName);
     Q_INVOKABLE bool hasFile(const QString &fileName) const;
-    Q_INVOKABLE void clearFiles();
+    Q_INVOKABLE bool clearFiles();
     Q_INVOKABLE QStringList fileNames() const;
     Q_INVOKABLE qint64 fileSize(const QString &fileName) const;
     Q_INVOKABLE bool isEmpty() const;
     
     // Convenience methods for working with strings (like data URLs)
     Q_INVOKABLE QString fileAsString(const QString &fileName) const;
-    Q_INVOKABLE void setFileAsString(const QString &fileName, const QString &data);
+    Q_INVOKABLE bool setFileAsString(const QString &fileName, const QString &data);
     
     // Storage format switching methods
     Q_INVOKABLE void switchToWebLocalStorage();
     Q_INVOKABLE void switchToWebIndexedDB();
 
 private:
+    bool syncSettings();
     void recreateSettings();
     
     QSettings::Format m_currentFormat;
