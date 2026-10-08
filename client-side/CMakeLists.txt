@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.29)
-project(CppQtQuickWebsite VERSION 1.1.6 LANGUAGES CXX)
+project(CppQtQuickWebsite VERSION 1.1.7 LANGUAGES CXX)
 
 # Enable the Qt Meta-Object Compiler and Qt Resource Compiler
 set(CMAKE_AUTOMOC ON)
@@ -107,6 +107,8 @@ qt_add_executable(${PROJECT_NAME}
     "src/cpp/WebSocketServer.cpp"
     "src/cpp/WebSocketClient.cpp"  
     "src/cpp/SystemInformation.cpp"
+    "src/cpp/ThreadedProcessor.cpp"
+    "src/cpp/ThreadedProcessor.h"
     "src/js/js.qrc" 
     "src/qml/qml.qrc"
     "resources/resources.qrc"

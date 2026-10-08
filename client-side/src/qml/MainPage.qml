@@ -12,6 +12,8 @@ import "qrc:/qml/singletons/"
 import CppQtQuickWebsite.CppObjects
 
 Rectangle {
+    readonly property int pageColumnCount: 5
+    readonly property int pageRowCount: Math.ceil(subPagesComponents.length / pageColumnCount)
 
     color: "transparent"
 
@@ -24,6 +26,7 @@ Rectangle {
     }
 
     Label {
+        id: tableOfContentsLabel
         text: Localization.string("Table of Contents")
         anchors.top: headerLabel.bottom
         anchors.horizontalCenter: parent.horizontalCenter
@@ -31,13 +34,14 @@ Rectangle {
     }
 
     GridLayout {
-        anchors.top: headerLabel.bottom
+        id: pageGrid
+        anchors.top: tableOfContentsLabel.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
         anchors.margins: 20
 
-        columns: 5
-        rows: 5
+        columns: pageColumnCount
+        rows: pageRowCount
         columnSpacing: 8
         rowSpacing: 8
 
@@ -49,6 +53,16 @@ Rectangle {
             delegate: Button {
                 Layout.preferredWidth: 180
                 Layout.preferredHeight: 70
+                Layout.row: Math.floor(index / pageGrid.columns)
+                Layout.column: {
+                    const row = Math.floor(index / pageGrid.columns);
+                    const remainder = subPagesComponents.length % pageGrid.columns;
+                    const itemsInLastRow = remainder === 0 ? pageGrid.columns : remainder;
+                    const firstLastRowColumn = Math.floor((pageGrid.columns - itemsInLastRow) / 2);
+                    return row === pageGrid.rows - 1
+                            ? firstLastRowColumn + index % pageGrid.columns
+                            : index % pageGrid.columns;
+                }
                 text: Localization.string("Page %1").arg(index + 1)
                 font.pointSize: ZoomSettings.regularFontSize
                 icon.source: "qrc:/resources/icons/pageIcon" + (index + 1) + ".svg"

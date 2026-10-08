@@ -4,7 +4,7 @@
 
 This project demonstrates how to use **Qt** and **Emscripten** to create a web application using **C++** and **QML**, compile it to **WebAssembly**, and make it accessible on any device capable of running modern web browsers. The application features a graphical interface resembling typical interactive websites.
 
-The 25 subpages (described in [SubPagesDescriptions.qml](client-side/src/qml/singletons/SubPagesDescriptions.qml)) showcase many functionalities offered by **Qt** that are available for **WebAssembly**.
+The 26 subpages (described in [SubPagesDescriptions.qml](client-side/src/qml/singletons/SubPagesDescriptions.qml)) showcase functionalities offered by **Qt** and browser APIs. The worker-thread example on page 26 requires a native build or a multithreaded **WebAssembly** build with cross-origin isolation enabled.
 
 You can use this codebase as a template for your own projects.
 

@@ -53,3 +53,7 @@
 ## [1.1.6] - 2026-10-08
 - Improved WebAssembly, networking, storage, and QML examples and documentation.
 - Added educational comments explaining key Qt, QML, browser, and build concepts.
+
+## [1.1.7] - 2026-10-08
+- Added a configurable, cancellable C++ worker-thread prime-counting example.
+- Centered the final incomplete row of home-screen page buttons.

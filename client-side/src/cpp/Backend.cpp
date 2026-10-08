@@ -11,7 +11,7 @@
 #include "Localization.h"
 
 #ifndef CPP_QT_QUICK_WEBSITE_VERSION
-#define CPP_QT_QUICK_WEBSITE_VERSION "1.1.6"
+#define CPP_QT_QUICK_WEBSITE_VERSION "1.1.7"
 #endif
 
 Backend::Backend(QObject *parent)

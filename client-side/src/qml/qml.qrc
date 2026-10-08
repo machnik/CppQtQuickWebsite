@@ -32,6 +32,7 @@
         <file>SubPage23.qml</file>
         <file>SubPage24.qml</file>
         <file>SubPage25.qml</file>
+        <file>SubPage26.qml</file>
         <file>ToMainPageButton.qml</file>
         <file>ZoomControl.qml</file>
         <file>singletons/qmldir</file>

@@ -42,7 +42,8 @@ QtObject {
         "22. Using QSysInfo in QML.\nDisplays system information by accessing QSysInfo through a C++ interface exposed to QML.",
         "23. Using QSettings to store files.\nDemonstrates how to download an example image from the internet and store it using QSettings that utilizes LocalStorage or IndexedDB in the web and .ini files on desktop.",
         "24. Video playback.\nShows how to implement a video player using Qt's Multimedia module within a QML application.",
-        "25. Video playback using the browser's built-in player.\nDemonstrates how to play video (embedded in the application) in a browser environment using its JavaScript engine."
+        "25. Video playback using the browser's built-in player.\nDemonstrates how to play video (embedded in the application) in a browser environment using its JavaScript engine.",
+        "26. CPU-bound work on a C++ worker thread.\nUses QThread, queued signals for progress, and cooperative cancellation with an atomic flag."
     ]
 
     readonly property var descriptionsPolish: [
@@ -70,7 +71,8 @@ QtObject {
         "22. Użycie QSysInfo w QML.\nWyświetla informacje o systemie, uzyskując dostęp do QSysInfo za pośrednictwem interfejsu C++ udostępnionego w QML.",
         "23. Użycie QSettings do przechowywania plików.\nDemonstruje, jak pobrać przykładowy obraz z internetu i przechowywać go za pomocą QSettings, który używa LocalStorage lub IndexedDB w sieci i plików .ini na komputerze.",
         "24. Odtwarzanie wideo.\nPokazuje, jak zaimplementować odtwarzacz wideo za pomocą modułu Multimedia w Qt w aplikacji QML.",
-        "25. Odtwarzacz wideo za pomocą wbudowanego odtwarzacza przeglądarki.\nDemonstruje, jak odtwarzać wideo (osadzone w aplikacji) w środowisku przeglądarki za pomocą jej silnika JavaScript."
+        "25. Odtwarzacz wideo za pomocą wbudowanego odtwarzacza przeglądarki.\nDemonstruje, jak odtwarzać wideo (osadzone w aplikacji) w środowisku przeglądarki za pomocą jej silnika JavaScript.",
+        "26. Obliczenia wymagające procesora w wątku roboczym C++.\nPokazuje QThread, kolejkujące sygnały postępu i kooperacyjne anulowanie z użyciem flagi atomowej."
     ]
 
     readonly property var descriptionsGerman: [
@@ -98,6 +100,7 @@ QtObject {
         "22. Verwendung von QSysInfo in QML.\nZeigt Systeminformationen an, indem auf QSysInfo über ein C++-Interface zugegriffen wird, das in QML verfügbar gemacht wurde.",
         "23. Verwendung von QSettings zum Speichern von Dateien.\nDemonstriert, wie ein Beispielbild aus dem Internet heruntergeladen und mit QSettings gespeichert wird, das LocalStorage oder IndexedDB im Web und .ini-Dateien auf dem Desktop verwendet.",
         "24. Videowiedergabe.\nZeigt, wie ein Videoplayer mit Qt's Multimedia-Modul in einer QML-Anwendung implementiert werden kann.",
-        "25. Videowiedergabe mit dem integrierten Player des Browsers.\nDemonstriert, wie Video (das in der Anwendung eingebettet ist) in einer Browser-Umgebung mit seiner JavaScript-Engine abgespielt werden kann."
+        "25. Videowiedergabe mit dem integrierten Player des Browsers.\nDemonstriert, wie Video (das in der Anwendung eingebettet ist) in einer Browser-Umgebung mit seiner JavaScript-Engine abgespielt werden kann.",
+        "26. CPU-intensive Arbeit in einem C++-Arbeitsthread.\nZeigt QThread, signalisierte Fortschrittsmeldungen und kooperative Abbrüche mit einem atomaren Flag."
     ]
 }

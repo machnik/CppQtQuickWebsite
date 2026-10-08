@@ -22,7 +22,7 @@ ApplicationWindow {
     }
 
     // Components act as factories here: StackView creates a page only when it
-    // is pushed, rather than keeping all 25 page instances alive.
+    // is pushed, rather than keeping all 26 page instances alive.
     Component {
         id: mainPage
         MainPage {}
@@ -60,7 +60,8 @@ ApplicationWindow {
         Component { id: subPage22; SubPage22 {}},
         Component { id: subPage23; SubPage23 {}},
         Component { id: subPage24; SubPage24 {}},
-        Component { id: subPage25; SubPage25 {}}
+        Component { id: subPage25; SubPage25 {}},
+        Component { id: subPage26; SubPage26 {}}
     ]
 
     readonly property var subPagesDescriptions: SubPagesDescriptions.descriptions(Localization.currentLanguage)
