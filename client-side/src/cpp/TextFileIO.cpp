@@ -11,6 +11,8 @@ TextFileIO::TextFileIO(QObject *parent)
 
 void TextFileIO::loadFileContent()
 {
+    // The browser-backed file picker completes asynchronously. QPointer
+    // becomes null if the singleton is destroyed before its callback runs.
     QPointer<TextFileIO> guardedThis{this};
 
     QFileDialog::getOpenFileContent(

@@ -16,6 +16,8 @@ if (typeof window !== 'undefined') {
             return;
         }
 
+        // Register this script as its own worker so its fetch handler can add
+        // cross-origin isolation headers to responses in the page's scope.
         let swRegistration = await navigator.serviceWorker.register(window.document.currentScript.src)
             .catch(error => console.error("[COOP/COEP: FAIL]", error));
         if (swRegistration) {
@@ -45,6 +47,8 @@ if (typeof window !== 'undefined') {
         }
 
         if (req.mode === "no-cors") {
+            // no-cors requests cannot carry credentials under the isolation
+            // policy; cloning the Request preserves its method and body.
             req = new Request(req, { credentials: "omit" });
         }
 
@@ -60,6 +64,8 @@ if (typeof window !== 'undefined') {
             return response;
         }
 
+        // Rebuild the response with COOP/COEP headers. This is the service
+        // worker workaround for static hosts that cannot set response headers.
         const newHeaders = new Headers(response.headers);
         newHeaders.set("Cross-Origin-Embedder-Policy", "require-corp");
         newHeaders.set("Cross-Origin-Opener-Policy", "same-origin");

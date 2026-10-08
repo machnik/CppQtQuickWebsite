@@ -14,6 +14,8 @@ Rectangle {
 
     color: "transparent"
 
+    // Each QML element constructs its own C++ QObject instance, so these two
+    // counters have independent state despite sharing the same class.
     Counter {
         id: counter1
     }

@@ -6,8 +6,8 @@
 #include <QtQml/QtQml>
 
 /*
-    A simple fake processor that simulates a long-running task.
-    It is used to demonstrate managing asynchronous tasks in QML.
+    A timer-driven fake task used to demonstrate asynchronous progress updates
+    in QML. It runs on the object's event-loop thread and is not CPU-parallel.
 */
 
 class FakeProcessor : public QObject

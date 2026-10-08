@@ -1,4 +1,5 @@
 <RCC>
+    <!-- This prefix is the stable qrc:/qml/ URL used by the application entry point. -->
     <qresource prefix="/qml/">
         <file>ExampleWindow.qml</file>
         <file>JSCounterBtnCodeBehind.qml</file>

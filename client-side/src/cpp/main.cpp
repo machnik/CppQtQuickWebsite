@@ -21,9 +21,13 @@ int main(int argc, char *argv[])
     qputenv("QT_QUICK_CONTROLS_MATERIAL_THEME", "Light");
     QQuickStyle::setStyle("Material");
 
+    // The engine owns the QML object tree. Loading a resource URL keeps the
+    // entry point available in both native and WebAssembly packages.
     QQmlApplicationEngine engine{};
     engine.load(":/qml/main.qml");
 
+    // A failed root load leaves no window to run, so report it before entering
+    // the application's event loop.
     if (engine.rootObjects().isEmpty()) {
         qCritical() << "Could not load the root QML document.";
         return -1;

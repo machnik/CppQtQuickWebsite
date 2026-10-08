@@ -11,6 +11,8 @@ class SystemInformation : public QObject
     Q_OBJECT
     QML_ELEMENT
 
+    // These are snapshots of QSysInfo's static platform data, so CONSTANT is
+    // appropriate: QML does not expect change notifications after construction.
     Q_PROPERTY(QString bootUniqueId READ bootUniqueId CONSTANT)
     Q_PROPERTY(QString buildAbi READ buildAbi CONSTANT)
     Q_PROPERTY(QString buildCpuArchitecture READ buildCpuArchitecture CONSTANT)

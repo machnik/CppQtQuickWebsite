@@ -1,4 +1,5 @@
-// This is instantiated only once and that instance is shared between all objects that use it.
+// .pragma library makes this module's state shared by all importers, so clicks
+// on separate buttons increment the same counter.
 
 .pragma library
 

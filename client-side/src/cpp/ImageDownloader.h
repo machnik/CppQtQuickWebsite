@@ -26,6 +26,8 @@ public:
     Q_INVOKABLE void downloadImage(const QString &url);
 
 signals:
+    // Signals separate network progress from the UI, allowing QML to react
+    // without blocking while the QNetworkReply is active.
     void downloadStarted();
     void downloadProgress(qint64 bytesReceived, qint64 bytesTotal);
     void downloadFinished(const QString &dataUrl);

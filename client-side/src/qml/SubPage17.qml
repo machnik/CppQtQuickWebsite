@@ -21,6 +21,8 @@ Rectangle {
 
     Component.onCompleted: {
         if (BrowserJS.browserEnvironment) {
+            // Browser APIs cannot open qrc:/ URLs, so expose the embedded
+            // resource as a data URL; native Qt can load the resource directly.
             var b64 = Base64Converter.convertFileToBase64(":/resources/audio/sound.ogg")
             mediaPlayer.source = "data:audio/ogg;base64," + b64
         } else {

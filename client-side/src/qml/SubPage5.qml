@@ -71,7 +71,8 @@ Rectangle {
                 drag.target: parent
                 drag.axis: Drag.XAndYAxis
                 onReleased: {
-                    // Constrain movement within the dragging area
+                    // MouseArea permits free dragging; clamp the final position
+                    // so the whole child rectangle remains inside its parent.
                     parent.x = Math.max(
                         drawingBorderWidth,
                         Math.min(parent.x, draggingArea.width - parent.width - drawingBorderWidth)

@@ -13,6 +13,8 @@ int Counter::count() const
 
 void Counter::setCount(int count)
 {
+    // Avoid redundant change notifications; QML bindings reevaluate when the
+    // NOTIFY signal fires, so emit it only when the exposed value changes.
     if (count == m_count) {
         return;
     }

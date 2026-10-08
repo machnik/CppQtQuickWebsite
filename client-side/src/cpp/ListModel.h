@@ -18,6 +18,8 @@ class ListModel : public QAbstractListModel
 public:
     explicit ListModel(QObject *parent = nullptr);
 
+    // Flat list models return rows only for the invalid root index; QML views
+    // obtain each row's value through data() and its display role.
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 

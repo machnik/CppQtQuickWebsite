@@ -1,8 +1,5 @@
 # Changelog
 
-## [1.1.6] - 2026-10-08
-- Improved WebAssembly, networking, storage, and QML examples and documentation.
-
 ## [1.0.0] - 2025-02-20
 - Initial MVP release.
 
@@ -52,3 +49,7 @@
 
 ## [1.1.5] - 2026-08-22
 - Update: Qt 6.12.0.
+
+## [1.1.6] - 2026-10-08
+- Improved WebAssembly, networking, storage, and QML examples and documentation.
+- Added educational comments explaining key Qt, QML, browser, and build concepts.

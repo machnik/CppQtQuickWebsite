@@ -65,7 +65,7 @@ Rectangle {
                         id: listViewQML
                         anchors.fill: parent
                         anchors.margins: 4
-                        model: ListModel {} // QML model
+                        model: ListModel {} // QML model owns its data in the declarative layer.
                         delegate: Rectangle {
                             width: listViewQML.width
                             height: 30
@@ -133,7 +133,7 @@ Rectangle {
                         id: listViewCpp
                         anchors.fill: parent
                         anchors.margins: 4
-                        model: Backend.listModel // C++ model
+                        model: Backend.listModel // C++ model reports changes through begin/end model notifications.
                         delegate: Rectangle {
                             width: listViewCpp.width
                             height: 30
@@ -176,6 +176,8 @@ Rectangle {
 
         Component.onCompleted: {
 
+            // The two lists start with equivalent labels to make it easier to
+            // compare the QML ListModel API with the C++ QAbstractListModel.
             for (let i = 1; i <= 3; i++) {
                 listViewQML.model.append({
                     "text": (Localization.string("QML Item %1")).arg(i)

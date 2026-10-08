@@ -28,6 +28,8 @@ Item {
             stepSize: 0.01
             anchors.verticalCenter: parent.verticalCenter
             onValueChanged: {
+                // ZoomSettings is a QML singleton; updating it recalculates
+                // typography throughout the interface via property bindings.
                 ZoomSettings.zoomLevel = value
             }
             ToolTip {

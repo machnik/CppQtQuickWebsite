@@ -8,6 +8,8 @@ static const auto FILES_GROUP{QStringLiteral("files")};
 namespace {
 QSettings::Format defaultStorageFormat()
 {
+    // QSettings maps these formats onto browser storage in WASM, while native
+    // builds use an ordinary INI file to demonstrate the platform difference.
 #ifdef Q_OS_WASM
     return QSettings::WebLocalStorageFormat;
 #else
@@ -36,6 +38,8 @@ QByteArray BinaryStorage::file(const QString &fileName) const
         return QByteArray{};
     }
 
+    // A group keeps this demo's entries namespaced inside the application's
+    // settings instead of mixing them with unrelated preferences.
     m_settings->beginGroup(FILES_GROUP);
     auto data{m_settings->value(fileName).toByteArray()};
     m_settings->endGroup();
@@ -94,6 +98,7 @@ bool BinaryStorage::clearFiles()
 QStringList BinaryStorage::fileNames() const
 {
     m_settings->beginGroup(FILES_GROUP);
+    // allKeys() includes nested entries too, matching QSettings' key hierarchy.
     auto names{m_settings->allKeys()};
     m_settings->endGroup();
 
@@ -128,6 +133,8 @@ bool BinaryStorage::setFileAsString(const QString &fileName, const QString &data
 
 bool BinaryStorage::syncSettings()
 {
+    // QSettings may defer writes; sync() flushes them and status() lets QML
+    // distinguish a persisted operation from a quota or I/O failure.
     m_settings->sync();
     const auto status{m_settings->status()};
     if (status != QSettings::NoError) {

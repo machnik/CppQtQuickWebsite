@@ -42,6 +42,8 @@ Rectangle {
         rowSpacing: 8
 
         Repeater {
+            // Reuse the same component list as the toolbar and menu so all
+            // navigation controls stay in sync with the page ordering.
             model: subPagesComponents
 
             delegate: Button {

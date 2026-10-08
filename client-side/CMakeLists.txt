@@ -7,6 +7,8 @@ set(CMAKE_AUTORCC ON)
 
 # Toggleable option to enable WebAssembly exceptions
 option(ENABLE_WASM_EXCEPTIONS "Enable C++ exceptions in WebAssembly builds" OFF)
+# This injects the browser isolation shim; Qt's wasm_multithread toolchain still
+# has to be selected separately when configuring the WebAssembly build.
 option(ENABLE_WASM_THREADING_HELPER "Inject the cross-origin isolation helper for multithreaded WebAssembly builds" OFF)
 
 set(WASM_COMPILE_OPTIONS)
@@ -31,6 +33,8 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
             list(APPEND WASM_COMPILE_OPTIONS "-fexceptions")
         endif()
         
+        # These runtime checks make memory and stack errors easier to locate
+        # while debugging, at a significant runtime cost.
         add_link_options(
             "--profiling-funcs" # Enable function-level profiling
             "-O0" # No optimization
@@ -60,6 +64,8 @@ elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
             list(APPEND WASM_COMPILE_OPTIONS "-fexceptions")
         endif()
         
+        # Release-only Emscripten settings reduce runtime overhead and output
+        # size after the debug checks have served their purpose.
         add_link_options(
             "-O3" # Full optimization
             "-sASSERTIONS=0" # Disable runtime assertions
@@ -109,7 +115,8 @@ qt_add_executable(${PROJECT_NAME}
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_20)
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/cpp)
 
-# Exposing C++ items to QML
+# QML_ELEMENT classes in this target are generated into a module so QML can
+# import their types from one URI instead of relying on context properties.
 qt6_add_qml_module(${PROJECT_NAME}
     URI "CppQtQuickWebsite.CppObjects"
     VERSION 1.0

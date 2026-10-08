@@ -29,6 +29,8 @@ Rectangle {
 
     Label {
         id: messageLabel
+        // Reading a Q_PROPERTY from QML creates a binding; Backend's NOTIFY
+        // signal makes the label refresh when C++ changes the value.
         text: Backend.message
         font.pointSize: ZoomSettings.hugeFontSize
         anchors.centerIn: parent

@@ -21,6 +21,8 @@ ApplicationWindow {
         }
     }
 
+    // Components act as factories here: StackView creates a page only when it
+    // is pushed, rather than keeping all 25 page instances alive.
     Component {
         id: mainPage
         MainPage {}
@@ -31,6 +33,8 @@ ApplicationWindow {
         ExampleWindow {}
     }
 
+    // Keep this order aligned with SubPagesDescriptions.qml and the numbered
+    // page icons because the toolbar, menu, and index-based navigation share it.
     property list<Component> subPagesComponents: [
         Component { id: subPage1; SubPage1 {}},
         Component { id: subPage2; SubPage2 {}},
@@ -63,6 +67,8 @@ ApplicationWindow {
 
     function switchLanguage(language) {
         Localization.setLanguage(language)
+        // Page labels and the C++ sample model contain translated values, so
+        // reset that state and rebuild the QML tree after choosing a language.
         Backend.resetBackend()
         Backend.reloadQML()
     }
@@ -80,6 +86,8 @@ ApplicationWindow {
             GradientStop { position: 1.0; color: "#909090" }
         }
 
+        // StackView owns page navigation and removes the previous page when it
+        // is popped, which also runs each page's destruction cleanup.
         StackView {
             id: stackView
             anchors.centerIn: parent

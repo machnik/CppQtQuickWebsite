@@ -11,6 +11,8 @@ WebSocketClient::WebSocketClient(QObject *parent)
     connect(&m_webSocket, &QWebSocket::connected, this, &WebSocketClient::onConnected);
     connect(&m_webSocket, &QWebSocket::disconnected, this, &WebSocketClient::onDisconnected);
     connect(&m_webSocket, &QWebSocket::errorOccurred, this, &WebSocketClient::onErrorOccurred);
+    // Socket state changes include connection-in-progress states that are not
+    // represented by the simpler connected/running boolean.
     connect(&m_webSocket, &QWebSocket::stateChanged, this, [this](QAbstractSocket::SocketState) {
         emit clientStateChanged();
     });
@@ -19,6 +21,8 @@ WebSocketClient::WebSocketClient(QObject *parent)
 
 void WebSocketClient::startClient(const QString & url)
 {
+    // Validate the scheme and host before handing a URL to QWebSocket; ports
+    // are optional in a URL but, when present, must be in range.
     const QUrl webSocketUrl{url};
     const auto port{webSocketUrl.port()};
     if (!webSocketUrl.isValid() || (webSocketUrl.scheme() != "ws" && webSocketUrl.scheme() != "wss")
@@ -52,6 +56,7 @@ bool WebSocketClient::isClientRunning() const
 
 bool WebSocketClient::isClientConnecting() const
 {
+    // A connection attempt is active before the connected signal arrives.
     const auto state{m_webSocket.state()};
     return state == QAbstractSocket::HostLookupState || state == QAbstractSocket::ConnectingState;
 }

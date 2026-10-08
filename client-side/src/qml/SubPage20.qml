@@ -47,6 +47,8 @@ Rectangle {
 
     TextField {
         id: urlField
+        // A full URL supports remote hosts and secure wss:// connections,
+        // unlike a hard-coded localhost + port combination.
         text: "ws://localhost:1234"
         placeholderText: Localization.string("WebSocket URL (e.g. ws://localhost:1234)")
         font.pointSize: smallFontSize
@@ -60,6 +62,8 @@ Rectangle {
 
     Button {
         id: startButton
+        // The client exposes its socket state so an in-progress connection can
+        // be cancelled before it becomes connected.
         text: WebSocketClient.isClientActive
               ? (WebSocketClient.isClientConnecting ? Localization.string("CANCEL") : Localization.string("STOP"))
               : Localization.string("START")

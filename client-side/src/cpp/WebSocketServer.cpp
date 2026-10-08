@@ -29,6 +29,8 @@ void WebSocketServer::startServer(int port)
         return;
     }
 
+    // Keep the unauthenticated educational echo server on loopback. Binding
+    // all interfaces would expose it to other machines on the local network.
     if (!m_webSocketServer->listen(QHostAddress::LocalHost, port)) {
         setServerRunning(false);
         emit errorOccurred(m_webSocketServer->errorString());
@@ -56,6 +58,8 @@ void WebSocketServer::stopServer()
 
 void WebSocketServer::onNewConnection()
 {
+    // QWebSocketServer queues accepted sockets; take ownership of each pending
+    // connection and track it so stopServer() can close active clients.
     auto socket{m_webSocketServer->nextPendingConnection()};
     if (!socket) {
         return;

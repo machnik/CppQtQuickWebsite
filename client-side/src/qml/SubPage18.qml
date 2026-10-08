@@ -22,6 +22,8 @@ Rectangle {
             return
         }
 
+        // Keep browser-owned AudioContext/AudioBufferSourceNode objects in
+        // JavaScript, then explicitly tear them down when the QML page leaves.
         BrowserJS.runVoidJS(`
             (function() {
                 var stateKey = '${audioStateKey}';
@@ -110,6 +112,8 @@ Rectangle {
             stopBrowserAudio()
             audioSessionActive = true
 
+            // Create/resume audio from the click handler because browsers
+            // generally require Web Audio playback to follow user activation.
             BrowserJS.runVoidJS(`
                 (function() {
                     var AudioContextCtor = window.AudioContext || window.webkitAudioContext;

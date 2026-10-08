@@ -14,6 +14,8 @@ Rectangle {
     property color textColor: "black"
 
     SystemInformation {
+        // A small QObject wrapper exposes QSysInfo's static C++ functions as
+        // read-only QML properties.
         id: sysInfo
     }
 
@@ -129,6 +131,8 @@ Rectangle {
     ColorDialog {
         id: colorDialog
         selectedColor: textColor
+        // Only commit the selection on acceptance; cancelling leaves the
+        // current display color unchanged.
         onAccepted: textColor = colorDialog.selectedColor
     }
 

@@ -110,6 +110,8 @@ Rectangle {
 
                 loops: Animation.Infinite
 
+                // Animations target the same bound property in sequence, with
+                // easing curves supplying the apparent acceleration and bounce.
                 NumberAnimation {
                     // Raise...
                     from: orangeBall.minHeight;

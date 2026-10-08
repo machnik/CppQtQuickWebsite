@@ -32,6 +32,8 @@ Rectangle {
     }
 
     PhysicsWorld {
+        // PhysicsWorld advances bodies in the View3D scene. Gravity uses
+        // scene-space units per second squared, independent of screen pixels.
         scene: view3d.scene
         gravity: Qt.vector3d(0, -981, 0)
         typicalSpeed: 200
@@ -74,6 +76,8 @@ Rectangle {
             }
 
             StaticRigidBody {
+                // The collider belongs to the physics world; its child Model
+                // supplies the visible geometry and can be shaped separately.
                 position: Qt.vector3d(0, -200, 0)
                 collisionShapes: BoxShape {
                     extents: Qt.vector3d(1000, 1, 1000)
@@ -94,6 +98,8 @@ Rectangle {
             }
 
             DynamicRigidBody {
+                // A dynamic body is moved by the solver, while the nested model
+                // is rendered at the body's simulated transform.
                 position: Qt.vector3d(0, 150, 0)
                 collisionShapes: SphereShape {}
                 physicsMaterial: PhysicsMaterial {

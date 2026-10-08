@@ -20,6 +20,8 @@ public:
 */
 
 public slots:
+    // The open dialog completes asynchronously and reports its result through
+    // fileContentReady/currentFileNameChanged rather than a return value.
     void loadFileContent();
     void saveFileContent(const QString &fileName, const QString &content);
 

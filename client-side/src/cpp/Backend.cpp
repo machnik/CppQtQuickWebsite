@@ -27,6 +27,8 @@ void Backend::reloadQML()
         return;
     }
 
+    // Resolve the engine from this QML singleton rather than keeping a second
+    // global engine pointer that could outlive or disagree with the real engine.
     auto context{QQmlEngine::contextForObject(this)};
     auto appEngine{context ? qobject_cast<QQmlApplicationEngine *>(context->engine()) : nullptr};
     if (!appEngine) {
@@ -34,6 +36,8 @@ void Backend::reloadQML()
         return;
     }
 
+    // Defer deletion until the current QML signal handler has returned; deleting
+    // the page tree synchronously from one of its own handlers is unsafe.
     m_reloadPending = true;
     QPointer<QQmlApplicationEngine> guardedEngine{appEngine};
 
@@ -105,6 +109,8 @@ void Backend::resetInputField(QObject *textField)
         return;
     }
 
+    // QQmlProperty lets this example update a QML object's writable property
+    // through the meta-object system without depending on a concrete QML type.
     QQmlProperty textProperty{textField, QStringLiteral("text")};
     if (!textProperty.isValid() || !textProperty.isWritable()) {
         qWarning() << "Backend::resetInputField expected a writable 'text' property on" << textField;

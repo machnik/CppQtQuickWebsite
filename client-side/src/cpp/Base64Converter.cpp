@@ -10,6 +10,8 @@ Base64Converter::Base64Converter(QObject *parent)
 
 QString Base64Converter::convertFileToBase64(const QString &filePath)
 {
+    // Encoding a bundled resource as a data URL is a simple bridge to browser
+    // APIs that cannot resolve Qt's qrc:/ resource URLs directly.
     QFile file{filePath};
     QString base64String;
 

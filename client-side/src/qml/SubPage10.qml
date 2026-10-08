@@ -13,6 +13,8 @@ Rectangle {
     readonly property string textSetJs: Localization.string("Text set using JavaScript.")
 
     function resetInputField(inputField) {
+        // This path changes the QML object directly from JavaScript; the second
+        // button sends the same object to C++ for a meta-object property write.
         inputField.text = textSetJs;
     }
 

@@ -19,6 +19,8 @@ class Backend : public QObject
     QML_ELEMENT // Makes the class available to QML
     QML_SINGLETON // Makes the class a singleton
 
+    // The property declaration exposes the getter/setter to QML, and NOTIFY
+    // keeps QML bindings reactive when C++ changes the value.
     Q_PROPERTY(QString message READ message WRITE setMessage NOTIFY messageChanged)
     Q_PROPERTY(ListModel *listModel READ listModel CONSTANT)
 

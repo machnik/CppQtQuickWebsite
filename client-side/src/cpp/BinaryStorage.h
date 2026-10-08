@@ -26,6 +26,8 @@ public:
     explicit BinaryStorage(QObject *parent = nullptr);
 
     Q_INVOKABLE QByteArray file(const QString &fileName) const;
+    // Mutations return whether QSettings successfully flushed the change, so
+    // QML callers can avoid displaying a false success message.
     Q_INVOKABLE bool setFile(const QString &fileName, const QByteArray &data);
     Q_INVOKABLE bool removeFile(const QString &fileName);
     Q_INVOKABLE bool hasFile(const QString &fileName) const;

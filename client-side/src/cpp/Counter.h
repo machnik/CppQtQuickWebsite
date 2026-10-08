@@ -14,6 +14,7 @@ class Counter : public QObject
     Q_OBJECT
     QML_ELEMENT
 
+    // NOTIFY is the bridge that tells QML bindings when the C++ value changes.
     Q_PROPERTY(int count READ count WRITE setCount NOTIFY countChanged)
 
 public:

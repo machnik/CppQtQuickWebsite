@@ -112,6 +112,8 @@ Rectangle {
                 id: storageSwitch
                 checked: false  // Default to WebLocalStorage (unchecked)
                 onToggled: {
+                    // Selecting a QSettings format chooses a different backend;
+                    // it does not migrate entries between the two stores.
                     if (checked) {
                         BinaryStorage.switchToWebIndexedDB()
                         setStatus(Localization.string("Switched to WebIndexedDB"), "blue")
@@ -200,6 +202,8 @@ Rectangle {
             return
         }
         
+        // QSettings can fail to persist (for example, when browser storage is
+        // full), so report its result instead of treating the call as success.
         if (!BinaryStorage.setFileAsString(imageFileName, sourceStr)) {
             setStatus(Localization.string("Storage operation failed. Check available storage and permissions."), "red")
             return

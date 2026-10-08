@@ -35,6 +35,8 @@ BrowserJS* BrowserJS::instance() {
 
 int BrowserJS::runIntJS(const QString & code) {
 #ifdef Q_OS_WASM
+    // Emscripten's helpers are deliberately separated by return type so the
+    // caller can choose a conversion the C++/JavaScript boundary supports.
     return emscripten_run_script_int(code.toLatin1().data());
 #else
     return 0;
@@ -45,6 +47,7 @@ QString BrowserJS::runStringJS(const QString & code) {
 #ifdef Q_OS_WASM
     auto *result{emscripten_run_script_string(code.toLatin1().data())};
     auto qstr{QString::fromUtf8(result)};
+    // Emscripten allocates this returned C string for the caller.
     free(result);
     return qstr;
 #else

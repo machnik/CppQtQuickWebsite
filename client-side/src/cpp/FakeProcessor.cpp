@@ -8,6 +8,8 @@ FakeProcessor::FakeProcessor(QObject *parent)
     m_timer.setInterval(100); // 1 decisecond
 
     connect(&m_timer, &QTimer::timeout, this, [this](){
+        // This is a UI-thread timer simulation, not a worker thread. Returning
+        // to the event loop after each tick keeps the interface responsive.
         if (QRandomGenerator::global()->bounded(1000) < 7) {
             m_status = Status::Error;
             emit statusChanged();

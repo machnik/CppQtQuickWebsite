@@ -28,6 +28,8 @@ Rectangle {
     }
 
     Image {
+        // qrc:/ URLs address files embedded by the Qt Resource System, so the
+        // image ships with the app instead of needing a separate web request.
         source: "qrc:/resources/images/picture.jpg"
         anchors.centerIn: parent
         width: parent.width * 0.6

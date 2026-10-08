@@ -13,6 +13,8 @@ Rectangle {
     color: "transparent"
 
     Component {
+        // A Component stores a reusable object definition; createObject()
+        // below creates a fresh dialog only when the user asks for one.
         id: dialogMessageComponent
         MessageDialog {}
     }

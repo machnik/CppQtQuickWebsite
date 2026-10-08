@@ -55,6 +55,8 @@ Rectangle {
         anchors.centerIn: parent
 
         Rectangle {
+            // Let the document grow with its text; ScrollView then scrolls the
+            // excess instead of clipping long files to the viewport height.
             width: fileContentsScrollView.availableWidth
             height: Math.max(fileContentsScrollView.availableHeight, fileContentsTextArea.contentHeight)
             border.color: "black"

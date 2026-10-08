@@ -22,6 +22,8 @@ void ImageDownloader::downloadImage(const QString &url)
     }
 
     if (m_currentReply) {
+        // This singleton handles one download at a time. Abort the old reply
+        // and ignore its later signals before starting the replacement request.
         auto previousReply{m_currentReply};
         m_currentReply = nullptr;
         previousReply->abort();
@@ -37,6 +39,7 @@ void ImageDownloader::downloadImage(const QString &url)
     emit downloadStarted();
 
     QNetworkRequest request{downloadUrl};
+    // Don't follow redirects that downgrade an HTTPS request to plain HTTP.
     request.setAttribute(QNetworkRequest::RedirectPolicyAttribute, QNetworkRequest::NoLessSafeRedirectPolicy);
     request.setTransferTimeout(DownloadTimeoutMilliseconds);
 
@@ -60,6 +63,8 @@ void ImageDownloader::onDownloadFinished()
         return;
     }
 
+    // Check the declared length early, then check the actual payload below:
+    // servers may omit or misstate Content-Length.
     const auto contentLength{reply->header(QNetworkRequest::ContentLengthHeader).toLongLong()};
     if (contentLength > MaxImageBytes) {
         emit downloadError("Downloaded image exceeds the size limit.");
@@ -80,6 +85,8 @@ void ImageDownloader::onDownloadFinished()
         return;
     }
 
+    // Prefer the server's declared MIME type. Only infer from the URL when the
+    // server provides no useful type, rather than overriding a conflicting one.
     auto contentType{normalizedMimeType(reply->header(QNetworkRequest::ContentTypeHeader).toString())};
     if (contentType.isEmpty() || contentType == "application/octet-stream") {
         contentType = guessMimeType(reply->url().toString());

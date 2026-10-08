@@ -45,6 +45,8 @@ Rectangle {
             anchors.margins: 3
 
             Component.onCompleted: {
+                // The helper controller listens for keyboard/mouse input only
+                // when this 3D view can receive focus.
                 view3d.forceActiveFocus();
             }
 
@@ -55,6 +57,8 @@ Rectangle {
 
             PerspectiveCamera {
                 id: camera
+                // Quick 3D positions are vectors in the scene's 3D coordinate
+                // system; camera orientation determines the view direction.
                 position: Qt.vector3d(0, 200, 300)
                 eulerRotation.x: -30
             }

@@ -29,6 +29,8 @@ Rectangle {
     }
 
     ScrollView {
+        // ScrollView provides a viewport for content that may be taller than
+        // the available page area.
         anchors.top: titleLabel.bottom
         anchors.left: parent.left
         anchors.right: parent.right

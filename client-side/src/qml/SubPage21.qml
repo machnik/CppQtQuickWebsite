@@ -98,6 +98,8 @@ Rectangle {
             currentRequest = xhr
             xhr.timeout = 10000;
             xhr.open('GET', url, true);
+            // XHR callbacks run later. Comparing identities prevents an
+            // obsolete request from updating this page after cancellation.
             xhr.onreadystatechange = function() {
                 if (currentRequest !== xhr) {
                     return

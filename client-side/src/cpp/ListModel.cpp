@@ -30,6 +30,8 @@ QVariant ListModel::data(const QModelIndex &index, int role) const
 
 void ListModel::addItem(const QString &item)
 {
+    // Views need begin/end notifications around storage changes to keep their
+    // delegates and current indexes synchronized with the model.
     beginInsertRows(QModelIndex{}, rowCount(), rowCount());
     m_items << item;
     endInsertRows();

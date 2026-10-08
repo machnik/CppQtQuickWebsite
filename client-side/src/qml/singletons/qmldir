@@ -1,2 +1,4 @@
+# Listing a file as a singleton makes its one shared object instance importable
+# from any QML page that includes this directory.
 singleton SubPagesDescriptions 1.0 SubPagesDescriptions.qml
 singleton ZoomSettings 1.0 ZoomSettings.qml

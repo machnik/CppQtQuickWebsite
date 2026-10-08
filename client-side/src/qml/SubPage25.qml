@@ -21,6 +21,8 @@ Rectangle {
             return
         }
 
+        // This video is a DOM element layered over the Qt canvas, not a QML
+        // item, so remove it explicitly when stopped or when the page is left.
         BrowserJS.runVoidJS(`
             (function() {
                 var vid = document.getElementById('${videoElementId}');
@@ -89,6 +91,8 @@ Rectangle {
             onClicked: {
                 removeBrowserVideo()
 
+                // A DOM overlay needs page coordinates rather than QML-local
+                // coordinates, hence mapToItem(null, ...) before creation.
                 // Calculate absolute position of videoContainer:
                 var pos = videoContainer.mapToItem(null, 0, 0);
 

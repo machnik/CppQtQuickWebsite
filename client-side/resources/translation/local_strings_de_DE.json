@@ -154,7 +154,7 @@
     "Visit the project's GitHub repository.": "Besuchen Sie das GitHub-Repository des Projekts.",
     "W: Forward, S: Backward, A: Left, D: Right, R: Up, F: Down, Hold Mouse: Look Around": "W: Vorwärts, S: Rückwärts, A: Links, D: Rechts, R: Hoch, F: Runter, Maus halten: Umsehen",
     "Storage operation failed. Check available storage and permissions.": "Speichervorgang fehlgeschlagen. Prüfen Sie den verfügbaren Speicherplatz und die Berechtigungen.",
-    "WebAssembly does not support hosting WebSocket servers with this Qt build. You can still try starting one to see the platform error; use a native build to host the server.": "Dieser Qt-WebAssembly-Build unterstützt das Hosten von WebSocket-Servern nicht. Sie können den Start trotzdem versuchen, um den Plattformfehler zu sehen; zum Hosten verwenden Sie einen nativen Build.",
+    "WebAssembly does not support hosting WebSocket servers with this Qt build. You can still try starting one to see the platform error. Use a native build to host the server.": "Dieser Qt-WebAssembly-Build unterstützt das Hosten von WebSocket-Servern nicht. Sie können den Start trotzdem versuchen, um den Plattformfehler zu sehen. Zum Hosten verwenden Sie einen nativen Build.",
     "WebIndexedDB": "WebIndexedDB",
     "WebLocalStorage": "WebLocalStorage",
     "WebSocket Client.": "WebSocket-Client.",

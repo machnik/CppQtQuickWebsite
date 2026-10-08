@@ -39,6 +39,8 @@ void Localization::setLanguage(QLocale::Language language)
 
         m_localStrings.clear();
 
+        // Locale::name() produces the resource naming convention used by the
+        // JSON files (for example, de_DE).
         auto languageCode{QLocale{language}.name()};
 
         QFile jsonFile{QString(":/resources/translation/local_strings_%1.json").arg(languageCode)};
@@ -69,6 +71,8 @@ void Localization::setLanguage(QLocale::Language language)
 
 QString Localization::string(const QString & key) const
 {
+    // Showing the source key when a translation is missing keeps the UI usable
+    // and makes untranslated strings obvious during development.
     auto it{m_localStrings.find(key)};
     const auto translation{(it != m_localStrings.end()) ? it->second : key};
     return translation;

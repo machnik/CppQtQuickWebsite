@@ -36,6 +36,8 @@ Rectangle {
         }
     }
 
+    // Starting all timers together demonstrates concurrent event-driven work,
+    // not parallel CPU execution: each timeout still runs on the UI thread.
     Component.onCompleted: {
         fakeProcessors.forEach(function(processor) {
             processor.start();

@@ -19,6 +19,7 @@ class Localization : public QObject
     QML_ELEMENT
     QML_SINGLETON
 
+    // NOTIFY allows QML bindings to update when the selected translation map changes.
     Q_PROPERTY(QLocale::Language currentLanguage READ currentLanguage NOTIFY languageChanged)
 
 public:

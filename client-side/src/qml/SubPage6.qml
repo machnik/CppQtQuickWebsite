@@ -99,6 +99,9 @@ Rectangle {
                             text: Localization.string("QT JS ENGINE")
                             font.pointSize: bigFontSize
                             onClicked: {
+                                // eval() runs in Qt's QML JavaScript engine. Only
+                                // evaluate expressions the user intentionally
+                                // enters here; never use this pattern on untrusted input.
                                 try {
                                     var result = eval(jsExpressionEditor.text)
                                     resultValueLabel.text = String(result)
@@ -114,6 +117,9 @@ Rectangle {
                             onClicked: {
                                 if (BrowserJS.browserEnvironment) {
                                     try {
+                                        // The Emscripten bridge here returns an
+                                        // integer, so it is not interchangeable
+                                        // with Qt's full JavaScript evaluator.
                                         var result = BrowserJS.runIntJS(jsExpressionEditor.text)
                                         resultValueLabel.text = String(result)
                                     } catch (error) {

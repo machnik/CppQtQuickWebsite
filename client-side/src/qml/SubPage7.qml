@@ -26,6 +26,8 @@ Rectangle {
     function saveSetting(key, value) {
         var db = getDatabase();
         db.transaction(function(tx) {
+            // Bind values as SQL parameters instead of concatenating user text
+            // into SQL, which also preserves quotes and special characters.
             tx.executeSql('INSERT OR REPLACE INTO settings VALUES (?, ?)', [key, value]);
         });
     }
@@ -34,6 +36,7 @@ Rectangle {
         var db = getDatabase();
         var res = "";
         db.transaction(function(tx) {
+            // The placeholder keeps the key as data rather than SQL syntax.
             var rs = tx.executeSql('SELECT value FROM settings WHERE key=?', [key]);
             if (rs.rows.length > 0) {
                 res = rs.rows.item(0).value;
@@ -45,6 +48,8 @@ Rectangle {
     Component.onCompleted: {
         var db = getDatabase();
         db.transaction(function(tx) {
+            // Create the schema once; the IF NOT EXISTS clause makes page
+            // visits safe when the browser database already persists.
             tx.executeSql('CREATE TABLE IF NOT EXISTS settings(key TEXT UNIQUE, value TEXT)');
         });
     }

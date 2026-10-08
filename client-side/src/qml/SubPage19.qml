@@ -55,7 +55,9 @@ Rectangle {
     }
 
     Label {
-        text: Localization.string("WebAssembly does not support hosting WebSocket servers with this Qt build. You can still try starting one to see the platform error; use a native build to host the server.")
+        // Keep the attempt available in WASM: the platform error is itself
+        // useful when comparing Qt networking support across targets.
+        text: Localization.string("WebAssembly does not support hosting WebSocket servers with this Qt build. You can still try starting one to see the platform error. Use a native build to host the server.")
         visible: showWasmWarning
         anchors.bottom: portField.top
         anchors.horizontalCenter: parent.horizontalCenter

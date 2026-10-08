@@ -14,6 +14,8 @@ Rectangle {
 
     color: "transparent"
 
+    // Layouts calculate child geometry from constraints, unlike anchors,
+    // which directly relate one item's edges to another item's edges.
     ColumnLayout {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top

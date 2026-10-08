@@ -43,6 +43,8 @@ Rectangle {
     }
 
     Component.onCompleted: {
+        // The source differs by platform: qrc:/ works natively, while WASM
+        // hands the embedded bytes to Qt Multimedia as a data URL.
         if (BrowserJS.browserEnvironment) {
             var b64 = Base64Converter.convertFileToBase64(":/resources/videos/earth.mp4")
             videoPlayer.source = "data:video/mp4;base64," + b64
@@ -53,6 +55,8 @@ Rectangle {
     }
 
     Row {
+        // Button availability is derived from MediaPlayer state, so controls
+        // stay synchronized even when playback ends without a button click.
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: videoPlayer.bottom
         anchors.topMargin: 20

@@ -21,6 +21,7 @@ string(REPLACE "${malformed_helper_script}" "" html_content "${html_content}")
 
 string(FIND "${html_content}" "${helper_file}" helper_script_index)
 if(NOT helper_script_index EQUAL -1)
+    # Post-build steps may run again without regenerating the HTML shell.
     return()
 endif()
 
@@ -31,5 +32,7 @@ if(app_script_index EQUAL -1)
 endif()
 
 set(helper_script "<script src=\"${helper_file}\"></script>")
+# Load the worker registration before Qt's startup code so it can take control
+# and reload once before the multithreaded application initializes.
 string(REPLACE "${app_script}" "${helper_script}\n    ${app_script}" html_content "${html_content}")
 file(WRITE "${HTML_FILE}" "${html_content}")

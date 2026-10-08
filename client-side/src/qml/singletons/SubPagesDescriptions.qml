@@ -4,6 +4,8 @@ import QtQuick
 
 QtObject {
 
+    // The page index is also used to select its icon and StackView component.
+    // Keep each language array in the same 1-to-25 order.
     function descriptions(language) {
         switch(language) {
             case Locale.Polish:

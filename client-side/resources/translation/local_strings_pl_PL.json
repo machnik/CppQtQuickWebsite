@@ -153,7 +153,7 @@
     "Video playback using the browser's built-in player.": "Odtwarzanie wideo przy użyciu wbudowanego odtwarzacza przeglądarki.",
     "Visit the project's GitHub repository.": "Odwiedź repozytorium projektu na GitHubie.",
     "W: Forward, S: Backward, A: Left, D: Right, R: Up, F: Down, Hold Mouse: Look Around": "W: Do przodu, S: Do tyłu, A: W lewo, D: W prawo, R: Do góry, F: W dół, Przytrzymaj mysz: Rozglądaj się",
-    "WebAssembly does not support hosting WebSocket servers with this Qt build. You can still try starting one to see the platform error; use a native build to host the server.": "Ten kompilator Qt dla WebAssembly nie obsługuje hostowania serwerów WebSocket. Możesz mimo to spróbować uruchomić serwer, aby zobaczyć błąd platformy; do hostowania użyj kompilacji natywnej.",
+    "WebAssembly does not support hosting WebSocket servers with this Qt build. You can still try starting one to see the platform error. Use a native build to host the server.": "Ten kompilator Qt dla WebAssembly nie obsługuje hostowania serwerów WebSocket. Możesz mimo to spróbować uruchomić serwer, aby zobaczyć błąd platformy. Do hostowania użyj kompilacji natywnej.",
     "WebIndexedDB": "WebIndexedDB",
     "WebLocalStorage": "WebLocalStorage",
     "WebSocket Client.": "Klient WebSocket.",

@@ -17,6 +17,8 @@ class WebSocketClient : public QObject
     QML_ELEMENT
     QML_SINGLETON
 
+    // Expose both "connected" and "in progress" so QML can distinguish a
+    // pending handshake from a usable socket and offer cancellation.
     Q_PROPERTY(bool isClientRunning READ isClientRunning NOTIFY clientRunningChanged)
     Q_PROPERTY(bool isClientConnecting READ isClientConnecting NOTIFY clientStateChanged)
     Q_PROPERTY(bool isClientActive READ isClientActive NOTIFY clientStateChanged)

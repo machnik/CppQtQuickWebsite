@@ -1,4 +1,5 @@
 <RCC>
+    <!-- Prefixes turn these bundled files into portable qrc:/resources/... URLs. -->
     <qresource prefix="/resources/">
         <file>audio/sound.ogg</file>
         <file>icons/addWindowIcon.svg</file>
