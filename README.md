@@ -228,14 +228,12 @@ If you are using _wasm_multithread_ binaries, sharing memory via `SharedArrayBuf
 
 - Better clipboard support: Use mouse for cut, copy and paste. See [Qt WebAssembly clipboard](https://www.qt.io/blog/qt-webassembly-clipboard).
 - Mobile UI version for smartphones (horizontal layout?).
-- Video playback using the browser's JavaScript engine.
 - Text to speech (Qt Speech and/or JavaScript Web Speech API).
 - Accessibility: Support for screenreaders.
 
 ## ❗ Known issues
 
 - The WebSocket server example binds to localhost only. Qt WebAssembly does not support hosting WebSocket servers in this Qt build, so the example remains enabled to demonstrate the platform error; use a native build to host it.
-- Qt Multimedia doesn't seem to work with WASM, even though it did in earlier Qt 6 versions.
 - 3D views do not always automatically get keyboard focus.
 
 # 📜 Documentation
