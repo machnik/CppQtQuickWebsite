@@ -103,6 +103,10 @@ option(ENABLE_WASM_EXCEPTIONS "Enable C++ exceptions in WebAssembly builds" OFF)
 
 For a `wasm_multithread` build, enable the cross-origin isolation service-worker helper with `-DENABLE_WASM_THREADING_HELPER=ON`. Leave it off for single-threaded builds.
 
+### Thread pool size (`PTHREAD_POOL_SIZE`)
+
+In `wasm_multithread` builds every C++ thread runs in a Web Worker, and Emscripten pre-creates a fixed pool of them (Qt's default is **4**). Threads beyond the pool are created asynchronously and only start once the main thread returns to the browser's event loop, so a thread that is waited on (e.g. `QThread::wait()`) can **deadlock or never start**. Keep the pool at least as large as the number of threads running at once, including Qt's own. This project sets it to **10** through `-DWASM_PTHREAD_POOL_SIZE=<n>` (page 26 uses up to 8 threads); each pooled worker costs memory and start-up time.
+
 
 ### On Linux
 

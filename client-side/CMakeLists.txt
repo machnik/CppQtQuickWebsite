@@ -10,6 +10,9 @@ option(ENABLE_WASM_EXCEPTIONS "Enable C++ exceptions in WebAssembly builds" OFF)
 # This injects the browser isolation shim; Qt's wasm_multithread toolchain still
 # has to be selected separately when configuring the WebAssembly build.
 option(ENABLE_WASM_THREADING_HELPER "Inject the cross-origin isolation helper for multithreaded WebAssembly builds" OFF)
+# Web Workers pre-created for C++ threads in wasm_multithread builds (Qt's default is 4).
+# Keep it at least as high as the number of threads the application starts at once.
+set(WASM_PTHREAD_POOL_SIZE 10 CACHE STRING "Size of the Emscripten pthread pool in multithreaded WebAssembly builds")
 
 set(WASM_COMPILE_OPTIONS)
 set(WASM_COMPILE_DEFINITIONS)
@@ -141,6 +144,12 @@ target_compile_options(${PROJECT_NAME}
 
 # Set the output name of the executable to "WebApplication"
 set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "WebApplication")
+
+# Read by Qt's WebAssembly finalization, which passes it to Emscripten as
+# PTHREAD_POOL_SIZE; it has no effect on single-threaded builds.
+if(EMSCRIPTEN)
+    set_target_properties(${PROJECT_NAME} PROPERTIES QT_WASM_PTHREAD_POOL_SIZE ${WASM_PTHREAD_POOL_SIZE})
+endif()
 
 # Copy website icon and splash image to build directory
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
