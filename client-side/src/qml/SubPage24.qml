@@ -76,7 +76,11 @@ Rectangle {
         Button {
             icon.source: "qrc:/resources/icons/stop.svg"
             enabled: isReady && videoPlayer.playbackState !== MediaPlayer.StoppedState
-            onClicked: videoPlayer.stop()
+            onClicked: {
+                // In WebAssembly stop() alone detaches the video element, so pause first
+                videoPlayer.pause()
+                videoPlayer.stop()
+            }
         }
     }
 
