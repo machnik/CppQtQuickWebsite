@@ -12,6 +12,11 @@ import "qrc:/qml/singletons/"
 import CppQtQuickWebsite.CppObjects
 
 Rectangle {
+    // Passed in from main.qml so this page does not depend on ids from the
+    // ApplicationWindow's scope.
+    required property var subPagesComponents
+    required property var subPagesDescriptions
+
     readonly property int pageColumnCount: 5
     readonly property int pageRowCount: Math.ceil(subPagesComponents.length / pageColumnCount)
 
@@ -73,7 +78,12 @@ Rectangle {
                     delay: 0
                 }
                 onClicked: {
-                    stackView.push(subPagesComponents[index], StackView.Immediate)
+                    // StackView.view is the attached property of the view this
+                    // page was pushed onto; it avoids depending on main.qml's ids.
+                    const view = StackView.view
+                    if (view) {
+                        view.push(subPagesComponents[index], StackView.Immediate)
+                    }
                 }
             }
         }

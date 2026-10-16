@@ -10,8 +10,10 @@
 
 #include "Localization.h"
 
+// The real version is injected by CMake as CPP_QT_QUICK_WEBSITE_VERSION; this
+// fallback only applies when building outside the project's CMake setup.
 #ifndef CPP_QT_QUICK_WEBSITE_VERSION
-#define CPP_QT_QUICK_WEBSITE_VERSION "1.1.7"
+#define CPP_QT_QUICK_WEBSITE_VERSION "0.0.0-dev"
 #endif
 
 Backend::Backend(QObject *parent)

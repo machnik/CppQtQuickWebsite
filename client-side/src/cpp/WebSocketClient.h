@@ -4,7 +4,7 @@
 #include <QtNetwork/QAbstractSocket>
 #include <QtWebSockets/QWebSocket>
 
-#include <QtQml>
+#include <QtQml/QtQml>
 
 /*
     A simple WebSocket client that can be used in QML.

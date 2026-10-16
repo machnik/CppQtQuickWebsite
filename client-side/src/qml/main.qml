@@ -10,8 +10,15 @@ ApplicationWindow {
     id: applicationWindow
 
     visible: true
-    width: Screen.width; height: Screen.height
-    flags: Qt.Window | Qt.FramelessWindowHint
+
+    // The frameless, screen-sized window suits the browser canvas. Native
+    // builds get standard window chrome instead, so the window can be moved,
+    // resized, minimized, and closed with the operating system's controls.
+    readonly property bool runningInBrowser: BrowserJS.browserEnvironment
+    flags: runningInBrowser ? (Qt.Window | Qt.FramelessWindowHint) : Qt.Window
+    width: runningInBrowser ? Screen.width : 1280
+    height: runningInBrowser ? Screen.height : 800
+    visibility: runningInBrowser ? Window.Windowed : Window.Maximized
 
     background: Rectangle {
         anchors.fill: parent
@@ -23,11 +30,6 @@ ApplicationWindow {
 
     // Components act as factories here: StackView creates a page only when it
     // is pushed, rather than keeping all 26 page instances alive.
-    Component {
-        id: mainPage
-        MainPage {}
-    }
-
     Component {
         id: exampleWindowComponent
         ExampleWindow {}
@@ -89,12 +91,17 @@ ApplicationWindow {
 
         // StackView owns page navigation and removes the previous page when it
         // is popped, which also runs each page's destruction cleanup.
+        // The shared navigation data is passed explicitly so MainPage does not
+        // depend on ids from this file's scope.
         StackView {
             id: stackView
             anchors.centerIn: parent
             width: parent.width - 60
             height: parent.height - 60
-            initialItem: mainPage
+            initialItem: MainPage {
+                subPagesComponents: applicationWindow.subPagesComponents
+                subPagesDescriptions: applicationWindow.subPagesDescriptions
+            }
         }
     }
 
@@ -129,31 +136,22 @@ ApplicationWindow {
         }
         Menu {
             title: Localization.string("LANGUAGE")
-            MenuItem {
-                icon.source: "qrc:/resources/icons/flag-us.png"
-                icon.color: "transparent"
-                text: Localization.string("English")
-                font.pointSize: ZoomSettings.regularFontSize
-                onTriggered: {
-                    switchLanguage(Locale.English)
-                }
-            }
-            MenuItem {
-                icon.source: "qrc:/resources/icons/flag-pl.png"
-                icon.color: "transparent"
-                text: Localization.string("Polish")
-                font.pointSize: ZoomSettings.regularFontSize
-                onTriggered: {
-                    switchLanguage(Locale.Polish)
-                }
-            }
-            MenuItem {
-                icon.source: "qrc:/resources/icons/flag-de.png"
-                icon.color: "transparent"
-                text: Localization.string("German")
-                font.pointSize: ZoomSettings.regularFontSize
-                onTriggered: {
-                    switchLanguage(Locale.German)
+            // One delegate per entry keeps adding a language a one-line change.
+            Repeater {
+                model: [
+                    { "language": Locale.English, "flag": "qrc:/resources/icons/flag-us.png", "name": "English" },
+                    { "language": Locale.Polish,  "flag": "qrc:/resources/icons/flag-pl.png", "name": "Polish"  },
+                    { "language": Locale.German,  "flag": "qrc:/resources/icons/flag-de.png", "name": "German"  }
+                ]
+                MenuItem {
+                    required property var modelData
+                    icon.source: modelData.flag
+                    icon.color: "transparent"
+                    text: Localization.string(modelData.name)
+                    font.pointSize: ZoomSettings.regularFontSize
+                    onTriggered: {
+                        switchLanguage(modelData.language)
+                    }
                 }
             }
         }
@@ -268,7 +266,7 @@ ApplicationWindow {
     }
 
     Label {
-        text: "v" + Backend.version()
+        text: "v" + Backend.version
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.margins: 10

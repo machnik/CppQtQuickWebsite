@@ -1,5 +1,14 @@
 # Changelog
 
+## [Unreleased]
+- Native builds now use a standard window frame, so the window can be moved, resized, minimized, and closed with the operating system's controls; WebAssembly builds keep the frameless, screen-sized window.
+- Build-type-specific WebAssembly options now use CMake generator expressions, making them work with multi-config generators.
+- Language switching now keeps the previous translation when the selected translation file is missing or invalid.
+- QML pages no longer rely on unqualified ids from `main.qml`; navigation data is passed via required properties and `StackView.view`.
+- Cleaned up dead code, header guards, includes, and helper method declarations in the C++ sources.
+- Added a GitHub Actions CI build.
+- Removed leftover `.backup` files from the repository root.
+
 ## [1.0.0] - 2025-02-20
 - Initial MVP release.
 

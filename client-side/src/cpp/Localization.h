@@ -1,12 +1,11 @@
 #ifndef LOCALIZATION_H
 #define LOCALIZATION_H
 
+#include <QtCore/QHash>
 #include <QtCore/QObject>
 #include <QtCore/QLocale>
 
 #include <QtQml/QtQml>
-
-#include <map>
 
 /*
     A very lightweight alternative to Qt's built-in localization system.
@@ -37,7 +36,7 @@ signals:
 
 private:
     QLocale::Language m_currentLanguage;
-    std::map<QString, QString> m_localStrings;
+    QHash<QString, QString> m_localStrings;
 
     static Localization *s_instance;
 };

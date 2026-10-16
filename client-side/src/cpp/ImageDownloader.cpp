@@ -137,8 +137,9 @@ void ImageDownloader::onDownloadError(QNetworkReply::NetworkError error)
 
 QString ImageDownloader::convertToDataUrl(const QByteArray &imageData, const QString &mimeType)
 {
-    auto base64Data{imageData.toBase64()};
-    return QString("data:%1;base64,%2").arg(mimeType, base64Data);
+    // Base64 output is plain ASCII.
+    const auto base64Data{QString::fromLatin1(imageData.toBase64())};
+    return QStringLiteral("data:%1;base64,%2").arg(mimeType, base64Data);
 }
 
 QString ImageDownloader::guessMimeType(const QString &url)

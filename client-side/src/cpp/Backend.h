@@ -23,6 +23,7 @@ class Backend : public QObject
     // keeps QML bindings reactive when C++ changes the value.
     Q_PROPERTY(QString message READ message WRITE setMessage NOTIFY messageChanged)
     Q_PROPERTY(ListModel *listModel READ listModel CONSTANT)
+    Q_PROPERTY(QString version READ version CONSTANT)
 
     public:
         explicit Backend(QObject *parent = nullptr);
@@ -30,14 +31,16 @@ class Backend : public QObject
 /*  
     Slots are automatically exposed to QML.
     The Q_INVOKABLE macro can be used to expose other methods (that are not slots) to QML.
+    Properties declared above are available to QML without Q_INVOKABLE.
 */
 
         Q_INVOKABLE void reloadQML();
         Q_INVOKABLE void resetBackend();
-        Q_INVOKABLE QString message() const;
-        Q_INVOKABLE ListModel *listModel() const;
         Q_INVOKABLE QString textResource(const QString &resourceName) const;
-        Q_INVOKABLE QString version() const;
+
+        QString message() const;
+        ListModel *listModel() const;
+        QString version() const;
 
     public slots:
         void setMessage(const QString &message);
@@ -45,7 +48,6 @@ class Backend : public QObject
 
     signals:
         void messageChanged();
-        void listModelChanged();
 
     private:
         QString m_message;

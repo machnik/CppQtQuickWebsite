@@ -4,7 +4,7 @@
 #include <QtCore/QList>
 #include <QtWebSockets/QWebSocketServer>
 
-#include <QtQml>
+#include <QtQml/QtQml>
 
 class QWebSocket;
 

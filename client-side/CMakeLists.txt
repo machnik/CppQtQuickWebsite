@@ -26,61 +26,30 @@ if(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Build type: Debug or Release" FORCE)
 endif()
 
-# Configure debug build
-if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    message(STATUS "Configuring Debug build")
-
-    # WebAssembly-specific debug settings
-    if(EMSCRIPTEN)
-        if(ENABLE_WASM_EXCEPTIONS)
-            list(APPEND WASM_COMPILE_OPTIONS "-fexceptions")
-        endif()
-        
-        # These runtime checks make memory and stack errors easier to locate
-        # while debugging, at a significant runtime cost.
-        add_link_options(
-            "--profiling-funcs" # Enable function-level profiling
-            "-O0" # No optimization
-            "-g" # Debugging information
-            "-sASSERTIONS=1" # Enable runtime assertions
-            "-sSAFE_HEAP=1" # Enable safe heap
-            "-sSAFE_HEAP_LOG=1" # Enable safe heap logging
-            "-sSTACK_OVERFLOW_CHECK=2" # Enable stack overflow checking
-        )
-        
-        if(ENABLE_WASM_EXCEPTIONS)
-            add_link_options("-fexceptions") # Enable C++ exceptions
-        endif()
-
-        list(APPEND WASM_COMPILE_DEFINITIONS
-            QT_QML_DEBUG # Enable QML debugging
-            EMSCRIPTEN_TRACING # Makes C++-to-JavaScript and JavaScript-to-C++ calls traceable
-        )
+# WebAssembly-specific settings
+if(EMSCRIPTEN)
+    if(ENABLE_WASM_EXCEPTIONS)
+        # Enable C++ exceptions (disabled by default)
+        list(APPEND WASM_COMPILE_OPTIONS "-fexceptions")
+        add_link_options("-fexceptions")
     endif()
-# Configure release build
-elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
-    message(STATUS "Configuring Release build")
 
-    # WebAssembly-specific release optimizations
-    if(EMSCRIPTEN)
-        if(ENABLE_WASM_EXCEPTIONS)
-            list(APPEND WASM_COMPILE_OPTIONS "-fexceptions")
-        endif()
-        
-        # Release-only Emscripten settings reduce runtime overhead and output
-        # size after the debug checks have served their purpose.
-        add_link_options(
-            "-O3" # Full optimization
-            "-sASSERTIONS=0" # Disable runtime assertions
-            "-sSAFE_HEAP=0" # Disable safe heap
-            "-sSTACK_OVERFLOW_CHECK=0" # Disable stack overflow checking
-            "-sELIMINATE_DUPLICATE_FUNCTIONS=1" # Eliminate duplicate functions
-        )
+    # Configuration-dependent Emscripten settings use generator expressions so
+    # multi-config generators (for example Ninja Multi-Config) select the right
+    # options for each build configuration.
+    add_link_options(
+        # Debug: these runtime checks make memory and stack errors easier to
+        # locate while debugging, at a significant runtime cost.
+        "$<$<CONFIG:Debug>:--profiling-funcs;-O0;-g;-sASSERTIONS=1;-sSAFE_HEAP=1;-sSAFE_HEAP_LOG=1;-sSTACK_OVERFLOW_CHECK=2>"
+        # Release: reduce runtime overhead and output size after the debug
+        # checks have served their purpose.
+        "$<$<CONFIG:Release>:-O3;-sASSERTIONS=0;-sSAFE_HEAP=0;-sSTACK_OVERFLOW_CHECK=0;-sELIMINATE_DUPLICATE_FUNCTIONS=1>"
+    )
 
-        if(ENABLE_WASM_EXCEPTIONS)
-            add_link_options("-fexceptions") # Enable C++ exceptions
-        endif()
-    endif()
+    list(APPEND WASM_COMPILE_DEFINITIONS
+        "$<$<CONFIG:Debug>:QT_QML_DEBUG>" # Enable QML debugging
+        "$<$<CONFIG:Debug>:EMSCRIPTEN_TRACING>" # Makes C++-to-JavaScript and JavaScript-to-C++ calls traceable
+    )
 endif()
 
 # Find the required Qt modules
@@ -98,18 +67,31 @@ qt_policy(
 qt_add_executable(${PROJECT_NAME}
     "src/cpp/main.cpp"
     "src/cpp/Backend.cpp"
+    "src/cpp/Backend.h"
     "src/cpp/Base64Converter.cpp"
-    "src/cpp/BrowserJS.cpp"
-    "src/cpp/Counter.cpp"
-    "src/cpp/FakeProcessor.cpp"
-    "src/cpp/ImageDownloader.cpp"
+    "src/cpp/Base64Converter.h"
     "src/cpp/BinaryStorage.cpp"
+    "src/cpp/BinaryStorage.h"
+    "src/cpp/BrowserJS.cpp"
+    "src/cpp/BrowserJS.h"
+    "src/cpp/Counter.cpp"
+    "src/cpp/Counter.h"
+    "src/cpp/FakeProcessor.cpp"
+    "src/cpp/FakeProcessor.h"
+    "src/cpp/ImageDownloader.cpp"
+    "src/cpp/ImageDownloader.h"
     "src/cpp/ListModel.cpp"
+    "src/cpp/ListModel.h"
     "src/cpp/Localization.cpp"
-    "src/cpp/TextFileIO.cpp"
-    "src/cpp/WebSocketServer.cpp"
-    "src/cpp/WebSocketClient.cpp"  
+    "src/cpp/Localization.h"
     "src/cpp/SystemInformation.cpp"
+    "src/cpp/SystemInformation.h"
+    "src/cpp/TextFileIO.cpp"
+    "src/cpp/TextFileIO.h"
+    "src/cpp/WebSocketServer.cpp"
+    "src/cpp/WebSocketServer.h"
+    "src/cpp/WebSocketClient.cpp"
+    "src/cpp/WebSocketClient.h"
     "src/cpp/ThreadedProcessor.cpp"
     "src/cpp/ThreadedProcessor.h"
     "src/js/js.qrc" 

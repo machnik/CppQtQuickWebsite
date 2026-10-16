@@ -14,12 +14,14 @@
 
 int main(int argc, char *argv[])
 {
-//  If the Widgets module is not needed, you can use QGuiApplication instead of QApplication:
-    QApplication app{argc, argv};
-
+    // Style environment variables must be set before the application object
+    // (and therefore any style or QML code) is created.
     // Set the Material UI theme to Light:
     qputenv("QT_QUICK_CONTROLS_MATERIAL_THEME", "Light");
     QQuickStyle::setStyle("Material");
+
+//  If the Widgets module is not needed, you can use QGuiApplication instead of QApplication:
+    QApplication app{argc, argv};
 
     // The engine owns the QML object tree. Loading a resource URL keeps the
     // entry point available in both native and WebAssembly packages.

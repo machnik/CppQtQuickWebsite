@@ -14,6 +14,10 @@ Button {
     text: Localization.string("To Main Page")
     font.pointSize: ZoomSettings.bigFontSize
     onClicked: {
-        stackView.pop(StackView.Immediate)
+        // StackView.view is the attached property of the view this button's
+        // page was pushed onto; it avoids depending on main.qml's ids.
+        if (StackView.view) {
+            StackView.view.pop(StackView.Immediate)
+        }
     }
 }

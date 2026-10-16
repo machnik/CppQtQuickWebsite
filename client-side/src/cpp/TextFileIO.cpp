@@ -30,6 +30,7 @@ void TextFileIO::loadFileContent()
 
 void TextFileIO::saveFileContent(const QString &fileName, const QString &content)
 {
-    const auto suggestedFileName{fileName.trimmed().isEmpty() ? QStringLiteral("untitled.txt") : fileName};
+    const auto trimmedFileName{fileName.trimmed()};
+    const auto suggestedFileName{trimmedFileName.isEmpty() ? QStringLiteral("untitled.txt") : trimmedFileName};
     QFileDialog::saveFileContent(content.toUtf8(), suggestedFileName);
 }

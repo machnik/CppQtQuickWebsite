@@ -42,12 +42,11 @@ private:
     void clearReply(QNetworkReply *reply);
     static bool isSupportedImageMimeType(const QString &mimeType);
     static QString normalizedMimeType(const QString &mimeType);
+    static QString convertToDataUrl(const QByteArray &imageData, const QString &mimeType);
+    static QString guessMimeType(const QString &url);
 
     QNetworkAccessManager *m_networkManager;
     QNetworkReply *m_currentReply;
-    
-    QString convertToDataUrl(const QByteArray &imageData, const QString &mimeType);
-    QString guessMimeType(const QString &url);
 };
 
 #endif // IMAGE_DOWNLOADER_H

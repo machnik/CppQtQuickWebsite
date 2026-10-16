@@ -1,9 +1,9 @@
-#ifndef JAVASCRIPT_H
-#define JAVASCRIPT_H
+#ifndef BROWSERJS_H
+#define BROWSERJS_H
 
 #include <QtCore/QObject>
 
-#include <QtQml/QQmlProperty>
+#include <QtQml/QtQml>
 
 class BrowserJS : public QObject {
 
@@ -31,4 +31,4 @@ private:
     static BrowserJS* s_instance;
 };
 
-#endif // JAVASCRIPT_H
+#endif // BROWSERJS_H
