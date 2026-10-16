@@ -21,7 +21,8 @@ jobs:
         with:
           version: '6.12.0'
           # aqt does not resolve module dependencies; qtquick3d needs qtshadertools.
-          modules: 'qtquick3d qtshadertools qtmultimedia qtwebsockets'
+          # qtquick3dphysics is a QML-only import (SubPage16), not a CMake component.
+          modules: 'qtquick3d qtquick3dphysics qtshadertools qtmultimedia qtwebsockets'
           cache: 'true'
 
       - name: Install OpenGL development libraries
@@ -51,7 +52,8 @@ jobs:
           target: 'wasm'
           arch: 'wasm_multithread'
           # aqt does not resolve module dependencies; qtquick3d needs qtshadertools.
-          modules: 'qtquick3d qtshadertools qtmultimedia qtwebsockets'
+          # qtquick3dphysics is a QML-only import (SubPage16), not a CMake component.
+          modules: 'qtquick3d qtquick3dphysics qtshadertools qtmultimedia qtwebsockets'
           # Emscripten provides its own headers; the Linux desktop packages
           # that install-deps would add are unnecessary for a WASM build.
           install-deps: 'false'
