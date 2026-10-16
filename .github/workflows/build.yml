@@ -6,6 +6,9 @@ on:
   pull_request:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   linux-native:
     runs-on: ubuntu-latest
@@ -31,3 +34,70 @@ jobs:
 
       - name: Build
         run: cmake --build build --parallel
+
+  wasm-multithread:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: '6.12.0'
+          arch: 'wasm_multithread'
+          # aqt does not resolve module dependencies; qtquick3d needs qtshadertools.
+          modules: 'qtquick3d qtshadertools qtmultimedia qtwebsockets'
+          cache: 'true'
+
+      - name: Install Emscripten
+        run: |
+          git clone --depth 1 https://github.com/emscripten-core/emsdk.git "$RUNNER_TEMP/emsdk"
+          "$RUNNER_TEMP/emsdk/emsdk" install 5.0.5
+          "$RUNNER_TEMP/emsdk/emsdk" activate 5.0.5
+
+      - name: Configure
+        run: |
+          source "$RUNNER_TEMP/emsdk/emsdk_env.sh"
+          qt-cmake -S client-side -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DENABLE_WASM_THREADING_HELPER=ON
+
+      - name: Build
+        run: |
+          source "$RUNNER_TEMP/emsdk/emsdk_env.sh"
+          cmake --build build --parallel
+
+      # The website runs entirely client-side, so a static artifact is enough:
+      # the CMake post-build steps have already copied favicon.ico, qtlogo.svg,
+      # and shared_array_buffer_fix.js next to the Emscripten output.
+      - name: Stage website files
+        run: |
+          mkdir dist
+          cp build/WebApplication.js build/WebApplication.wasm build/WebApplication.worker.js \
+             build/qtloader.js build/qtlogo.svg build/favicon.ico build/shared_array_buffer_fix.js \
+             dist/
+          cp build/WebApplication.html dist/index.html
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    # Deploy only from pushes to main and manual runs; PRs just build.
+    if: github.event_name != 'pull_request'
+    needs: wasm-multithread
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    # Serialize deployments so rapid consecutive pushes cannot race Pages.
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

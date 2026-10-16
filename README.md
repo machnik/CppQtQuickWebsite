@@ -190,8 +190,19 @@ WebApplication.exe
 
 The build process generates many files in the output directory, of which only a few have to be uploaded to a server. This website is very interactive, but its logic runs on the client's side (in the web browser) - therefore, it can be deployed on very simple hosting services, like **GitHub Pages**.
 
+## Automatic deployment (CI)
+
+Every push to `main` triggers the [Build workflow](.github/workflows/build.yml), which compiles the **multithreaded WebAssembly** version of this project and deploys it to **GitHub Pages**:
+
+**Live at: [machnik.github.io/CppQtQuickWebsite/](https://machnik.github.io/CppQtQuickWebsite/)**
+
+The workflow stages _WebApplication.html_ (renamed to _index.html_), _WebApplication.js_, _WebApplication.wasm_, _WebApplication.worker.js_, _qtloader.js_, _qtlogo.svg_, _favicon.ico_, and _shared_array_buffer_fix.js_, then publishes them using GitHub's Pages actions - no access tokens or separate hosting repository are needed.
+
+To use the same automation in your own fork, set **Settings** -> **Pages** -> **Source** to _GitHub Actions_ once. Pull requests and the desktop Linux job only verify that the project builds; they never deploy.
 
 ## Files to deploy
+
+When publishing manually instead, only these files have to be uploaded:
 
 - _favicon.ico_
 - _qtloader.js_
@@ -206,7 +217,7 @@ Rename _WebApplication.html_ to _index.html_ for a simpler website URL.
 
 The content of _qtlogo.svg_ can be modified to contain a custom splash image.
 
-## GitHub Pages
+## GitHub Pages (manual)
 
 1. Create a new **GitHub** repository.
 2. Push the aforementioned files there.
@@ -218,13 +229,7 @@ The content of _qtlogo.svg_ can be modified to contain a custom splash image.
 
 ### Multithreading
 
-If you are using _wasm_multithread_ binaries, sharing memory via `SharedArrayBuffer` must be allowed by setting proper COEP and COOP policies in HTTP headers. This is currently not directly possible in **GitHub**, but there is a workaround. Enable `ENABLE_WASM_THREADING_HELPER` when configuring the build, then:
-1. Add _[shared_array_buffer_fix.js](client-side/src/js/shared_array_buffer_fix.js)_ to the deployed files.
-2. Reference it in _WebApplication.html_ (renamed to _index.html_):
-   ```html
-   <title>WebApplication</title>
-   <script src="shared_array_buffer_fix.js"></script>
-   ```
+If you are using _wasm_multithread_ binaries, sharing memory via `SharedArrayBuffer` must be allowed by setting proper COEP and COOP policies in HTTP headers. This is currently not directly possible in **GitHub**, but there is a workaround. Enable `ENABLE_WASM_THREADING_HELPER` when configuring the build (the CI workflow already does this) - the build then copies _[shared_array_buffer_fix.js](client-side/src/js/shared_array_buffer_fix.js)_ next to the other output files and injects the corresponding script tag into _WebApplication.html_ automatically.
 
 # ⏩ Roadmap
 

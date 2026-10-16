@@ -7,6 +7,7 @@
 - QML pages no longer rely on unqualified ids from `main.qml`; navigation data is passed via required properties and `StackView.view`.
 - Cleaned up dead code, header guards, includes, and helper method declarations in the C++ sources.
 - Added a GitHub Actions CI build.
+- Added automated multithreaded WebAssembly build and GitHub Pages deployment to CI.
 - Removed leftover `.backup` files from the repository root.
 
 ## [1.0.0] - 2025-02-20
