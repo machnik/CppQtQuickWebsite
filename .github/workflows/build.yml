@@ -45,9 +45,16 @@ jobs:
         uses: jurplel/install-qt-action@v4
         with:
           version: '6.12.0'
+          # Qt 6.8+ distributes WebAssembly kits under the all_os/wasm
+          # repository instead of as desktop architectures.
+          host: 'all_os'
+          target: 'wasm'
           arch: 'wasm_multithread'
           # aqt does not resolve module dependencies; qtquick3d needs qtshadertools.
           modules: 'qtquick3d qtshadertools qtmultimedia qtwebsockets'
+          # Emscripten provides its own headers; the Linux desktop packages
+          # that install-deps would add are unnecessary for a WASM build.
+          install-deps: 'false'
           cache: 'true'
 
       - name: Install Emscripten
