@@ -196,7 +196,7 @@ Every push to `main` triggers the [Build workflow](.github/workflows/build.yml),
 
 **Live at: [machnik.github.io/CppQtQuickWebsite/](https://machnik.github.io/CppQtQuickWebsite/)**
 
-The workflow stages _WebApplication.html_ (renamed to _index.html_), _WebApplication.js_, _WebApplication.wasm_, _WebApplication.worker.js_, _qtloader.js_, _qtlogo.svg_, _favicon.ico_, and _shared_array_buffer_fix.js_, then publishes them using GitHub's Pages actions - no access tokens or separate hosting repository are needed.
+The workflow stages _WebApplication.html_ (renamed to _index.html_), _WebApplication.js_, _WebApplication.wasm_, _qtloader.js_, _qtlogo.svg_, _favicon.ico_, and _shared_array_buffer_fix.js_, then publishes them using GitHub's Pages actions - no access tokens or separate hosting repository are needed.
 
 To use the same automation in your own fork, set **Settings** -> **Pages** -> **Source** to _GitHub Actions_ once. Pull requests and the desktop Linux job only verify that the project builds; they never deploy.
 
@@ -211,7 +211,7 @@ When publishing manually instead, only these files have to be uploaded:
 - _WebApplication.html_
 - _WebApplication.wasm_
 
-For a multithreaded build, also deploy _WebApplication.worker.js_ and, when `ENABLE_WASM_THREADING_HELPER=ON`, _shared_array_buffer_fix.js_.
+For a multithreaded build with `ENABLE_WASM_THREADING_HELPER=ON`, also deploy _shared_array_buffer_fix.js_. (With Qt 6.12 / Emscripten 5.0.5 the pthread workers are bundled into _WebApplication.js_; older toolchain versions may additionally emit a _WebApplication.worker.js_ that then has to be deployed as well.)
 
 Rename _WebApplication.html_ to _index.html_ for a simpler website URL.
 

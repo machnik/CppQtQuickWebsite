@@ -75,11 +75,13 @@ jobs:
 
       # The website runs entirely client-side, so a static artifact is enough:
       # the CMake post-build steps have already copied favicon.ico, qtlogo.svg,
-      # and shared_array_buffer_fix.js next to the Emscripten output.
+      # and shared_array_buffer_fix.js next to the Emscripten output. With
+      # Qt 6.12 / Emscripten 5.0.5 the pthread workers are bundled into
+      # WebApplication.js; no separate worker file is generated.
       - name: Stage website files
         run: |
           mkdir dist
-          cp build/WebApplication.js build/WebApplication.wasm build/WebApplication.worker.js \
+          cp build/WebApplication.js build/WebApplication.wasm \
              build/qtloader.js build/qtlogo.svg build/favicon.ico build/shared_array_buffer_fix.js \
              dist/
           cp build/WebApplication.html dist/index.html
